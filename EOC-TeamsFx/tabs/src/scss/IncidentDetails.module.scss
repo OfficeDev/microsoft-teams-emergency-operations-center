@@ -1,0 +1,529 @@
+:global {
+
+    .incident-details-input-field,
+    .incident-details-date-field {
+        input {
+            font: normal normal normal 16px/21px Segoe UI;
+            opacity: 1;
+            height: 40px;
+            background-color: #FFFFFF;
+            color: #000000;
+        }
+
+        input::placeholder {
+            font: normal normal normal 14px/21px Segoe UI;
+            color: #979593;
+            opacity: 1;
+        }
+    }
+
+    .incident-details-input-field-disabled{
+        input {
+            font: normal normal normal 16px/21px Segoe UI;
+            opacity: 1;
+            height: 40px;
+            background-color: #D3D3D3;
+            color: #000000;
+        }
+
+        input::placeholder {
+            font: normal normal normal 14px/21px Segoe UI;
+            color: #979593;
+            opacity: 1;
+        }
+    }
+
+    .dte-ph {
+        input {
+            height: 40px;
+            background-color: #FFFFFF;
+            font: normal normal normal 14px/21px Segoe UI;
+            color: #727170;
+            opacity: 1;
+        }
+    }
+
+    .incident-details-description-area {
+        textArea {
+            height: 83%;
+            font: normal normal normal 16px/21px Segoe UI;
+            background-color: #FFFFFF;
+            color: #000000;
+        }
+
+        textArea::placeholder {
+            font: normal normal normal 14px/21px Segoe UI;
+            color: #979593;
+            opacity: 1;
+        }
+    }
+
+    .dropdown-placeholder {
+        .ui-dropdown__container {
+            background-color: #FFFFFF !important;
+        }
+
+        button {
+            height: 40px;
+
+            span {
+                font: normal normal normal 14px/21px Segoe UI;
+                color: #727170;
+                opacity: 1;
+            }
+        }
+
+        .ui-box {
+            font: normal normal normal 16px/21px Segoe UI;
+            opacity: 1;
+        }
+    }
+
+    .incident-details-dropdown {
+        .ui-dropdown__container {
+            background-color: #FFFFFF !important;
+        }
+
+        //Dropdown Field
+        button {
+            height: 40px;
+
+            //Dropdown Placeholder
+            span {
+                font: normal normal normal 16px/21px Segoe UI;
+                color: #000000;
+                opacity: 1;
+            }
+
+        }
+
+        //Dropdown Items
+        .ui-box {
+            font: normal normal normal 16px/21px Segoe UI;
+            opacity: 1;
+        }
+    }
+
+    .incident-type-dropdown {
+        .ui-dropdown__container {
+            border-bottom: none;
+        }
+
+        .ui-dropdown__selected-items {
+            background-color: #FFFFFF;
+            border: 1px solid #FFFFFF;
+            border-radius: 0.1875rem;
+            height: 40px;
+        }
+
+        input[type="text"] {
+            font: normal normal normal 16px/21px Segoe UI;
+            opacity: 1;
+            color: #000000;
+        }
+
+        input::placeholder {
+            font: normal normal normal 14px/21px Segoe UI;
+            color: #979593;
+            opacity: 1;
+        }
+    }
+
+    .incident-type-dropdown-disabled {
+        .ui-dropdown__container {
+            border-bottom: none;
+        }
+
+        .ui-dropdown__selected-items {
+            background-color: #D3D3D3;
+            border: 1px solid #FFFFFF;
+            border-radius: 0.1875rem;
+            height: 40px;
+        }
+
+        input[type="text"] {
+            font: normal normal normal 16px/21px Segoe UI;
+            opacity: 1;
+            color: #000000;
+        }
+
+        input::placeholder {
+            font: normal normal normal 14px/21px Segoe UI;
+            color: #979593;
+            opacity: 1;
+        }
+    }
+
+    .thead-border-left {
+        border-left: 0.25px solid #FFFFFF;
+    }
+
+    .col-center {
+        text-align: center;
+    }
+
+    .loader-bg {
+        position: fixed;
+        width: 100%;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background-color: rgba(255, 255, 255, 0.7);
+        z-index: 9999;
+
+        .loaderStyle {
+            top: 50%;
+            left: 35%;
+            position: absolute;
+            width: 30%;
+            height: 150px;
+            z-index: 1;
+            opacity: 1;
+
+            div[role="progressbar"] {
+                color: black;
+                font-weight: bold;
+            }
+        }
+    }
+
+    .incCommanderInfoIcon {
+        padding-left: 3px;
+    }   
+
+    .incNameInfoIcon {
+        padding-left: 3px;
+    }
+
+    .role-edit-icon {
+        font-size: 22px;
+        color: #979593;
+        cursor: pointer;
+    }
+    .editRoleCol{
+        margin: auto;
+    }
+}
+
+
+div[class="incident-details"] {
+    background: #F4F4F4 0% 0% no-repeat padding-box;
+    text-align: left;
+    letter-spacing: 0px;
+    opacity: 1;
+
+    div[id="incident-details-path"] {
+        width: 100%;
+        height: auto;
+        max-height: 100vh;
+
+        label {
+            margin: 5px auto;
+            text-align: center;
+            font: normal normal 400 14px/24px Segoe UI;
+            color: #33344A;
+            opacity: 1;
+
+            span[class="back-label"] {
+                font-size: 12px;
+                position: relative;
+                bottom: 1px;
+                margin-left: 1px;
+            }
+
+            span[class="go-back"] {
+                cursor: pointer;
+
+                span[id="path-back-icon"] {
+                    position: relative;
+                    bottom: 2px;
+                }
+            }
+
+            span[class="right-border"] {
+                position: relative;
+                bottom: 1px;
+            }
+        }
+    }
+
+    div[class="incident-details-form-area"] {
+        background: #E4E9F5 0% 0% no-repeat padding-box;
+        border: 0.25px solid #a3a6b3;
+        padding-bottom: 50px;
+        opacity: 1;
+
+        div[class="incident-form-head-text"] {
+            font: normal normal 400 22px/32px Segoe UI;
+            color: #33344A;
+            margin: 12px auto;
+            opacity: 1;
+        }
+
+        div[class="incident-grid-item"] {
+            margin-bottom: 5%;
+
+            label {
+                font: normal normal normal 16px/21px Segoe UI;
+                color: #000000;
+                opacity: 1;
+            }
+
+            label::after {
+                content: " *";
+                color: #FF0000;
+            }
+
+            label[class="FormInput-label"] {
+                margin-bottom: 0.25rem;
+            }
+
+            label[class="FormInput-label"]::after {
+                content: " *";
+                color: #FF0000
+            }
+
+            label[class="people-picker-label"] {
+                margin-bottom: 0.25rem;
+            }
+
+            label[class="people-picker-label"]::after {
+                content: " *";
+                color: #FF0000
+            }
+
+            label[class="message-label"] {
+                color: #f26e86;
+            }
+
+            mgt-people-picker[class="incident-details-people-picker"] {
+
+                --input-border: 2px #FFFFFF solid;
+
+                --input-background-color: #FFFFFF;
+                /* input area background color */
+                --input-border-color--hover: #FFFFFF;
+                /* input area border hover color */
+                --input-border-color--focus: #FFFFFF;
+                /* input area border focus color */
+                --dropdown-background-color: #FFFFFF;
+                /* selection area background color */
+                --dropdown-item-hover-background: #F0F0F0;
+                /* person background color on hover */
+
+                --selected-person-background-color: #f6f6f6;
+
+                /* person item background color */
+
+                --color: white;
+                /* input area border focus color */
+                --placeholder-color: #979593;
+                /* placeholder text color */
+                --placeholder-size: 16px;
+                --placeholder-color--focus: #979593;
+                /* placeholder text focus color */
+            }
+
+            mgt-people-picker[class="incident-details-people-picker-disabled"] {
+
+                --input-border: 2px #D3D3D3 solid;
+
+                --input-background-color: #D3D3D3;
+                /* input area background color */
+                --input-border-color--hover: #D3D3D3;
+                /* input area border hover color */
+                --input-border-color--focus: #D3D3D3;
+                /* input area border focus color */
+                --dropdown-background-color: #D3D3D3;
+                /* selection area background color */
+                --dropdown-item-hover-background: #F0F0F0;
+                /* person background color on hover */
+
+                --selected-person-background-color: #D3D3D3;
+
+                /* person item background color */
+
+                --color: white;
+                /* input area border focus color */
+                --placeholder-color: #979593;
+                /* placeholder text color */
+                --placeholder-size: 16px;
+                --placeholder-color--focus: #979593;
+                /* placeholder text focus color */
+            }
+
+            button[id="manage-role-disabled-btn"] {
+                background-color: auto;
+
+                img[class="manage-role-btn-icon"] {
+                    width: 20px;
+                    height: 20px;
+                }
+
+                label[class="manage-role-btn-label"] {
+                    cursor: pointer;
+                    font: normal normal bold 18px/24px Segoe UI;
+                    color: #FFFFFF;
+                    text-transform: capitalize;
+                    opacity: 1;
+                }
+
+                label[class="manage-role-btn-label"]::after {
+                    content: "";
+                }
+            }
+
+            button[id="manage-role-btn"] {
+                background-color: rgb(88, 90, 150);
+                opacity: 1;
+
+                img[class="manage-role-btn-icon"] {
+                    width: 20px;
+                    height: 20px;
+                }
+
+                label[class="manage-role-btn-label"] {
+                    cursor: pointer;
+                    font: normal normal bold 18px/24px Segoe UI;
+                    color: #FFFFFF;
+                    text-transform: capitalize;
+                    opacity: 1;
+                }
+
+                label[class="manage-role-btn-label"]::after {
+                    content: "";
+                }
+            }
+
+            button[id="manage-role-btn"]:hover {
+                opacity: 0.9
+            }
+
+        }
+
+        div[class="role-assignment-table"] {
+            margin-top: 25px;
+            text-align: left;
+            overflow-wrap: break-word;
+            opacity: 1;
+
+            div[id="role-grid-thead"] {
+                background: #414157 0% 0% no-repeat padding-box;
+                width: 100%;
+                height: auto;
+                border-top: 0.25px solid #979593;
+                border-left: 0.25px solid #979593;
+                border-right: 0.25px solid #979593;
+                border-radius: 3px 3px 0px 0px;
+                padding: 7px;
+                margin-left: 0px;
+                font: normal normal 600 16px/24px Segoe UI;
+                color: #FFFFFF;
+
+                @media screen and (max-width:1059px) {
+                    font: normal normal 600 13px/20px Segoe UI;
+                }
+
+            }
+
+            div[id="role-grid-tbody"] {
+                background: #FFFFFF 0% 0% no-repeat padding-box;
+                width: 100%;
+                margin-left: 0px;
+                border-left: 0.25px solid #979593;
+                border-right: 0.25px solid #979593;
+                border-bottom: 0.25px solid #979593;
+                height: auto;
+                padding: 10px;
+                font: normal normal normal 16px/21px Segoe UI;
+                color: #000000;
+
+                @media screen and (max-width:1059px) {
+                    font: normal normal normal 13px/20px Segoe UI;
+                }
+
+                img[class="role-icon"]{
+                    width: 20px;
+                    height: 23px;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        div[class="new-incident-btn-area"] {
+
+            label {
+                font: normal normal 600 16px/24px Segoe UI;
+                cursor: pointer;
+            }
+
+            @media screen and (max-width:835px) {
+                button[id="new-incident-back-btn"] {
+                    margin-bottom: 10px;
+                }
+            }
+
+            button[id="new-incident-back-btn"] {
+                width: 106px;
+                height: 46px;
+                border-color: #FFFFFF;
+            }
+
+            button[id="new-incident-back-btn"]:hover {
+                border-color: rgb(237, 235, 233);
+            }
+
+            button[id="new-incident-create-btn"] {
+                width: 230px;
+                height: 46px;
+
+                img {
+                    width: 30px;
+                    height: 30px;
+                    margin-right: 5px;
+                    margin-bottom: 5px;
+                }
+            }
+        }
+
+    }
+}
+
+//For Mobile View
+@media screen and (max-width:375pt) {
+    div[class="incident-details"] {
+        div[class="incident-details-form-area"] {
+
+            div[class="role-assignment-table"] {
+
+                div[id="role-grid-thead"] {
+                    font: normal normal 600 11pt/15pt Segoe UI;
+                }
+
+                div[id="role-grid-tbody"] {
+                    font: normal normal normal 11pt/15pt Segoe UI;
+
+                    img[class="role-icon"] {
+                        width: 10pt;
+                        height: 12pt;
+                    }
+
+                    div[class="editRoleCol"] > *{
+                        font-size: 15px;
+                    }
+                }
+            }
+
+            div[class="new-incident-btn-area"] {
+                button[id="new-incident-back-btn"] {
+                    display: none !important;
+                }
+
+                button[id="new-incident-create-btn"] {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}

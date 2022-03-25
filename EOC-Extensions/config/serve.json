@@ -1,0 +1,29 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/core-build/serve.schema.json",
+  "port": 4321,
+  "https": true,
+  "serveConfigurations": {
+    "default": {
+      "pageUrl": "https://contoso.sharepoint.com/sites/mySite/SitePages/Forms/ByAuthor.aspx",
+      "customActions": {
+        "3462de2d-d4b5-48b1-9e81-471a13a5c038": {
+          "location": "ClientSideExtension.ListViewCommandSet.CommandBar",
+          "properties": {
+            "NotifyToTeamsGroup": "One item is selected in the list"
+          }
+        }
+      }
+    },
+    "notifyToTeamsGroup": {
+      "pageUrl": "https://contoso.sharepoint.com/sites/mySite/SitePages/Forms/ByAuthor.aspx",
+      "customActions": {
+        "3462de2d-d4b5-48b1-9e81-471a13a5c038": {
+          "location": "ClientSideExtension.ListViewCommandSet.CommandBar",
+          "properties": {
+            "NotifyToTeamsGroup": "One item is selected in the list"
+          }
+        }
+      }
+    }
+  }
+}
