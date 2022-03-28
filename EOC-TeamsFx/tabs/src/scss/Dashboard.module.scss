@@ -1,0 +1,488 @@
+div[id="dashboard-search-btn-area"] {
+    background: #F4F4F4 0% 0% no-repeat padding-box;
+    padding: 14px 0px;
+    opacity: 1;
+    text-align: left;
+    letter-spacing: 0px;
+
+    div[class="search-area"]>div {
+
+        input[type="text"] {
+            font: normal normal normal 14px/24px Segoe UI;
+            height: 46px;
+            width: 416px;
+            border: 1px solid #33344A;
+            background: #FFFFFF;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            color: #000000;
+        }
+
+        svg[role="presentation"] {
+            width: 22px;
+            height: auto;
+            color: #000000;
+        }
+
+        input[type="text"]::placeholder {
+            font: normal normal normal 14px/24px Segoe UI;
+            color: #939290;
+            padding-left: 1%;
+        }
+    }
+
+
+
+    button[id="create-incident-btn"] {
+        width: 230px;
+        height: 46px;
+        background: #6264A7;
+        box-shadow: 0px 3px 6px #00000029;
+        border-radius: 0%;
+        font: normal normal 600 16px/24px Segoe UI;
+        color: #FFFFFF;
+        text-transform: capitalize;
+        cursor: pointer;
+
+        img {
+            width: 30px;
+            height: 30px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+    }
+
+    button[id="create-incident-btn"]:hover {
+        opacity: 0.9;
+    }
+
+    @media screen and (max-width: 1060px) {
+        div[class="search-area"] {
+            margin-bottom: 15px;
+        }
+    }
+}
+
+
+div[id="dashboard-pivot-container"] {
+    background: #E4E9F5 0% 0% no-repeat padding-box;
+    opacity: 1;
+    background-color: #E4E9F5;
+    height: auto;
+    min-height: fit-content;
+    max-height: fit-content;
+    padding-bottom: 200px;
+
+    div[class="grid-heading"] {
+        text-align: left;
+        font: normal normal 400 22px/32px Segoe UI;
+        margin-bottom: 15px;
+        letter-spacing: 0px;
+        color: #000000;
+        opacity: 1;
+        padding-top: 15px;
+    }
+
+    div[id="status-indicators"] {
+        display: none;
+        margin: 3% 0%;
+
+        div>img {
+            width: 35px;
+            height: 35px;
+        }
+
+        div>label {
+            text-align: left;
+            font: normal normal 600 16px/27px Segoe UI;
+            letter-spacing: 0px;
+            color: #000000;
+            opacity: 1;
+        }
+
+        @media screen and (max-width: 1060px) {
+            display: flex;
+        }
+    }
+
+    div[id="piv-tabs"]>div {
+        width: 100%;
+        text-align: left;
+        letter-spacing: 0px;
+        opacity: 1;
+
+        button[role="tab"] {
+            width: 22%;
+            height: 45px;
+            border-radius: 8px 8px 0px 0px;
+            margin-right: 4%;
+
+            span {
+                color: #000000;
+                justify-content: center;
+                padding-top: 2px;
+            }
+
+            img[id="pivot-icon"] {
+                width: 35px;
+                height: 35px;
+                display: inline;
+            }
+
+            img[id="pivot-icon-selected"] {
+                width: 35px;
+                height: 35px;
+                display: none;
+            }
+
+            span[id="state"] {
+                font: normal normal 600 16px/27px Segoe UI;
+            }
+
+            @media screen and (max-width: 1060px) {
+                span[id="state"] {
+                    display: none;
+                }
+
+                img {
+                    margin-right: 10px;
+                }
+            }
+
+            span[id="count"] {
+                font: normal normal 600 16px/27px Segoe UI;
+            }
+
+        }
+
+
+        button[name="Completed"] {
+            margin-right: 0;
+        }
+
+        button[role="tab"]:hover,
+        button[aria-selected=true][role="tab"],
+        button[aria-selected=true][role="tab"]:hover {
+            background-color: #33344A;
+
+            span[id="state"],
+            span[id="count"] {
+                color: #FFFFFF;
+            }
+
+            img[id="pivot-icon"] {
+                display: none;
+            }
+
+            img[id="pivot-icon-selected"] {
+                display: inline;
+            }
+
+        }
+
+        div[class="react-bootstrap-table"] {
+            border: 10px solid #33344A;
+            border-radius: 0px 0px 8px 8px !important;
+
+            table {
+                margin: 0px;
+                table-layout: fixed;
+                width: 100%;
+
+                thead {
+                    th {
+                        background: #33344A;
+                        font: normal normal 600 16px/24px Segoe UI;
+                        color: #FFFFFF;
+                        border-right: 1px solid #FFFFFF;
+                        border-bottom: hidden;
+                        padding-left: 1%;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+
+                    }
+
+                    th:nth-child(1) {
+                        width: 11%;
+                    }
+
+                    th:nth-child(2) {
+                        width: 24%;
+                    }
+
+                    th:nth-child(3) {
+                        width: 22%;
+                    }
+
+                    th:nth-child(4) {
+                        width: 7%;
+                    }
+
+                    th:nth-child(5) {
+                        width: 16%;
+                    }
+
+                    th:nth-child(6) {
+                        width: 14%;
+                    }
+
+                    th:nth-child(7) {
+                        width: 6%;
+                    }
+
+                    th:nth-child(4),
+                    th:nth-child(7) {
+                        text-align: center;
+                    }
+
+                    th:nth-last-child(1) {
+                        border-right: none;
+                    }
+                }
+
+                tbody {
+
+                    tr {
+                        border-bottom: hidden;
+                        font: normal normal normal 16px/21px Segoe UI;
+                        letter-spacing: 0px;
+                        color: #000000;
+                        opacity: 1;
+
+                        td {
+                            padding-left: 1%;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+
+                            img[class="grid-edit-icon"] {
+                                width: 17px;
+                                height: 17px;
+                                cursor: pointer;
+                            }
+
+                            img[class="status-icon"] {
+                                width: 28px;
+                                height: 28px;
+                            }
+                        }
+
+                        td:nth-child(1) {
+                            color: #2d69a2;
+                            font-weight: bold;
+
+                            span[class="incIdDeepLink"] {
+                                cursor: pointer;
+                            }
+                        }
+
+                        td:nth-child(4),
+                        td:nth-child(7) {
+                            text-align: center;
+                        }
+                    }
+
+                    tr:nth-child(odd) {
+                        background: #FFFFFF 0% 0% no-repeat padding-box;
+                        opacity: 1;
+                    }
+
+                    tr:nth-child(even) {
+                        background: #E6E6E6 0% 0% no-repeat padding-box;
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+
+        div[class="row react-bootstrap-table-pagination"] {
+            margin-top: 50px !important;
+
+            @media screen and (max-width:750px) {
+                display: block;
+            }
+
+
+            div:nth-child(1)>span {
+                margin-top: 5px;
+
+                button[id="pageDropDown"] {
+                    background-color: #464775;
+                    border-color: #464775;
+                }
+
+                button[id="pageDropDown"]:focus {
+                    box-shadow: 0 0 0 0.25rem rgb(70 71 117 / 25%);
+                }
+
+                ul {
+                    background-color: #DBDBDB;
+
+                    li>a {
+                        text-decoration: none;
+                        color: #000000;
+                    }
+                }
+            }
+
+            span[class="react-bootstrap-table-pagination-total"] {
+                text-align: left;
+                font: normal normal normal 16px/21px Segoe UI;
+                letter-spacing: 0px;
+                color: #000000;
+                opacity: 1;
+                display: inline-flex;
+                margin-left: 2%;
+            }
+
+
+            ul[class="pagination react-bootstrap-table-page-btns-ul"] {
+                margin-top: 5px;
+
+                li {
+                    a {
+                        color: #6264A7;
+                    }
+
+                    a:focus {
+                        box-shadow: 0 0 0 0.25rem rgb(70 71 117 / 25%);
+                    }
+                }
+
+                li[class="active page-item"] {
+                    opacity: 1;
+
+                    a {
+                        background-color: #464775;
+                        border-color: #464775;
+                        color: white;
+                    }
+
+                    a:focus {
+                        box-shadow: 0 0 0 0.25rem rgb(70 71 117 / 25%);
+                    }
+
+                }
+
+            }
+        }
+
+    }
+}
+
+
+
+
+
+
+
+
+//For Mobile View
+@media screen and (max-width:375pt) {
+    div[id="dashboard-search-btn-area"] {
+        div[class="search-area"]>div {
+            input[type="text"] {
+                height: 35pt;
+                width: 325px;
+            }
+
+            @media screen and (max-width:364px) {
+                input[type="text"] {
+                    width: 100%;
+                }
+            }
+
+            input[type="text"]::placeholder {
+                font: normal normal normal 8pt/11pt Segoe UI;
+            }
+
+            svg[role="presentation"] {
+                width: 18px;
+                height: auto;
+                margin-top: 5px;
+            }
+        }
+
+        button[id="create-incident-btn"] {
+            width: 325px;
+            height: 35pt;
+        }
+    }
+
+    div[id="dashboard-pivot-container"] {
+        div[class="grid-heading"] {
+            font: normal normal bold 14pt/19pt Segoe UI;
+        }
+
+        div[id="status-indicators"] {
+
+            div>img {
+                width: 18pt !important;
+                height: 17pt !important;
+                margin-top: 5%;
+            }
+
+            div>label {
+                font: normal normal 600 10pt/14pt Segoe UI;
+                margin-top: 5%;
+            }
+        }
+
+        div[id="piv-tabs"]>div {
+            button[role="tab"] {
+
+                img[id="pivot-icon"],
+                img[id="pivot-icon-selected"],
+                img[alt="All Items"] {
+                    width: 17pt !important;
+                    height: 15pt !important;
+                    margin-right: 5%;
+                }
+
+                span[id="count"] {
+                    font: normal normal 600 4vw/21pt Segoe UI !important;
+                    position: none;
+                }
+            }
+
+            div[class="react-bootstrap-table"] {
+                overflow: scroll;
+
+                table {
+                    table-layout: auto;
+
+                    thead {
+                        th {
+                            overflow: visible;
+                            text-overflow: none;
+                            white-space: nowrap;
+                            padding-left: 10px;
+
+                        }
+                    }
+
+                    tbody {
+                        tr {
+                            td {
+                                padding-left: 10px;
+                                overflow: visible;
+                                text-overflow: none;
+                                white-space: nowrap;
+                            }
+                        }
+                    }
+                }
+            }
+
+            div[class="row react-bootstrap-table-pagination"] {
+                margin-top: 20px !important;
+
+                ul[class="pagination react-bootstrap-table-page-btns-ul"] {
+                    margin: 5% 0%;
+                }
+            }
+        }
+    }
+
+}

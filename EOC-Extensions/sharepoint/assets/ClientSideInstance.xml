@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+    <ClientSideComponentInstance
+        Title="NotifyToTeamsGroup"
+        Location="ClientSideExtension.ListViewCommandSet.CommandBar"
+        ListTemplateId="119"
+        Properties="{&quot;NotifyToTeamsGroup&quot;:&quot;One item is selected in the list.&quot;}"
+        ComponentId="3462de2d-d4b5-48b1-9e81-471a13a5c038" />
+</Elements>

@@ -1,0 +1,494 @@
+<?xml version="1.0"?>
+<pnp:Provisioning xmlns:pnp="http://schemas.dev.office.com/PnP/2021/03/ProvisioningSchema">
+  <pnp:Preferences Generator="PnP.Framework, Version=1.8.3.0, Culture=neutral, PublicKeyToken=0d501f89f11b748c" />
+  <pnp:Templates ID="CONTAINER-TEMPLATE-8315D078DB6D4FF9A32C5E2397D54645">
+    <pnp:ProvisioningTemplate ID="TEMPLATE-8315D078DB6D4FF9A32C5E2397D54645" Version="1" BaseSiteTemplate="STS#3" Scope="RootSite">
+      <pnp:SiteSettings AllowDesigner="true" SearchBoxInNavBar="Inherit" SearchCenterUrl="" />
+      <pnp:RegionalSettings AdjustHijriDays="0" AlternateCalendarType="None" CalendarType="Gregorian" Collation="25" FirstDayOfWeek="Sunday" FirstWeekOfYear="0" LocaleId="1033" ShowWeeks="false" Time24="false" TimeZone="13" WorkDayEndHour="5:00PM" WorkDays="62" WorkDayStartHour="8:00AM" />
+      <pnp:Security AssociatedOwnerGroup="{groupsitetitle} Owners" AssociatedMemberGroup="{groupsitetitle} Members" AssociatedVisitorGroup="{groupsitetitle} Visitors">
+        <pnp:Permissions />
+      </pnp:Security>
+      <pnp:Navigation AddNewPagesToNavigation="true" CreateFriendlyUrlsForNewPages="true">
+        <pnp:GlobalNavigation NavigationType="Structural">
+          <pnp:StructuralNavigation RemoveExistingNodes="false" />
+        </pnp:GlobalNavigation>
+        <pnp:CurrentNavigation NavigationType="StructuralLocal">
+          
+        </pnp:CurrentNavigation>
+      </pnp:Navigation>
+      <pnp:Lists>
+        <pnp:ListInstance Title="Documents" Description="" DocumentTemplate="{site}/Shared Documents/Forms/template.dotx" OnQuickLaunch="true" TemplateType="101" Url="Shared Documents" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="500" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-e717-4e80-aa17-d0c71b360101" EnableAttachments="false" DefaultDisplayFormUrl="{site}/Shared Documents/Forms/DispForm.aspx" DefaultEditFormUrl="{site}/Shared Documents/Forms/EditForm.aspx" DefaultNewFormUrl="{site}/Shared Documents/Forms/Upload.aspx" ImageUrl="/_layouts/15/images/itdl.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+          <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x0101" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{7CD63CFA-E209-4EEF-B72C-B7B0E0376191}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Documents" Url="{site}/Shared Documents/Forms/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/dlicon.png?rev=47">
+              <Query>
+                <OrderBy>
+                  <FieldRef Name="FileLeafRef" />
+                </OrderBy>
+              </Query>
+              <ViewFields>
+                <FieldRef Name="DocIcon" />
+                <FieldRef Name="LinkFilename" />
+                <FieldRef Name="Modified" />
+                <FieldRef Name="Editor" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <JSLink>clienttemplates.js</JSLink>
+            </View>
+          </pnp:Views>
+          <pnp:FieldRefs>
+            <pnp:FieldRef ID="d307dff3-340f-44a2-9f4b-fbfe1ba07459" Name="_CommentCount" DisplayName="Comment count" />
+            <pnp:FieldRef ID="db8d9d6d-dc9a-4fbd-85f3-4a753bfdc58c" Name="_LikeCount" DisplayName="Like count" />
+            <pnp:FieldRef ID="cb19284a-cde7-4570-a980-1dab8bd74470" Name="_ExtendedDescription" DisplayName="Description" />
+          </pnp:FieldRefs>
+        </pnp:ListInstance>
+        <pnp:ListInstance Title="Form Templates" Description="This library contains administrator-approved form templates that were activated to this site collection." DocumentTemplate="" TemplateType="101" Url="FormServerTemplates" MinorVersionLimit="0" MaxVersionLimit="0" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-e717-4e80-aa17-d0c71b360101" EnableAttachments="false" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/FormServerTemplates/Forms/DispForm.aspx" DefaultEditFormUrl="{site}/FormServerTemplates/Forms/EditForm.aspx" DefaultNewFormUrl="{site}/FormServerTemplates/Forms/Upload.aspx" ImageUrl="/_layouts/15/images/itdl.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+          <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x010100F8EF98760CBA4A94994F13BA881038FA" Default="true" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{6CB387B1-4BF9-4898-A82B-9398568DB435}" MobileView="TRUE" Type="HTML" DisplayName="All Documents" Url="{site}/FormServerTemplates/Forms/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/dlicon.png?rev=47">
+              <Query>
+                <OrderBy>
+                  <FieldRef Name="FileLeafRef" />
+                </OrderBy>
+              </Query>
+              <ViewFields>
+                <FieldRef Name="DocIcon" />
+                <FieldRef Name="LinkFilename" />
+                <FieldRef Name="Modified" />
+                <FieldRef Name="Editor" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <JSLink>clienttemplates.js</JSLink>
+            </View>
+            <View Name="{B0711C85-BD23-4A07-A181-A5E5ECF7410C}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Forms" Url="{site}/FormServerTemplates/Forms/All Forms.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/dlicon.png?rev=47">
+              <Query>
+                <GroupBy Collapse="FALSE">
+                  <FieldRef Name="FormCategory" />
+                </GroupBy>
+                <OrderBy>
+                  <FieldRef Name="FormName" />
+                </OrderBy>
+                <Where>
+                  <Neq>
+                    <FieldRef Name="ShowInCatalog" />
+                    <Value Type="Boolean">0</Value>
+                  </Neq>
+                </Where>
+              </Query>
+              <ViewFields>
+                <FieldRef Name="DocIcon" />
+                <FieldRef Name="LinkFilename" />
+                <FieldRef Name="FormName" />
+                <FieldRef Name="FormDescription" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <JSLink>clienttemplates.js</JSLink>
+            </View>
+          </pnp:Views>
+          <pnp:FieldRefs>
+            <pnp:FieldRef ID="cb19284a-cde7-4570-a980-1dab8bd74470" Name="_ExtendedDescription" DisplayName="Description" />
+            <pnp:FieldRef ID="66b691cf-07a3-4ca6-ac6d-27fa969c8569" Name="FormName" DisplayName="Form Name" />
+            <pnp:FieldRef ID="65572d4d-445a-43f1-9c77-3358222a2c93" Name="FormCategory" DisplayName="Form Category" />
+            <pnp:FieldRef ID="94ad6f7c-09a1-42ca-974f-d24e080160c2" Name="FormVersion" DisplayName="Form Version" />
+            <pnp:FieldRef ID="1a03fa74-8c63-40cc-bd06-73b580bd8744" Name="FormId" DisplayName="Form ID" />
+            <pnp:FieldRef ID="96c27c9d-33f5-4f8e-893e-684014bc7090" Name="FormLocale" DisplayName="Form Locale" />
+            <pnp:FieldRef ID="1fff255c-6c88-4a76-957b-ae24bf07b78c" Name="FormDescription" DisplayName="Form Description" />
+            <pnp:FieldRef ID="4ef69ca4-4179-4d27-9e6c-f9544d45dfdc" Name="ShowInCatalog" DisplayName="Show in Catalog" />
+            <pnp:FieldRef ID="1a03fa74-8c63-40cc-bd06-73b580bd8743" Name="LinkTemplateName" DisplayName="Form Name" />
+            <pnp:FieldRef ID="d307dff3-340f-44a2-9f4b-fbfe1ba07459" Name="_CommentCount" DisplayName="Comment count" />
+            <pnp:FieldRef ID="db8d9d6d-dc9a-4fbd-85f3-4a753bfdc58c" Name="_LikeCount" DisplayName="Like count" />
+          </pnp:FieldRefs>
+        </pnp:ListInstance>
+        <pnp:ListInstance Title="TEOC-IncidentStatus" Description="" DocumentTemplate="" TemplateType="100" Url="Lists/TEOC-IncidentStatus" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="50" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/TEOC-IncidentStatus/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/TEOC-IncidentStatus/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/TEOC-IncidentStatus/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.gif?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+          <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{E84ADB04-AC20-46A8-A620-6BB8FEC166C8}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Items" Url="{site}/Lists/TEOC-IncidentStatus/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=47">
+              <Query>
+                <OrderBy>
+                  <FieldRef Name="ID" />
+                </OrderBy>
+              </Query>
+              <ViewFields>
+                <FieldRef Name="LinkTitle" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <JSLink>clienttemplates.js</JSLink>
+            </View>
+          </pnp:Views>
+          <pnp:Webhooks>
+            <pnp:Webhook ServerNotificationUrl="https://southeastasia0.pushnp.svc.ms/notifications?token=6ac0052c-3643-48ed-ab2d-20082a4dd416" ExpiresInDays="1" />
+          </pnp:Webhooks>
+           <pnp:DataRows UpdateBehavior="Overwrite">
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Active</pnp:DataValue>
+          </pnp:DataRow>
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Planning</pnp:DataValue>              
+          </pnp:DataRow>
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Closed</pnp:DataValue>              
+          </pnp:DataRow>
+        </pnp:DataRows>
+        </pnp:ListInstance>
+        <pnp:ListInstance Title="TEOC-IncidentTransaction" Description="" DocumentTemplate="" TemplateType="100" Url="Lists/TEOC-IncidentTransaction" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="50" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/TEOC-IncidentTransaction/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/TEOC-IncidentTransaction/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/TEOC-IncidentTransaction/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.gif?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+          <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{AA0A97B3-B232-415E-A75E-5C5516E1E8C9}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Items" Url="{site}/Lists/TEOC-IncidentTransaction/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=47">
+              <Query>
+                <OrderBy>
+                  <FieldRef Name="ID" />
+                </OrderBy>
+              </Query>
+              <ViewFields>
+                <FieldRef Name="LinkTitle" />
+                <FieldRef Name="Description" />
+                <FieldRef Name="IncidentName" />
+                <FieldRef Name="IncidentType" />
+                <FieldRef Name="IncidentStatus" />
+                <FieldRef Name="StartDateTime" />
+                <FieldRef Name="IncidentCommander" />
+                <FieldRef Name="TeamId" />
+                <FieldRef Name="Location" />
+                <FieldRef Name="RoleAssignment" />
+                <FieldRef Name="IncidentId" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <JSLink>clienttemplates.js</JSLink>
+            </View>
+          </pnp:Views>
+          <pnp:Fields>
+            <Field DisplayName="Description" Type="Note" Required="FALSE" ID="{717d7908-3441-42b1-8468-3ce96811e94d}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="Description" Name="Description" ColName="nvarchar4" RowOrdinal="0" Version="1" />
+            <Field DisplayName="IncidentName" Type="Text" Required="FALSE" ID="{eb457654-d965-46d2-900d-374282a2bb71}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="IncidentName" Name="IncidentName" ColName="nvarchar5" RowOrdinal="0" Version="1" />
+            <Field DisplayName="IncidentType" Type="Text" Required="FALSE" ID="{89e2af99-6f53-40db-87d6-31c0a7f03093}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="IncidentType" Name="IncidentType" ColName="nvarchar6" RowOrdinal="0" Version="1" />
+            <Field DisplayName="IncidentStatus" Type="Text" Required="FALSE" ID="{3099fe5b-8791-44ff-97df-b6e48115ddd7}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="IncidentStatus" Name="IncidentStatus" ColName="nvarchar7" RowOrdinal="0" Version="1" />
+            <Field DisplayName="StartDateTime" Type="DateTime" Required="FALSE" ID="{9100a987-5b2b-48c8-a235-90c6a923f274}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="StartDateTime" Name="StartDateTime" ColName="datetime1" RowOrdinal="0" Version="1" />
+            <Field DisplayName="IncidentCommander" Type="Note" Required="FALSE" ID="{a2638677-efdb-4f86-b265-43182e2d2fab}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="IncidentCommander" Name="IncidentCommander" ColName="nvarchar8" RowOrdinal="0" Version="1" />
+            <Field DisplayName="TeamId" Type="Text" Required="FALSE" ID="{4849e924-f5e3-43c6-9127-71ebef9afdec}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="TeamId" Name="TeamId" ColName="nvarchar13" RowOrdinal="0" Version="1" />
+            <Field DisplayName="Location" Type="Text" Required="FALSE" ID="{ac1ca70c-b889-4a96-a1e6-084a87e455aa}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="Location" Name="Location" ColName="nvarchar14" RowOrdinal="0" Version="1" />
+            <Field Name="RoleAssignment" FromBaseType="FALSE" Type="Note" DisplayName="RoleAssignment" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" NumLines="6" RichText="FALSE" Sortable="FALSE" ID="{4d358bc3-6b55-41ea-a23b-543fe291aaec}" Version="2" StaticName="RoleAssignment" SourceID="{{listid:TEOC-IncidentTransaction}}" ColName="ntext2" RowOrdinal="0" />
+            <Field Type="Text" DisplayName="IncidentId" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" MaxLength="255" ID="{b4eaf27a-d1fc-47da-80a9-1dc1ea805c31}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="IncidentId" Name="IncidentId" ColName="nvarchar16" RowOrdinal="0" />
+            <Field DisplayName="TeamWebURL" Type="Note" Required="FALSE" ID="{ac01043f-5b8b-4c5f-8255-2b0a17552eec}" SourceID="{{listid:IncidentTransaction}}" StaticName="TeamWebURL" Name="TeamWebURL" ColName="nvarchar17" RowOrdinal="0" Version="1" />
+          
+          </pnp:Fields>
+        </pnp:ListInstance>
+        <pnp:ListInstance Title="TEOC-IncidentType" Description="" DocumentTemplate="" TemplateType="100" Url="Lists/TEOC-IncidentType" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="50" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/TEOC-IncidentType/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/TEOC-IncidentType/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/TEOC-IncidentType/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.gif?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+          <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{4EF377C3-9B4A-448B-955B-430D1BCF0ED0}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Items" Url="{site}/Lists/TEOC-IncidentType/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=47">
+              <Query>
+                <OrderBy>
+                  <FieldRef Name="ID" />
+                </OrderBy>
+              </Query>
+              <ViewFields>
+                <FieldRef Name="LinkTitle" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <JSLink>clienttemplates.js</JSLink>
+            </View>
+          </pnp:Views>
+          <pnp:Webhooks>
+            <pnp:Webhook ServerNotificationUrl="https://southeastasia0.pushnp.svc.ms/notifications?token=b816c626-077b-46f6-a002-189839b1c5cc" ExpiresInDays="1" />
+          </pnp:Webhooks>
+           <pnp:DataRows UpdateBehavior="Overwrite">
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Fishing Losses</pnp:DataValue>
+          </pnp:DataRow>
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Mud/Landslide</pnp:DataValue>              
+          </pnp:DataRow>
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Tsunami</pnp:DataValue>              
+          </pnp:DataRow>
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Hurricane</pnp:DataValue>              
+          </pnp:DataRow>
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Severe Ice Storm</pnp:DataValue>              
+          </pnp:DataRow>
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Snow</pnp:DataValue>              
+          </pnp:DataRow>
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Freezing</pnp:DataValue>              
+          </pnp:DataRow>
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Other</pnp:DataValue>              
+          </pnp:DataRow>
+           <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Biological</pnp:DataValue>              
+          </pnp:DataRow>
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Tornado</pnp:DataValue>              
+          </pnp:DataRow>
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Severe Storm(s)</pnp:DataValue>              
+          </pnp:DataRow>
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Typhoon</pnp:DataValue>              
+          </pnp:DataRow>
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Volcano</pnp:DataValue>              
+          </pnp:DataRow>
+           <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Toxic Substances</pnp:DataValue>              
+          </pnp:DataRow>
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Terrorist</pnp:DataValue>              
+          </pnp:DataRow>
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Dam/Levee Break</pnp:DataValue>              
+          </pnp:DataRow>
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Drought</pnp:DataValue>              
+          </pnp:DataRow>
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Coastal Storm</pnp:DataValue>              
+          </pnp:DataRow>
+           <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Earthquake</pnp:DataValue>              
+          </pnp:DataRow>
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Chemical</pnp:DataValue>              
+          </pnp:DataRow>
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Fire</pnp:DataValue>              
+          </pnp:DataRow>
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Explosion</pnp:DataValue>              
+          </pnp:DataRow>
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Flood</pnp:DataValue>              
+          </pnp:DataRow>
+           <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Human Cause</pnp:DataValue>              
+          </pnp:DataRow>
+        </pnp:DataRows>
+        </pnp:ListInstance>
+        <pnp:ListInstance Title="TEOC-RoleAssignments" Description="" DocumentTemplate="" TemplateType="100" Url="Lists/TEOC-RoleAssignments" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="50" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/TEOC-RoleAssignments/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/TEOC-RoleAssignments/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/TEOC-RoleAssignments/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.gif?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+          <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{CB4192B5-F136-479E-87E6-8C51FF2D8668}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Items" Url="{site}/Lists/TEOC-RoleAssignments/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=47">
+              <Query>
+                <OrderBy>
+                  <FieldRef Name="ID" />
+                </OrderBy>
+              </Query>
+              <ViewFields>
+                <FieldRef Name="LinkTitle" />
+                <FieldRef Name="Description" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <JSLink>clienttemplates.js</JSLink>
+            </View>
+          </pnp:Views>
+          <pnp:Fields>
+            <Field DisplayName="Description" Type="Text" Required="FALSE" ID="{55661dad-4393-4f6e-9424-6c471ac86a3d}" SourceID="{{listid:TEOC-RoleAssignments}}" StaticName="Description" Name="Description" ColName="nvarchar4" RowOrdinal="0" Version="1" />
+          </pnp:Fields>
+        <pnp:DataRows UpdateBehavior="Overwrite">
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Secondary Incident Commander</pnp:DataValue>
+          </pnp:DataRow>
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">EOC Coordinator</pnp:DataValue>              
+          </pnp:DataRow>
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Watch Officer</pnp:DataValue>              
+          </pnp:DataRow>
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Public Information Officer</pnp:DataValue>              
+          </pnp:DataRow>
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Logistics Coordinator</pnp:DataValue>              
+          </pnp:DataRow>
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">New Role (Specify a new role to be created and assign users to)</pnp:DataValue>              
+          </pnp:DataRow>
+        </pnp:DataRows>
+
+        </pnp:ListInstance>
+        <pnp:ListInstance Title="Site Assets" Description="Use this library to store files which are included on pages within this site, such as images on Wiki pages." DocumentTemplate="{site}/SiteAssets/Forms/template.doc" TemplateType="101" Url="SiteAssets" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="500" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-e717-4e80-aa17-d0c71b360101" EnableAttachments="false" DefaultDisplayFormUrl="{site}/SiteAssets/Forms/DispForm.aspx" DefaultEditFormUrl="{site}/SiteAssets/Forms/EditForm.aspx" DefaultNewFormUrl="{site}/SiteAssets/Forms/Upload.aspx" ImageUrl="/_layouts/15/images/itdl.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="true" ValidationFormula="" ValidationMessage="">
+          <pnp:PropertyBagEntries>
+            <pnp:PropertyBagEntry Key="IsAttachmentLibrary" Value="1" Overwrite="false" />
+          </pnp:PropertyBagEntries>
+          <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x0101" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{61E2402A-2CD2-4E56-9979-A776A40BBC7B}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Documents" Url="{site}/SiteAssets/Forms/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/dlicon.png?rev=47">
+              <Query>
+                <OrderBy>
+                  <FieldRef Name="FileLeafRef" />
+                </OrderBy>
+              </Query>
+              <ViewFields>
+                <FieldRef Name="DocIcon" />
+                <FieldRef Name="LinkFilename" />
+                <FieldRef Name="Modified" />
+                <FieldRef Name="Editor" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <JSLink>clienttemplates.js</JSLink>
+            </View>
+          </pnp:Views>
+          <pnp:FieldRefs>
+            <pnp:FieldRef ID="d307dff3-340f-44a2-9f4b-fbfe1ba07459" Name="_CommentCount" DisplayName="Comment count" />
+            <pnp:FieldRef ID="db8d9d6d-dc9a-4fbd-85f3-4a753bfdc58c" Name="_LikeCount" DisplayName="Like count" />
+            <pnp:FieldRef ID="cb19284a-cde7-4570-a980-1dab8bd74470" Name="_ExtendedDescription" DisplayName="Description" />
+          </pnp:FieldRefs>
+        </pnp:ListInstance>
+        <pnp:ListInstance Title="Site Pages" Description="" DocumentTemplate="" TemplateType="119" Url="SitePages" EnableVersioning="true" EnableMinorVersions="true" MinorVersionLimit="0" MaxVersionLimit="0" DraftVersionVisibility="1" TemplateFeatureID="00bfea71-c796-4402-9f2f-0eb9a6e71b18" ContentTypesEnabled="true" EnableAttachments="false" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/SitePages/Forms/DispForm.aspx" DefaultEditFormUrl="{site}/SitePages/Forms/EditForm.aspx" DefaultNewFormUrl="{site}/SitePages/Forms/Upload.aspx" ImageUrl="/_layouts/15/images/itdl.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="true" ValidationFormula="" ValidationMessage="">
+          <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x0101009D1CB255DA76424F860D91F20E6C4118" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0101009D1CB255DA76424F860D91F20E6C4118002A50BFCFB7614729B56886FADA02339B" />
+            <pnp:ContentTypeBinding ContentTypeID="0x010108" />
+            <pnp:ContentTypeBinding ContentTypeID="0x01010901" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{81FC32A8-AC1B-4217-B706-85DCF59F248C}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="By Author" Url="{site}/SitePages/Forms/ByAuthor.aspx" Level="1" BaseViewID="4" ContentTypeID="0x" ToolbarTemplate="WikiLibraryViewToolBar" ImageUrl="/_layouts/15/images/dlicon.png?rev=47">
+              <Query>
+                <GroupBy Collapse="FALSE">
+                  <FieldRef Name="Author" />
+                </GroupBy>
+                <OrderBy>
+                  <FieldRef Name="Modified" />
+                </OrderBy>
+              </Query>
+              <ViewFields>
+                <FieldRef Name="DocIcon" />
+                <FieldRef Name="LinkFilename" />
+                <FieldRef Name="Editor" />
+                <FieldRef Name="Modified" />
+                <FieldRef Name="Created" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <JSLink>clienttemplates.js</JSLink>
+            </View>
+            <View Name="{ADABC0FA-3F75-4487-8023-0EB5F90FA3DE}" Type="HTML" DisplayName="Recent Changes" Url="{site}/SitePages/Forms/RecentChanges.aspx" Level="1" BaseViewID="2" ContentTypeID="0x" ToolbarTemplate="WikiLibraryViewToolBar" ImageUrl="/_layouts/15/images/dlicon.png?rev=47">
+              <Query>
+                <OrderBy>
+                  <FieldRef Name="Modified" Ascending="FALSE" />
+                </OrderBy>
+              </Query>
+              <ViewFields>
+                <FieldRef Name="DocIcon" />
+                <FieldRef Name="LinkFilename" />
+                <FieldRef Name="Editor" />
+                <FieldRef Name="Modified" />
+                <FieldRef Name="Author" />
+                <FieldRef Name="Created" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <JSLink>clienttemplates.js</JSLink>
+            </View>
+            <View Name="{9F95B1BA-36A1-4AD3-976F-73795AD82903}" Type="HTML" DisplayName="By Editor" Url="{site}/SitePages/Forms/ByEditor.aspx" Level="1" BaseViewID="5" ContentTypeID="0x" ToolbarTemplate="WikiLibraryViewToolBar" ImageUrl="/_layouts/15/images/dlicon.png?rev=47">
+              <Query>
+                <GroupBy Collapse="FALSE">
+                  <FieldRef Name="Editor" />
+                </GroupBy>
+                <OrderBy>
+                  <FieldRef Name="FileLeafRef" />
+                </OrderBy>
+              </Query>
+              <ViewFields>
+                <FieldRef Name="DocIcon" />
+                <FieldRef Name="LinkFilename" />
+                <FieldRef Name="Editor" />
+                <FieldRef Name="Modified" />
+                <FieldRef Name="Author" />
+                <FieldRef Name="Created" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <JSLink>clienttemplates.js</JSLink>
+            </View>
+            <View Name="{1558705B-6190-466B-8C11-D41E025D4467}" Type="HTML" DisplayName="Created By Me" Url="{site}/SitePages/Forms/CreatedByMe.aspx" Level="1" BaseViewID="3" ContentTypeID="0x" ToolbarTemplate="WikiLibraryViewToolBar" ImageUrl="/_layouts/15/images/dlicon.png?rev=47">
+              <Query>
+                <Where>
+                  <Eq>
+                    <FieldRef Name="Author" />
+                    <Value Type="Integer">
+                      <UserID />
+                    </Value>
+                  </Eq>
+                </Where>
+                <OrderBy>
+                  <FieldRef Name="FileLeafRef" />
+                </OrderBy>
+              </Query>
+              <ViewFields>
+                <FieldRef Name="DocIcon" />
+                <FieldRef Name="LinkFilename" />
+                <FieldRef Name="Editor" />
+                <FieldRef Name="Modified" />
+                <FieldRef Name="Author" />
+                <FieldRef Name="Created" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <JSLink>clienttemplates.js</JSLink>
+            </View>
+            <View Name="{6472BF93-0F73-4341-AAED-6A15ED14D4B0}" Type="HTML" DisplayName="All Pages" Url="{site}/SitePages/Forms/AllPages.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ToolbarTemplate="WikiLibraryViewToolBar" ImageUrl="/_layouts/15/images/dlicon.png?rev=47">
+              <Query>
+                <OrderBy>
+                  <FieldRef Name="Modified" Ascending="FALSE" />
+                </OrderBy>
+              </Query>
+              <ViewFields>
+                <FieldRef Name="DocIcon" />
+                <FieldRef Name="LinkFilename" />
+                <FieldRef Name="Editor" />
+                <FieldRef Name="Modified" />
+                <FieldRef Name="Author" />
+                <FieldRef Name="Created" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <JSLink>clienttemplates.js</JSLink>
+            </View>
+          </pnp:Views>
+          <pnp:FieldRefs>
+            <pnp:FieldRef ID="c33527b4-d920-4587-b791-45024d00068a" Name="WikiField" DisplayName="Wiki Content" />
+            <pnp:FieldRef ID="4966388e-6e12-4bc6-8990-5b5b66153eae" Name="CanvasContent1" DisplayName="Authoring Canvas Content" />
+            <pnp:FieldRef ID="5baf6db5-9d25-4738-b15e-db5789298e82" Name="BannerImageUrl" DisplayName="Banner Image URL" />
+            <pnp:FieldRef ID="3f155110-a6a2-4d70-926c-94648101f0e8" Name="Description" DisplayName="Description" />
+            <pnp:FieldRef ID="f5ad16a2-85be-46b2-b5f0-2bb8b4a5074a" Name="PromotedState" DisplayName="Promoted State" />
+            <pnp:FieldRef ID="c84f8697-331e-457d-884a-c4fb8f30ea74" Name="FirstPublishedDate" DisplayName="First Published Date" />
+            <pnp:FieldRef ID="261075db-0525-4fb8-a6ea-772014186599" Name="LayoutWebpartsContent" DisplayName="Page Layout Content" />
+            <pnp:FieldRef ID="1a7348e7-1bb7-4a47-9790-088e7cb20b58" Name="_AuthorByline" DisplayName="Author Byline" />
+            <pnp:FieldRef ID="d60d65ff-ff42-4044-a684-ac3f7a5e598c" Name="_TopicHeader" DisplayName="Topic header" />
+            <pnp:FieldRef ID="9de685c5-fdf5-4319-b987-3edf55efb36f" Name="_SPSitePageFlags" DisplayName="Site Page Flags" />
+            <pnp:FieldRef ID="9889a80f-c9ec-41d8-a359-ac5fb5c4cfa2" Name="_SPCallToAction" DisplayName="Call To Action" />
+            <pnp:FieldRef ID="0e7b982f-698a-4d0c-aacb-f16906f66d30" Name="_OriginalSourceUrl" DisplayName="Original Source Url" />
+            <pnp:FieldRef ID="36193413-dd5c-4096-8c1e-1b40098b9ba3" Name="_OriginalSourceSiteId" DisplayName="Original Source Site ID" />
+            <pnp:FieldRef ID="3477a5bc-c605-4b2e-a7c1-8db8f13c017e" Name="_OriginalSourceWebId" DisplayName="Original Source Web ID" />
+            <pnp:FieldRef ID="139da674-dbf6-439f-98e0-4eb05fa9a669" Name="_OriginalSourceListId" DisplayName="Original Source List ID" />
+            <pnp:FieldRef ID="91e86a43-75f2-426f-80da-35edfb47d55d" Name="_OriginalSourceItemId" DisplayName="Original Source Item ID" />
+          </pnp:FieldRefs>
+        </pnp:ListInstance>       
+      </pnp:Lists>
+      <pnp:Features>
+        <pnp:WebFeatures>
+          <pnp:Feature ID="8c6f9096-388d-4eed-96ff-698b3ec46fc4" />
+        </pnp:WebFeatures>
+      </pnp:Features>
+      <pnp:Header Layout="Compact" ShowSiteTitle="false" ShowSiteNavigation="false" />
+    </pnp:ProvisioningTemplate>
+  </pnp:Templates>
+</pnp:Provisioning>

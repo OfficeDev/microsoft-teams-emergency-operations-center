@@ -1,0 +1,150 @@
+:global {
+    .status-dd-label::after {
+        content: " *" !important;
+        color: red !important;
+    }
+
+    .popup-text-field,
+    .popup-date-field {
+        input {
+            height: 35px;
+            background-color: #FFFFFF;
+            color: #000000;
+        }
+    }
+
+    .popup-text-field-disabled {
+        input {
+            height: 35px;
+            background-color: #D3D3D3;
+            color: #000000;
+            cursor: not-allowed;
+        }
+    }
+
+    .popup-dropdown>div {
+
+        div:nth-child(1) {
+            height: 35px;
+            background-color: #FFFFFF;
+            border-bottom-color: #FFFFFF;
+            border-radius: 0.125rem;
+        }
+
+        ul,
+        li {
+            background-color: #FFFFFF !important;
+            color: #000000;
+            border-color: #FFFFFF;
+        }
+
+        li>div>div {
+            color: #000000;
+        }
+
+        button {
+            color: #000000;
+
+            span {
+                font-weight: normal;
+            }
+        }
+    }
+
+
+}
+
+
+div[id="incident-popup"] {
+    opacity: 1;
+    padding: 0% 0%;
+    letter-spacing: 0px;
+    text-align: left;
+    width: auto;
+    background-color: #EDEBE9;
+
+    div[id="incident-popup-header"] {
+        background: #414157 0% 0% no-repeat padding-box;
+        height: auto;
+        max-height: 100vh;
+        color: #FFFFFF;
+
+        div[class="popup-header-text"] {
+            font: normal normal 400 22px/32px Segoe UI;
+            padding: 10px 3%;
+        }
+
+        span[id="popup-header-close"] {
+            padding: 17px 36px 0px;
+
+            svg {
+                width: 20px;
+                height: auto;
+            }
+
+            svg:hover {
+                background-color: #FFFFFF;
+                color: #000000;
+            }
+        }
+    }
+
+    div[class="incident-popup-body"] {
+        padding: 2%;
+        padding-left: 3%;
+
+        div[class="popup-grid-item"] {
+            margin: 5px auto 20px;
+        }
+
+        label {
+            text-align: left;
+            font: normal normal normal 16px/21px Segoe UI;
+            letter-spacing: 0px;
+            color: #000000;
+            opacity: 1;
+        }
+
+        label[class="message-label"] {
+            color: #f26e86;
+        }
+
+    }
+
+    div[id="popup-btn-area"] {
+        margin-right: 2%;
+
+        button[id="popup-close-btn"] {
+            color: #6264A7;
+            border: 1px solid #6264A7;
+        }
+
+        button {
+            border-radius: 0%;
+        }
+    }
+}
+
+@media screen and (max-width:375pt) {
+    div[id="incident-popup"] {
+        margin: 2%;
+
+        div[class="incident-popup-body"] {
+            div[class="popup-grid-item"] {
+                margin-bottom: 10px;
+            }
+        }
+
+        div[id="popup-btn-area"] {
+            margin-left: 3%;
+
+            button[id="popup-close-btn"] {
+                display: none;
+            }
+
+            button[id="popup-update-btn"] {
+                width: 100%;
+            }
+        }
+    }
+}

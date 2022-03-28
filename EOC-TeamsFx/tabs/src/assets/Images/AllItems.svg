@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="43" height="40" viewBox="0 0 43 40">
+  <g id="Group_18427" data-name="Group 18427" transform="translate(-597 -331)">
+    <g id="Group_18425" data-name="Group 18425" transform="translate(597 331)">
+      <g id="Rectangle_26687" data-name="Rectangle 26687" transform="translate(0 11)" fill="none" stroke="#000" stroke-width="2">
+        <rect width="43" height="29" rx="1" stroke="none"/>
+        <rect x="1" y="1" width="41" height="27" fill="none"/>
+      </g>
+      <g id="Rectangle_26688" data-name="Rectangle 26688" fill="none" stroke="#000" stroke-width="2">
+        <rect width="43" height="13" rx="1" stroke="none"/>
+        <rect x="1" y="1" width="41" height="11" fill="none"/>
+      </g>
+    </g>
+    <g id="Group_18426" data-name="Group 18426" transform="translate(603.4 347)">
+      <rect id="Rectangle_26689" data-name="Rectangle 26689" width="8" height="8" transform="translate(-0.4)" fill="#979593"/>
+      <rect id="Rectangle_26690" data-name="Rectangle 26690" width="8" height="8" transform="translate(11.6)" fill="#00ad56"/>
+      <rect id="Rectangle_26691" data-name="Rectangle 26691" width="8" height="8" transform="translate(22.6)" fill="#ff8c00"/>
+      <rect id="Rectangle_26692" data-name="Rectangle 26692" width="8" height="8" transform="translate(-0.4 11)" fill="#979593"/>
+      <rect id="Rectangle_26693" data-name="Rectangle 26693" width="8" height="8" transform="translate(11.6 11)" fill="#979593"/>
+      <rect id="Rectangle_26694" data-name="Rectangle 26694" width="8" height="8" transform="translate(22.6 11)" fill="#ff8c00"/>
+    </g>
+  </g>
+</svg>

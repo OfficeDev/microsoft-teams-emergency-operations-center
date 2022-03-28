@@ -1,0 +1,58 @@
+{
+    "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.11/MicrosoftTeams.schema.json",
+    "manifestVersion": "1.11",
+    "version": "0.5",
+    "id": "{{localSettings.teamsApp.teamsAppId}}",
+    "packageName": "com.microsoft.teams.extension",
+    "developer": {
+        "name": "Teams Customer Advocacy Group",
+        "websiteUrl": "https://products.office.com/en-us/sharepoint/collaboration",
+        "privacyUrl": "https://privacy.microsoft.com/en-us/privacystatement",
+        "termsOfUseUrl": "https://www.microsoft.com/en-us/servicesagreement"
+    },
+    "icons": {
+        "color": "resources/color.png",
+        "outline": "resources/outline.png"
+    },
+    "name": {
+        "short": "EOC",
+        "full": "Emergency Operations Center"
+    },
+    "description": {
+        "short": "Emergency Operation Center",
+        "full": "App Template to help facilitate the creation of teams and assets for incident response for designated scenarios. In addition to quick team creation and asset deployment, TEOC also delivers a central dashboard to see and manage incidents from and take further action. Helping you to respond and act quicker powered by the solutions you already have."
+    },
+    "accentColor": "#FFFFFF",
+    "bots": [],
+    "composeExtensions": [],
+    "configurableTabs": [
+        {
+            "configurationUrl": "{{{localSettings.frontend.tabEndpoint}}}/index.html#/config",
+            "canUpdateConfiguration": true,
+            "scopes": [
+                "team",
+                "groupchat"
+            ]
+        }
+    ],
+    "staticTabs": [
+        {
+            "entityId": "index",
+            "name": "Team EOC",
+            "contentUrl": "{{{localSettings.frontend.tabEndpoint}}}/index.html#/tab",
+            "websiteUrl": "{{{localSettings.frontend.tabEndpoint}}}/index.html#/tab",
+            "scopes": [
+                "personal"
+            ]
+        }
+    ],
+    "permissions": [
+        "identity",
+        "messageTeamMembers"
+    ],
+    "validDomains": [],
+    "webApplicationInfo": {
+        "id": "{{localSettings.auth.clientId}}",
+        "resource": "{{{localSettings.auth.applicationIdUris}}}"
+    }
+}

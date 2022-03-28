@@ -1,0 +1,60 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.11/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.11",
+  "version": "0.5",
+  "id": "bef61400-db9b-41d4-a617-403deb7bbe77",
+  "packageName": "com.microsoft.teams.extension",
+  "developer": {
+    "name": "Teams Customer Advocacy Group",
+    "websiteUrl": "https://aka.ms/teamsapptemplates",
+    "privacyUrl": "https://privacy.microsoft.com/en-us/privacystatement",
+    "termsOfUseUrl": "https://www.microsoft.com/en-us/servicesagreement"
+  },
+  "icons": {
+    "color": "resources/color.png",
+    "outline": "resources/outline.png"
+  },
+  "name": {
+    "short": "TEOC",
+    "full": "Microsoft Teams Emergency Operations Center (Preview)"
+  },
+  "description": {
+    "short": "Microsoft Teams Emergency Operation Center (Preview)",
+    "full": "The Microsoft Teams Emergency Operations Center (TEOC) solution template leverages the power of the Microsoft 365 platform to centralize incident response, information sharing and field communications using powerful services like Microsoft Lists, SharePoint and more. An open-source solution supported by Microsoft it provides core functionality out of the box or can be extended to meet specific agency requirements."
+  },
+  "accentColor": "#FFFFFF",
+  "bots": [],
+  "composeExtensions": [],
+  "configurableTabs": [
+    {
+      "configurationUrl": "https://<<appDomain>>/index.html#/config",
+      "canUpdateConfiguration": true,
+      "scopes": [
+        "team",
+        "groupchat"
+      ]
+    }
+  ],
+  "staticTabs": [
+    {
+      "entityId": "index",
+      "name": "Teams EOC",
+      "contentUrl": "https://<<appDomain>>/index.html#/tab",
+      "websiteUrl": "https://<<appDomain>>/index.html#/tab",
+      "scopes": [
+        "personal"
+      ]
+    }
+  ],
+  "permissions": [
+    "identity",
+    "messageTeamMembers"
+  ],
+  "validDomains": [
+    "<<appDomain>>"
+  ],
+  "webApplicationInfo": {
+    "id": "<<clientId>>",
+    "resource": "api://<<appDomain>>/<<clientId>>"
+  }
+}

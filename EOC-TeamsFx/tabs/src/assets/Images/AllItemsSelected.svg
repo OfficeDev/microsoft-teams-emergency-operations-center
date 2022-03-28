@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="43" height="40" viewBox="0 0 43 40">
+    <defs>
+    <style> 
+            .a,.f{fill:none;}.a{stroke:#fff;stroke-width:2px;}.b{fill:#979593;}.c{fill:#00ad56;}.d{fill:#ff8c00;}.e{stroke:none;}
+        </style>
+    </defs>
+    <g transform="translate(-597 -331)">
+        <g transform="translate(597 331)">
+            <g class="a" transform="translate(0 11)">
+                <rect class="e" width="43" height="29" rx="1"/>
+                <rect class="f" x="1" y="1" width="41" height="27"/>
+            </g>
+            <g class="a">
+                <rect class="e" width="43" height="13" rx="1"/>
+                <rect class="f" x="1" y="1" width="41" height="11"/>
+            </g>
+        </g>
+        <g transform="translate(603.4 347)">
+            <rect class="b" width="8" height="8" transform="translate(-0.4)"/>
+            <rect class="c" width="8" height="8" transform="translate(11.6)"/>
+            <rect class="d" width="8" height="8" transform="translate(22.6)"/>
+            <rect class="b" width="8" height="8" transform="translate(-0.4 11)"/>
+            <rect class="b" width="8" height="8" transform="translate(11.6 11)"/>
+            <rect class="d" width="8" height="8" transform="translate(22.6 11)"/>
+        </g>
+    </g>
+</svg>

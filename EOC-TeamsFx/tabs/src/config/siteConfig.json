@@ -1,0 +1,343 @@
+{
+    "siteName": "TEOCSite",
+    "incidentsList": "TEOC-IncidentTransaction",
+    "assessmentsList": "TEOC-Assessments",
+    "incStatusList": "TEOC-IncidentStatus",
+    "incTypeList": "TEOC-IncidentType",
+    "roleAssignmentList": "TEOC-RoleAssignments",
+    "lists": [
+        {
+            "listName": "TEOC-Assessments",
+            "listURL":"TEOCAssessments",
+            "columns": [
+                {
+                    "name": "Contact Name",
+                    "displayName": "Contact Name",
+                    "text": {
+                        "allowMultipleLines": false,
+                        "maxLength": 255
+                    }
+                },
+                {
+                    "name": "ContactPhoneNumber",
+                    "displayName": "Contact Phone Number",
+                    "text": {
+                        "allowMultipleLines": false,
+                        "maxLength": 255
+                    }
+                },
+                {
+                    "name": "Location",
+                    "displayName": "Location of the assessment",
+                    "location": {}
+                },
+                {
+                    "name": "EventCausedDamage",
+                    "displayName": "What type of event caused the damage",
+                    "choice": {
+                        "choices": [
+                            "Biological",
+                            "Chemical",
+                            "Coastal Storm",
+                            "Dam/Levee Break",
+                            "Drought",
+                            "Earthquake",
+                            "Explosion",
+                            "Fire",
+                            "Fishing Losses",
+                            "Flood",
+                            "Freezing",
+                            "Human Cause",
+                            "Hurricane",
+                            "Mud/Landslide",
+                            "Other",
+                            "Severe Ice Storm",
+                            "Severe Storm(s)",
+                            "Snow",
+                            "Terrorist",
+                            "Tornado",
+                            "Toxic Substances",
+                            "Tsunami",
+                            "Typhoon",
+                            "Volcano"
+                        ],
+                        "displayAs": "dropDownMenu"
+                    }
+                },
+                {
+                    "name": "ImmediateNeedsRequired",
+                    "displayName": "Are there any immediate need at the location",
+                    "boolean": {}
+                },
+                {
+                    "name": "MoreInformation",
+                    "displayName": "Is there any additional information you would like to provide",
+                    "text": {
+                        "allowMultipleLines": true,
+                        "appendChangesToExistingText": false,
+                        "linesForEditing": 3,
+                        "maxLength": 300,
+                        "textType": "plain"
+                    }
+                },
+                {
+                    "name": "Status",
+                    "displayName": "Status",
+                    "choice": {
+                        "choices": [
+                            "New",
+                            "Pending",
+                            "Completed",
+                            "Hold"
+                        ],
+                        "displayAs": "dropDownMenu"
+                    }
+                }
+            ]
+        }
+    ],
+    "AssessmentListStatusFormat": {
+        "$schema": "https://developer.microsoft.com/json-schemas/sp/v2/column-formatting.schema.json",
+        "elmType": "div",
+        "style": {
+            "box-sizing": "border-box",
+            "padding": "0 2px"
+        },
+        "attributes": {
+            "class": {
+                "operator": ":",
+                "operands": [
+                    {
+                        "operator": "==",
+                        "operands": [
+                            "[$Status]",
+                            "New"
+                        ]
+                    },
+                    "sp-css-backgroundColor-BgCornflowerBlue",
+                    {
+                        "operator": ":",
+                        "operands": [
+                            {
+                                "operator": "==",
+                                "operands": [
+                                    "[$Status]",
+                                    "Pending"
+                                ]
+                            },
+                            "sp-css-backgroundColor-BgGold sp-css-borderColor-GoldFont",
+                            {
+                                "operator": ":",
+                                "operands": [
+                                    {
+                                        "operator": "==",
+                                        "operands": [
+                                            "[$Status]",
+                                            "Completed"
+                                        ]
+                                    },
+                                    "sp-css-backgroundColor-BgMintGreen sp-css-borderColor-MintGreenFont",
+                                    {
+                                        "operator": ":",
+                                        "operands": [
+                                            {
+                                                "operator": "==",
+                                                "operands": [
+                                                    "[$Status]",
+                                                    "Hold"
+                                                ]
+                                            },
+                                            "sp-css-backgroundColor-BgCoral",
+                                            ""
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        "children": [
+            {
+                "elmType": "span",
+                "style": {
+                    "line-height": "16px",
+                    "height": "14px"
+                },
+                "attributes": {
+                    "iconName": {
+                        "operator": ":",
+                        "operands": [
+                            {
+                                "operator": "==",
+                                "operands": [
+                                    "[$Status]",
+                                    "New"
+                                ]
+                            },
+                            "",
+                            {
+                                "operator": ":",
+                                "operands": [
+                                    {
+                                        "operator": "==",
+                                        "operands": [
+                                            "[$Status]",
+                                            "Pending"
+                                        ]
+                                    },
+                                    "",
+                                    {
+                                        "operator": ":",
+                                        "operands": [
+                                            {
+                                                "operator": "==",
+                                                "operands": [
+                                                    "[$Status]",
+                                                    "Completed"
+                                                ]
+                                            },
+                                            "",
+                                            {
+                                                "operator": ":",
+                                                "operands": [
+                                                    {
+                                                        "operator": "==",
+                                                        "operands": [
+                                                            "[$Status]",
+                                                            "Hold"
+                                                        ]
+                                                    },
+                                                    "",
+                                                    ""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "class": {
+                        "operator": ":",
+                        "operands": [
+                            {
+                                "operator": "==",
+                                "operands": [
+                                    "[$Status]",
+                                    "New"
+                                ]
+                            },
+                            "",
+                            {
+                                "operator": ":",
+                                "operands": [
+                                    {
+                                        "operator": "==",
+                                        "operands": [
+                                            "[$Status]",
+                                            "Pending"
+                                        ]
+                                    },
+                                    "sp-css-color-GoldFont",
+                                    {
+                                        "operator": ":",
+                                        "operands": [
+                                            {
+                                                "operator": "==",
+                                                "operands": [
+                                                    "[$Status]",
+                                                    "Completed"
+                                                ]
+                                            },
+                                            "sp-css-color-MintGreenFont",
+                                            {
+                                                "operator": ":",
+                                                "operands": [
+                                                    {
+                                                        "operator": "==",
+                                                        "operands": [
+                                                            "[$Status]",
+                                                            "Hold"
+                                                        ]
+                                                    },
+                                                    "",
+                                                    ""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "elmType": "span",
+                "style": {
+                    "overflow": "hidden",
+                    "text-overflow": "ellipsis",
+                    "padding": "0 3px"
+                },
+                "txtContent": "[$Status]",
+                "attributes": {
+                    "class": {
+                        "operator": ":",
+                        "operands": [
+                            {
+                                "operator": "==",
+                                "operands": [
+                                    "[$Status]",
+                                    "New"
+                                ]
+                            },
+                            "sp-css-color-CornflowerBlueFont",
+                            {
+                                "operator": ":",
+                                "operands": [
+                                    {
+                                        "operator": "==",
+                                        "operands": [
+                                            "[$Status]",
+                                            "Pending"
+                                        ]
+                                    },
+                                    "sp-css-color-GoldFont",
+                                    {
+                                        "operator": ":",
+                                        "operands": [
+                                            {
+                                                "operator": "==",
+                                                "operands": [
+                                                    "[$Status]",
+                                                    "Completed"
+                                                ]
+                                            },
+                                            "sp-css-color-MintGreenFont",
+                                            {
+                                                "operator": ":",
+                                                "operands": [
+                                                    {
+                                                        "operator": "==",
+                                                        "operands": [
+                                                            "[$Status]",
+                                                            "Hold"
+                                                        ]
+                                                    },
+                                                    "sp-css-color-CoralFont",
+                                                    ""
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}
