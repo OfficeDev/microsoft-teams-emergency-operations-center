@@ -56,7 +56,7 @@ You need to first create a new Azure AD Application to secure API permissions. R
 ## 2. Deploy to your Azure subscription
 1. Click on the **Deploy to Azure** button below.
 
-    [![Deploy to Azure](images/DeployButton.png)](https%3A%2F%2Fportal.azure.com%2F%23create%2FMicrosoft.Template%2Furi%2Fhttps%3A%2F%2Fraw.githubusercontent.com%2FOfficeDev%2Fmicrosoft-teams-emergency-operations-center%2Fmain%2FDeployment%2Fazuredeploy.json)
+    [![Deploy to Azure](images/DeployButton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fgithub.com%2FOfficeDev%2Fmicrosoft-teams-emergency-operations-center%2Ftree%2Fmain%2FDeployment%2Fazuredeploy.json)
 
 1. When prompted, log in to your Azure subscription.
 
@@ -312,6 +312,8 @@ To create the team's package,
 1. Click on **App Catalog** link. 
 
     ![App Catalog](images/App_Catalog.PNG)
+
+    _If you do not see an app catalog available, use the instructions [here](https://docs.microsoft.com/en-us/sharepoint/use-app-catalog#step-1-create-the-app-catalog-site-collection) to create a new app catalog before continuing._
 
 1. Click the Distribute apps for SharePoint link.
 

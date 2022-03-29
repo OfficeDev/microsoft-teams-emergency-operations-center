@@ -26,6 +26,25 @@ This happens when Application Insights is not available in the Azure datacenter 
 
 Create the resource group in a location where Application Insights is available. For an up-to-date list of these locations, refer [here](https://azure.microsoft.com/en-us/global-infrastructure/services/?products=monitor), under "Application Insights".
 
+### 3. Deployment failed with one or more resource as 'Conflict'
+
+Click on the Operation details, check for the error message. If the error message is **Gateway error**, this can occur due to network issues.
+
+![Gateway Error](images/Deployment_Failure.png)
+
+### Fix
+
+* If multiple resources failed due to same error, recommendation is to clear out the existing resources and re-deploy the template from start.
+* If anyone resource has failed like _addTeamsFxSimpleAuthConfiguration_,
+
+    * Click on the failed resource template. 
+    * Click on Redeploy as template for the specific resource can be re-deployed separately.
+    * Provide the parameters specific to the template.
+    * Verify if the deployment has been successful.
+
+        ![Deployment Success](images/Deployment_Success.png)
+
+
 ## Problems installing the app in Teams
 
 ### 1. Missing entrypoint to upload custom app
