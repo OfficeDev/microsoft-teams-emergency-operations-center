@@ -3,8 +3,8 @@
 1. The current version of the Microsoft Teams Emergency Operations Center operates as an app in Microsoft Teams that is installed locally in your tenant by your tenant administrator or any user who has the capability to side load the application.
 2. Once installed, it can be accessed via "+Add a tab" option at the top of the channel within a team. **Channel > Add a tab > TEOC**
 3. The app will enable users to create new incidents, modify existing incidents and view the incidents on a dashboard.
-4. The app will create Teams channel for each incident with default channel groups so that users track the activities for each incident in specific Teams channel
-5. There are 3 major components in the Microsoft Teams Emergency Operations Center App -
+4. The app will create a team for each incident with default channels so that users can track the activities for each incident in specific team.
+5. There are 3 major components in the Microsoft Teams Emergency Operations Center App Template -
     1. Incident Details Dashboard
     2. New Incident Form
     3. Update Incident Form
