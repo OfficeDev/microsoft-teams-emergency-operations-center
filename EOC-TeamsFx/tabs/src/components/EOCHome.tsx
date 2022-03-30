@@ -201,10 +201,10 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
     public async getTenantAndSiteDetails() {
         try {
             // get the tenant name
-            const tenantName = await this.dataService.getTenantDetails(graphConfig.organizationGraphEndpoint, this.state.graph);
+            const tenantName = await this.dataService.getTenantDetails(graphConfig.rootSiteGraphEndpoint, this.state.graph);
 
             // Form the graph end point to get the SharePoint site Id
-            const urlForSiteId = graphConfig.spSiteGraphEndpoint + tenantName + ".sharepoint.com:/sites/" + siteConfig.siteName + "?$select=id";
+            const urlForSiteId = graphConfig.spSiteGraphEndpoint + tenantName + ":/sites/" + siteConfig.siteName + "?$select=id";
 
             // get SharePoint site Id
             const siteDetails = await this.dataService.getGraphData(urlForSiteId, this.state.graph);

@@ -1083,7 +1083,7 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
                         console.log(constants.infoLogPrefix + "channels created");
                         //log trace
                         this.dataService.trackTrace(this.props.appInsights, "Channel created ", incidentId, this.props.userPrincipalName);
-                        const siteURL = "https://" + this.props.tenantName + ".sharepoint.com/sites/" + groupInfo.mailNickname;
+                        const siteURL = "https://" + this.props.tenantName + "/sites/" + groupInfo.mailNickname;
 
                         // create assessment channel and tab
                         await this.createAssessmentChannelAndTab(groupInfo.id, siteURL, groupInfo.mailNickname);
@@ -1091,7 +1091,7 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
                         console.log(constants.infoLogPrefix + "Assessment Channel and tab created");
                         //log trace
                         this.dataService.trackTrace(this.props.appInsights, "Assessment Channel and tab created ", incidentId, this.props.userPrincipalName);
-                        const siteBaseURL = "https://" + this.props.tenantName + ".sharepoint.com/sites/";
+                        const siteBaseURL = "https://" + this.props.tenantName + "/sites/";
 
                         // create news channel and tab
                         await this.createNewsTab(groupInfo, siteBaseURL);
@@ -1100,7 +1100,7 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
                         this.dataService.trackTrace(this.props.appInsights, "News tab create ", incidentId, this.props.userPrincipalName);
 
                         // create URL to get site Id
-                        const urlForSiteId = graphConfig.spSiteGraphEndpoint + this.props.tenantName + ".sharepoint.com:/sites/" + groupInfo.mailNickname + "?$select=id";
+                        const urlForSiteId = graphConfig.spSiteGraphEndpoint + this.props.tenantName + ":/sites/" + groupInfo.mailNickname + "?$select=id";
 
                         const siteDetails = await this.dataService.getGraphData(urlForSiteId, this.props.graph);
                         console.log(constants.infoLogPrefix + "Site details retrieved");
