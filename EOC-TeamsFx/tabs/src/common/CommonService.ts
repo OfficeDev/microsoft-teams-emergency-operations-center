@@ -173,20 +173,8 @@ export default class CommonService {
     // Get tenant name
     public async getTenantDetails(graphEndpoint: any, graph: Client): Promise<any> {
         try {
-            const domains = await graph.api(graphEndpoint).get();
-
-            let domainName = "";
-            domains.value.forEach((element: any) => {
-                element.verifiedDomains.forEach((vDomains: any) => {
-                    if (vDomains.isInitial) {
-                        if (vDomains.name.indexOf('.onmicrosoft.com') > -1) {
-                            domainName = vDomains.name.split('.onmicrosoft.com')[0];
-                        }
-                    }
-                });
-            });
-
-            return domainName;
+            const rootSite = await graph.api(graphEndpoint).get();
+            return rootSite.siteCollection.hostname;
         } catch (error) {
             console.error(
                 constants.errorLogPrefix + "_CommonService_GetTenantDetails \n",
@@ -243,22 +231,22 @@ export default class CommonService {
     }
 
     //Log exception to App Insights
-    public trackException(appInsights: any, error: any, componentName: string, methodName: string, userPrincipalName:any) {
+    public trackException(appInsights: any, error: any, componentName: string, methodName: string, userPrincipalName: any) {
         let exception = {
             exception: error,
             severityLevel: SeverityLevel.Error
         };
 
-        appInsights.trackException(exception, { Component: componentName, Method: methodName ,User : userPrincipalName})
+        appInsights.trackException(exception, { Component: componentName, Method: methodName, User: userPrincipalName })
     }
 
     //track events in App Insight
-    public trackTrace(appInsights: any, message: string, incidentid: string, userPrincipalName:any) {
+    public trackTrace(appInsights: any, message: string, incidentid: string, userPrincipalName: any) {
         let trace = {
             message: message,
             severityLevel: SeverityLevel.Information
         };
-        appInsights.trackTrace(trace, { User: userPrincipalName, IncidentID: incidentid})
+        appInsights.trackTrace(trace, { User: userPrincipalName, IncidentID: incidentid })
     }
     //#endregion
 }

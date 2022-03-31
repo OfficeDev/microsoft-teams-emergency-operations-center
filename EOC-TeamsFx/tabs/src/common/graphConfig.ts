@@ -1,4 +1,4 @@
-export const organizationGraphEndpoint = "https://graph.microsoft.com/v1.0/organization?$select=verifiedDomains";
+export const rootSiteGraphEndpoint = "https://graph.microsoft.com/v1.0/sites/root";
 export const spSiteGraphEndpoint = "https://graph.microsoft.com/v1.0/sites/";
 export const meGraphEndpoint = "/me";
 export const teamGroupsGraphEndpoint = "/groups";
