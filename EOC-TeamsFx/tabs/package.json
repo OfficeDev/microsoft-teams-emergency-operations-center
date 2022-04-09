@@ -15,7 +15,7 @@
         "classnames": "^2.3.1",
         "glob-parent": "^6.0.2",
         "immer": "^9.0.12",
-        "moment": "^2.29.1",
+        "moment": "^2.29.2",
         "moment-timezone": "^0.5.34",
         "msteams-react-base-component": "^3.1.0",
         "react": "^16.14.0",
