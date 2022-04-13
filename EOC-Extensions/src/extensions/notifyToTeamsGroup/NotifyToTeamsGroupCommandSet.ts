@@ -149,7 +149,7 @@ export default class NotifyToTeamsGroupCommandSet extends BaseListViewCommandSet
           .catch(
             (err) => {
               console.log(err);
-              reject("Failed")
+              reject("Failed");
             }
           );
       }
