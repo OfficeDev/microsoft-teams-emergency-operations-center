@@ -29,9 +29,8 @@ div[id="dashboard-search-btn-area"] {
             color: #939290;
             padding-left: 1%;
         }
+
     }
-
-
 
     button[id="create-incident-btn"] {
         width: 230px;
@@ -44,6 +43,28 @@ div[id="dashboard-search-btn-area"] {
         text-transform: capitalize;
         cursor: pointer;
 
+        img {
+            width: 30px;
+            height: 30px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+    }
+
+    div[class="dashboard-link"]{
+        text-align: left;
+        font: normal normal 600 16px/24px Segoe UI;
+        letter-spacing: 0px;
+        opacity: 1;
+        cursor: pointer;
+        a {
+            color: #242424 !important;
+            text-decoration: none !important;
+            padding:0.5em;
+            text-align: center;
+            display:inline-block;
+            margin:0 auto;
+        }
         img {
             width: 30px;
             height: 30px;

@@ -1,7 +1,6 @@
 ﻿param([string]$AdminEmail,
   [string]$TenantName)
 
-
 $FilePath = Read-Host "Please enter site template XML schema file path";
 $FilePath = $FilePath.Trim();
 
@@ -29,30 +28,31 @@ $EOCSiteURL = "/sites/TEOCSite"
 Connect-PnPOnline -Url $TenantURL -Interactive
 
 try {
-	Write-Host "Checking if site already exists at $EOCSiteURL"
-	$site = Get-PnPTenantSite -Url $TenantURL$EOCSiteURL -ErrorAction SilentlyContinue
+    Write-Host "Checking if site already exists at $EOCSiteURL"
+    $site = Get-PnPTenantSite -Url $TenantURL$EOCSiteURL -ErrorAction SilentlyContinue
+
+    if ($site -ne $null)
+    {
+        Write-Host "Site already exists, exiting the PowerShell script"
+        return;
+    }
+    else
+    {
+        Write-Host "Site doesn't exist, creating new site at $EOCSiteURL"
+    }
+
+    New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title TEOC -Url $TenantURL$EOCSiteURL -Owner $AdminEmail -ErrorAction Stop -WarningAction SilentlyContinue
+
+    Connect-PnPOnline -Url $TenantURL$EOCSiteURL -Interactive
+
+    Write-Host "Creating lists in TEOC site"
+
+    Invoke-PnPSiteTemplate -Path $FilePath -ErrorAction Stop -WarningAction SilentlyContinue
+          
+    Write-Host "TEOC App Provision complete."
 }
 catch{
-	
+
+    Write-Host "`nError Message: " $_.Exception.Message
+    Write-Host "`nTEOC App Provisioning failed."
 }
-
-if ($site -ne $null)
-{
-    Write-Host "Site already exists, exiting the PowerShell script"
-	return;
-}
-else
-{
-    Write-Host "Site doesn't exist, creating new site at $EOCSiteURL"
-}
-
-New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title TEOC -Url $TenantURL$EOCSiteURL -Owner $AdminEmail
-
-Connect-PnPOnline -Url $TenantURL$EOCSiteURL -Interactive
-
-Write-Host "Creating lists in the EOC site"
-
-Invoke-PnPSiteTemplate -Path $FilePath
-
-Write-Host "EOC App Provision complete."
-
