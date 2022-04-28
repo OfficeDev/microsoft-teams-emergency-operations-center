@@ -3,9 +3,18 @@ This page contains the release information for Microsoft Teams Emergency Operati
 ## Version history
 | Version | Release Date |
 |----|----|
+| 0.5.1 | Apr 28, 2022 |
 | 0.5 | Mar 31, 2022 |
 
 ## Release notes
+
+### v0.5.1 (Apr 28, 2022)
+
+This app is released in _Public Preview_ mode. Below are the changes released with this version - 
+
+- Allow users to manage roles and incident types from dashboard.
+- Fix for incident creation failure for GCC tenant.
+- Wiki updates
 
 ### v0.5 (Mar 31, 2022)
 
