@@ -205,13 +205,16 @@ To provision the TEOC site and SharePoint lists,
 
     ![Provisioning Scripts](images/Provisioning_Scripts.PNG)
 
-* Run the below command, this will allow you to run **EOC-Provision.ps1** script. By default, the execution policy is restricted. You may change it back to restricted after deployment is completed.
+>Note: Run below commands with Windows Powershell as Administrator
+
+* Run the below command, this will allow you to run **EOC-Provision.ps1** script. By default, the execution policy is restricted for windows computer. You may change it back to restricted after deployment is completed.
+    >Note: Non-windows computer users can skip this as it is unrestricted by default for them.
     ```
     Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
     ```
 
 * Run the below command to unblock the deployment script.
-
+    >Note: File path should be set to provisioning folder. 
     ```
     Unblock-File -Path .\EOC-Provision.ps1
     ```

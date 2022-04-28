@@ -17,7 +17,7 @@
         }
     }
 
-    .incident-details-input-field-disabled{
+    .incident-details-input-field-disabled {
         input {
             font: normal normal normal 16px/21px Segoe UI;
             opacity: 1;
@@ -190,7 +190,7 @@
 
     .incCommanderInfoIcon {
         padding-left: 3px;
-    }   
+    }
 
     .incNameInfoIcon {
         padding-left: 3px;
@@ -201,7 +201,8 @@
         color: #979593;
         cursor: pointer;
     }
-    .editRoleCol{
+
+    .editRoleCol {
         margin: auto;
     }
 }
@@ -290,11 +291,15 @@ div[class="incident-details"] {
 
             label[class="people-picker-label"]::after {
                 content: " *";
-                color: #FF0000
+                color: #FF0000;
             }
 
             label[class="message-label"] {
-                color: #f26e86;
+                color: #ce0000;
+            }
+
+            label[class="message-label"]::after {
+                content: "";
             }
 
             mgt-people-picker[class="incident-details-people-picker"] {
@@ -443,7 +448,7 @@ div[class="incident-details"] {
                     font: normal normal normal 13px/20px Segoe UI;
                 }
 
-                img[class="role-icon"]{
+                img[class="role-icon"] {
                     width: 20px;
                     height: 23px;
                     cursor: pointer;
@@ -509,7 +514,7 @@ div[class="incident-details"] {
                         height: 12pt;
                     }
 
-                    div[class="editRoleCol"] > *{
+                    div[class="editRoleCol"]>* {
                         font-size: 15px;
                     }
                 }

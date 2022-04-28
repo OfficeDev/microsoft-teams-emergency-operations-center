@@ -15,7 +15,7 @@ export const listsGraphEndpoint = "/lists";
 export const columnsGraphEndpoint = "/columns";
 export const usersGraphEndpoint = "https://graph.microsoft.com/v1.0/users/";
 export const teamsAppsGraphEndpoint = "https://graph.microsoft.com/v1.0/appCatalogs/teamsApps/";
-export const newsTabTeamsAppIdGraphEndpoint = "https://graph.microsoft.com/v1.0/appCatalogs/teamsApps/0ae35b36-0fd7-422e-805b-d53af1579093";
+export const newsTabTeamsAppIdGraphEndpoint = "https://graph.microsoft.com/v1.0/appCatalogs/teamsApps/2a527703-1f6f-4559-a332-d8a7d288cd88";
 export const assessmentTabTeamsAppIdGraphEndpoint = "https://graph.microsoft.com/v1.0/appCatalogs/teamsApps/2a527703-1f6f-4559-a332-d8a7d288cd88";
 export const allAppsGraphEndpoint = "/appCatalogs/teamsApps?$filter=distributionMethod eq 'organization'";
 export const betaGraphEndpoint = "https://graph.microsoft.com/beta/teams/";

@@ -322,6 +322,18 @@ class Dashboard extends React.PureComponent<IDashboardProps, IDashboardState> {
                                             successIndicator={false}
                                         />
                                     </div>
+                                    <div className="dashboard-link">
+                                        <a title="Manage Roles" href={`https://${this.props.tenantName}/sites/${siteConfig.siteName}/lists/${siteConfig.roleAssignmentList}`} target='_blank' rel="noreferrer">
+                                            <img src={require("../assets/Images/Manage Roles.svg").default} alt="Manage Roles" />
+                                            <span>Manage Roles</span>
+                                        </a>
+                                    </div>
+                                    <div className="dashboard-link">
+                                        <a title="Manage Incident Types" href={`https://${this.props.tenantName}/sites/${siteConfig.siteName}/lists/${siteConfig.incTypeList}`} target='_blank' rel="noreferrer">
+                                            <img src={require("../assets/Images/Manage Incident Types.svg").default} alt="Manage Incident Types" />
+                                            Manage Incident Types
+                                        </a>
+                                    </div>
                                     <Button
                                         primary id="create-incident-btn"
                                         fluid={true}

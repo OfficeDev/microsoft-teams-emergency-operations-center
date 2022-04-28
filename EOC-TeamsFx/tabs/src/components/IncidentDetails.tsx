@@ -1,6 +1,6 @@
 import {
     Button, ChevronStartIcon, Flex,
-    FormDropdown, FormInput, FormTextArea, Loader, Dialog
+    FormDropdown, FormInput, FormTextArea, Loader
 } from "@fluentui/react-northstar";
 import { LocalizationHelper, PeoplePicker, PersonType, UserType } from '@microsoft/mgt-react';
 import { Client } from "@microsoft/microsoft-graph-client";
@@ -86,8 +86,10 @@ const getInputValildationInitialState = (): IInputValidationStates => {
 };
 
 class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncidentDetailsState> {
+
     constructor(props: IIncidentDetailsProps) {
         super(props);
+
         this.state = {
             dropdownOptions: '',
             incDetailsItem: new IncidentEntity(),
@@ -143,10 +145,28 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
 
         // check if form is in edit mode
         await this.checkIfEditMode();
+        this.updatePeoplePickerRole();
     }
 
     //Function for screen Resizing
     resize = () => this.setState({ isDesktop: window.innerWidth > constants.mobileWidth })
+
+    //Update Roles in Both People Pickers
+    updatePeoplePickerRole = () => {
+        customElements.whenDefined('mgt-people-picker').then(() => {
+            let peoplePicker1 = document?.getElementsByTagName("mgt-people-picker")[0]?.shadowRoot?.querySelector('mgt-flyout')?.querySelector('#people-picker-input');
+            let peoplePicker2 = document?.getElementsByTagName("mgt-people-picker")[1]?.shadowRoot?.querySelector('mgt-flyout')?.querySelector('#people-picker-input');
+            peoplePicker1?.setAttribute('role', 'searchbox');
+            peoplePicker2?.setAttribute('role', 'searchbox');
+        })
+    }
+
+    public componentDidUpdate(prevProps: IIncidentDetailsProps, prevState: IIncidentDetailsState) {
+        if (prevState.selectedUsersInEditMode !== this.state.selectedUsersInEditMode ||
+            prevState.selectedIncidentCommander !== this.state.selectedIncidentCommander) {
+            this.updatePeoplePickerRole();
+        }
+    }
 
     componentWillUnmount() {
 
