@@ -179,6 +179,7 @@ In this section, you’ll be adding the necessary Graph API permissions to the a
     *  TeamsTab.Create
     *  TeamworkTag.ReadWrite
     *  User.Read
+    *  User.ReadBasic.All
 
 4. Click on **Add Permissions** to commit your changes. 
 5. Below is the description/reason for each permission granted above, 
@@ -191,6 +192,7 @@ In this section, you’ll be adding the necessary Graph API permissions to the a
     6.  **TeamsTab.Create** : Allows the app to create tabs in any team in Microsoft Teams, on behalf of the signed-in user. This does not grant the ability to read, modify or delete tabs after they are created, or give access to the content inside the tabs. TEOC app uses to create the tabs in the team created for the incident. 
     7.  **TeamworkTag.ReadWrite** :  Allows the app to read and write tags in Teams without a signed-in user. TEOC app uses this permission to create and update the tags which gets created along with the incident. 
     8.  **User.Read** : Allows users to sign-in to the app and allows the app to read the profile of signed-in users. It also allows the app to read basic company information of signed-in users. TEOC app uses to get the current user details in the app. 
+    9.  **User.ReadBasic.All** : Allows the app to read a basic set of profile properties of other users in your organization on behalf of the signed-in user. TEOC app uses this permission search for other users and assign them roles while creating the incident.
 
 5. Reach out to your IT admin team to grant consent for the permissions provided. If you’re an admin, click on Grant the admin Consent for ******* 
 
@@ -236,6 +238,32 @@ Below are the steps you need to perform to provision the TEOC site, 
     ![PnP Permissions](images/PnP_Permissions.PNG)
 
 5. Only SharePoint related permission **Have full control of all site collections** will be utilized in the script so that the site can be provisioned.
+
+6. Please make sure to grant permissions to users who need to use TEOC application, follow the below steps provide permissions,
+    -   Navigate to the URL for the TEOC site as the administrator.
+    -   If you are using the default configuration, this can be found at ***`https://<yourtenant>.sharepoint.com/sites/TEOCSite/`***.
+        - Select site permissions
+
+            ![SitePermission](images/SitePermission.PNG)
+
+        - Advanced permissions settings
+
+            ![AdvPermission](images/AdvPermission.PNG)
+
+        - Select Grant permissions 
+
+            ![GrantPermission](images/GrantPermission.PNG)
+
+        - Enter in 'Everyone except external users'        
+
+            ![EveryonePermission](images/Everyone.PNG)
+        
+        >Note: In case access has to be given to specific users, enter specific users instead of directly adding 'Everyone except external users' group.
+
+        - Change permissions to 'TEOC Members [Edit]'
+        - Unselect send an email invitation
+        - Click share
+
 
 ## 6. Create the Teams app packages
 
