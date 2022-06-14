@@ -189,8 +189,8 @@ class Dashboard extends React.PureComponent<IDashboardProps, IDashboardState> {
         }
         return (
             <span>
-                <img src={require(`../assets/Images/${link.itemKey}ItemsSelected.svg`).default} alt={`${link.headerText}`} id="pivot-icon-selected" />
-                <img src={require(`../assets/Images/${link.itemKey}Items.svg`).default} alt={`${link.headerText}`} id="pivot-icon" />
+                <img src={require(`../assets/Images/${link.itemKey}ItemsSelected.svg`)} alt={`${link.headerText}`} id="pivot-icon-selected" />
+                <img src={require(`../assets/Images/${link.itemKey}Items.svg`)} alt={`${link.headerText}`} id="pivot-icon" />
                 <span id="state">&nbsp;&nbsp;{link.headerText}&nbsp;&nbsp;</span>
                 <span id="count">|&nbsp;{link.itemCount}</span>
                 {defaultRenderer({ ...link, headerText: undefined, itemCount: undefined })}

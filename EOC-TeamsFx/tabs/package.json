@@ -15,7 +15,7 @@
         "classnames": "^2.3.1",
         "glob-parent": "^6.0.2",
         "immer": "^9.0.12",
-        "moment": "^2.29.1",
+        "moment": "^2.29.3",
         "moment-timezone": "^0.5.34",
         "msteams-react-base-component": "^3.1.0",
         "react": "^16.14.0",
@@ -25,7 +25,7 @@
         "react-dom": "^16.14.0",
         "react-localization": "^1.0.17",
         "react-router-dom": "^5.1.2",
-        "react-scripts": "^4.0.3",
+        "react-scripts": "5.0.0",
         "sass": "^1.49.0",
         "simple-get": "^4.0.1",
         "underscore": "^1.13.2",
@@ -35,7 +35,10 @@
         "simple-get": "^4.0.1",
         "underscore": "^1.13.2",
         "glob-parent": "^6.0.2",
-        "immer": "^9.0.12"
+        "immer": "^9.0.12",
+        "async": "2.6.4",
+        "moment": "2.29.2",
+        "nth-check": "^2.0.1"
     },
     "devDependencies": {
         "@types/jest": "^26.0.15",
@@ -46,7 +49,8 @@
         "@types/react-dom": "^16.9.12",
         "@types/react-router-dom": "^5.1.7",
         "@types/uuid": "^8.3.3",
-        "typescript": "^4.1.2"
+        "typescript": "^4.1.2",
+        "nth-check": "^2.0.1"
     },
     "scripts": {
         "start": "react-scripts start",

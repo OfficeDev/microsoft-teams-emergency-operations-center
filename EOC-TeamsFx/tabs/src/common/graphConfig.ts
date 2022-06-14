@@ -31,5 +31,6 @@ export const scope = [
     "TeamMember.ReadWrite.All",
     "TeamsTab.Create",
     "TeamworkTag.ReadWrite",
-    "Directory.AccessAsUser.All"
+    "Directory.AccessAsUser.All",
+    "User.ReadBasic.All"
 ]
