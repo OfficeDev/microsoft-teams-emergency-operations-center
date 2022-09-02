@@ -218,7 +218,8 @@
               "sku": {
                 "name": "[variables('sku')]"
               },
-              "kind": "app"
+              "kind": "app",
+              "properties": {}
             },
             {
               "type": "Microsoft.Web/sites",
