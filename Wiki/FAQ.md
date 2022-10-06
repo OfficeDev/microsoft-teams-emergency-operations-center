@@ -9,12 +9,12 @@ Deployment can fail if the base resource name provided is not available and you 
 ## 2. Provisioning failed with error, what do I need to do?
 Provisioning can fail due to some network issue. If it failed and TEOC site collection is created in your tenant then delete the site collection from Active sites as well as Deleted sites. Run the provisioning script again.
 
-![ProvisioningError](Images/ProvisioningError.PNG)
+![ProvisioningError](Images/ProvisioningError.jpg)
 
 ## 3. Upgrading to latest version failed with error, what do I need to do?
 App service deployment fails with the error message “Input string was not in a correct format” due to fsevents package.
 
-![UpgradeError](Images/NodeError.PNG)
+![UpgradeError](Images/NodeError.JPG)
 
 The fsevents library is causing the app service deployment to fail for already deployed apps.
 
@@ -28,3 +28,24 @@ The fsevents library is causing the app service deployment to fail for already d
 -	Once the app service is restarted. Navigate to Deployment Center and click on Sync.
 -	Wait till the deployment is completed. You can validate this once the status changes to Success under logs. 
 
+
+ ## 4. Does the app support multiple locales?
+
+ Yes, TEOC v1.0 supports the translations for below 12 languages, 
+
+- Arabic (SA)
+- Chinese
+- Chinese (TW)
+- English (US)
+- French
+- German
+- Hebrew
+- Japanese
+- Korean
+- Portuguese (BR)
+- Russian
+- Spanish
+
+## 5. Does the app support mobile devices?
+
+Yes, TEOC v1.0 supports the desktop, mobile and tab devices.

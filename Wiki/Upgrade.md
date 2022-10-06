@@ -1,27 +1,50 @@
-## Upgrade to version 0.5.1
+## Upgrade to version 1.0 from 0.5 or 0.5.1
 
-### Sync latest version
+### 1. Run the upgrade PowerShell script
+  
+  1. Clone the [repository](https://github.com/OfficeDev/microsoft-teams-emergency-operations-center.git) locally. Open the `Deployment/provisioning/Upgrade` folder to get the latest provisioning files i.e `Update-EOC-Provision.ps1` and `Update-EOC-SiteTemplate.xml`
 
-1.  In Azure portal, navigate to TEOC resource group, open app service and click on deployment center.
+  2. If you have customized the site name already as mentioned [here](https://github.com/OfficeDev/microsoft-teams-emergency-operations-center/wiki/Customizations#site-name-customization), then update the same site name in the Update-EOC-Provision.ps1 script, otherwise skip this step.
 
-    ![AppService](images/Update1.PNG)
+      ![SiteURL](images/SiteURL.PNG)
+  
+  3. Run the PowerShell script (Update-EOC-Provision.ps1) as an Administrator, script will ask for below inputs,
+    
+    * XML file path – enter fully qualified path of the XML file (Ex: C:\Scripts\Update-EOC-SiteTemplate.xml) 
+    * Tenant Name – Name of the tenant where the SharePoint site was already provisioned (Ex: Contoso)
+    * Tenant Admin Email – Email of tenant admin account (Ex: `abc@contoso.com`)  
+ 
+  ![Provisioning Scripts](images/UpgradePSScript.PNG)
 
-2.  Click on sync.
+### 2. Add new application setting in the App Service
 
-    ![Sync](images/Update2.PNG)
+  1. In Azure portal, navigate to TEOC resource group, open app service and click on Configuration.
 
-3.  Wait until you see status as success for sync.
+  2. Click on "New application setting" and add **REACT_APP_SHAREPOINT_SITE_NAME** as the Name and **TEOCSite** as the value and click on OK.
+  >Note: If you have already customized the site name during inital deployment, then use that sitename instead of TEOCSite.
 
-    ![SyncLog](images/Update3.PNG)
+ ![AppService](images/AddAppSetting.PNG)
+  
 
-### Update version
+### 3. Sync latest version
+
+  1.  In Azure portal, navigate to TEOC resource group, open app service and click on deployment center.
+
+![AppService](images/Update1.PNG)
+
+  2.  Click on sync.
+
+![Sync](images/Update2.PNG)
+
+  3.  Wait until you see status as success for sync.
+
+![SyncLog](images/Update3.PNG)
+
+### 4. Update version
 
 1.  Delete existing app from teams admin center.
 
 2.  Refer [6.Create the Teams app packages](https://github.com/OfficeDev/microsoft-teams-emergency-operations-center/wiki/Deployment-Guide#6-create-the-teams-app-packages) section of deployment guide.
 
-    >Note: If you already have "AppPackage" folder with the manifest file, then update app version in manifest file from 0.5 to 0.5.1 and rezip the files.
-    
-    ![Version](images/Update4.PNG)
-
 3.  Refer [7.Install the app in Microsoft Teams](https://github.com/OfficeDev/microsoft-teams-emergency-operations-center/wiki/Deployment-Guide#7-install-the-app-in-microsoft-teams) section from deployment guide to upload updated zip.
+

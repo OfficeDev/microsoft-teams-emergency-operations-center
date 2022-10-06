@@ -1,25 +1,29 @@
-import React from 'react';
-import { TeamsUserCredential, createMicrosoftGraphClient } from "@microsoft/teamsfx";
-import { Client } from "@microsoft/microsoft-graph-client";
+import { initializeIcons, MessageBar, MessageBarType } from '@fluentui/react';
+import { Button, Dialog, Loader } from "@fluentui/react-northstar";
+import { ApplicationInsights } from '@microsoft/applicationinsights-web';
 import { Providers, ProviderState, SimpleProvider } from '@microsoft/mgt-element';
-import { Button, Loader, Dialog } from "@fluentui/react-northstar";
-import { MessageBar, MessageBarType, initializeIcons } from '@fluentui/react';
-import Dashboard from './Dashboard';
-import EocHeader from './EocHeader';
-import siteConfig from '../config/siteConfig.json';
-import * as graphConfig from '../common/graphConfig';
+import { Client } from "@microsoft/microsoft-graph-client";
+import * as microsoftTeams from "@microsoft/teams-js";
+import { createMicrosoftGraphClient, TeamsUserCredential } from "@microsoft/teamsfx";
+import React from 'react';
+import LocalizedStrings from 'react-localization';
 import CommonService from "../common/CommonService";
 import * as constants from '../common/Constants';
-import IncidentDetails from './IncidentDetails';
-import "../scss/EOCHome.module.scss";
-import * as microsoftTeams from "@microsoft/teams-js";
-import LocalizedStrings from 'react-localization';
+import * as graphConfig from '../common/graphConfig';
 import { localizedStrings } from "../locale/LocaleStrings";
-import { ApplicationInsights } from '@microsoft/applicationinsights-web';
+import "../scss/EOCHome.module.scss";
+import Dashboard from './Dashboard';
+import EocHeader from './EocHeader';
+import IncidentDetails from './IncidentDetails';
+import { IncidentHistory } from './IncidentHistory';
+import { TeamNameConfig } from './TeamNameConfig';
 
 initializeIcons();
+//Global Variables
 let appInsights: ApplicationInsights;
-
+//Get site name from ARMS template(environment variable)
+//Replace spaces from environment variable to get site URL
+let siteName = process.env.REACT_APP_SHAREPOINT_SITE_NAME?.toString().replace(/\s+/g, '');
 interface IEOCHomeState {
     showLoginPage: boolean;
     graph: Client;
@@ -40,6 +44,9 @@ interface IEOCHomeState {
     showLoader: boolean,
     showNoAccessMessage: boolean;
     userPrincipalName: any;
+    showTeamNameConfigForm: boolean;
+    showIncidentHistory: boolean;
+    incidentId: string;
 }
 
 interface IEOCHomeProps {
@@ -82,7 +89,10 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
             isEditMode: false,
             showLoader: false,
             showNoAccessMessage: false,
-            userPrincipalName: null
+            userPrincipalName: null,
+            showTeamNameConfigForm: false,
+            showIncidentHistory: false,
+            incidentId: ""
         }
     }
 
@@ -204,7 +214,7 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
             const tenantName = await this.dataService.getTenantDetails(graphConfig.rootSiteGraphEndpoint, this.state.graph);
 
             // Form the graph end point to get the SharePoint site Id
-            const urlForSiteId = graphConfig.spSiteGraphEndpoint + tenantName + ":/sites/" + siteConfig.siteName + "?$select=id";
+            const urlForSiteId = graphConfig.spSiteGraphEndpoint + tenantName + ":/sites/" + siteName + "?$select=id";
 
             // get SharePoint site Id
             const siteDetails = await this.dataService.getGraphData(urlForSiteId, this.state.graph);
@@ -332,10 +342,10 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
     // changes state to show message bar and dashboard
     private handleBackClick = (showMessageBar: boolean) => {
         if (showMessageBar) {
-            this.setState({ showIncForm: false, isEditMode: false })
+            this.setState({ showIncForm: false, isEditMode: false, showTeamNameConfigForm: false, showIncidentHistory: false })
         }
         else {
-            this.setState({ showIncForm: false, showMessageBar: false, isEditMode: false })
+            this.setState({ showIncForm: false, showMessageBar: false, isEditMode: false, showTeamNameConfigForm: false, showIncidentHistory: false })
         }
     }
 
@@ -346,8 +356,19 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
         })
     }
 
+    // changes state to show create incident form
+    private onShowTeamNameConfigForm = () => {
+        this.setState({ showTeamNameConfigForm: true });
+        this.hideMessageBar();
+    }
+
+    //changes state to show Incident History of an incident.
+    private onShowIncidentHistory = (incidentId: string) => {
+        this.setState({ showIncidentHistory: true, incidentId: incidentId });
+        this.hideMessageBar();
+    }
+
     public render() {
-        // let localeStrings = new LocalizedStrings(localizedStrings);
         if (this.state.locale && this.state.locale !== "") {
             localeStrings.setLanguage(this.state.locale);
         }
@@ -399,27 +420,79 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
                                     <>
                                         <Loader label={this.state.loaderMessage} size="largest" />
                                     </>
-                                    :
-                                    <>
-                                        {!this.state.showIncForm ?
-                                            <Dashboard
-                                                graph={this.state.graph}
-                                                tenantName={this.state.tenantName}
-                                                siteId={this.state.siteId}
-                                                onCreateTeamClick={this.showNewForm}
-                                                onEditButtonClick={this.showEditForm}
+                                    : this.state.showTeamNameConfigForm ?
+                                        <TeamNameConfig
+                                            localeStrings={localeStrings}
+                                            onBackClick={this.handleBackClick}
+                                            siteId={this.state.siteId}
+                                            graph={this.state.graph}
+                                            appInsights={appInsights}
+                                            userPrincipalName={this.state.userPrincipalName}
+                                            showMessageBar={this.showMessageBar}
+                                            hideMessageBar={this.hideMessageBar}
+                                        />
+                                        : this.state.showIncidentHistory ?
+                                            <IncidentHistory
                                                 localeStrings={localeStrings}
                                                 onBackClick={this.handleBackClick}
-                                                showMessageBar={this.showMessageBar}
-                                                hideMessageBar={this.hideMessageBar}
+                                                siteId={this.state.siteId}
+                                                graph={this.state.graph}
                                                 appInsights={appInsights}
                                                 userPrincipalName={this.state.userPrincipalName}
+                                                showMessageBar={this.showMessageBar}
+                                                hideMessageBar={this.hideMessageBar}
+                                                incidentId={this.state.incidentId}
                                             />
                                             :
                                             <>
-                                                {this.state.isEditMode ?
+                                                {!this.state.showIncForm ?
+                                                    <Dashboard
+                                                        graph={this.state.graph}
+                                                        tenantName={this.state.tenantName}
+                                                        siteId={this.state.siteId}
+                                                        onCreateTeamClick={this.showNewForm}
+                                                        onEditButtonClick={this.showEditForm}
+                                                        localeStrings={localeStrings}
+                                                        onBackClick={this.handleBackClick}
+                                                        showMessageBar={this.showMessageBar}
+                                                        hideMessageBar={this.hideMessageBar}
+                                                        appInsights={appInsights}
+                                                        userPrincipalName={this.state.userPrincipalName}
+                                                        siteName={siteName}
+                                                        onShowTeamNameConfigForm={this.onShowTeamNameConfigForm}
+                                                        onShowIncidentHistory={this.onShowIncidentHistory}
+                                                    />
+                                                    :
                                                     <>
-                                                        {(this.state.isOwner && !this.state.showNoAccessMessage) ?
+                                                        {this.state.isEditMode ?
+                                                            <>
+                                                                {(this.state.isOwner && !this.state.showNoAccessMessage) ?
+                                                                    <IncidentDetails
+                                                                        graph={this.state.graph}
+                                                                        tenantName={this.state.tenantName}
+                                                                        siteId={this.state.siteId}
+                                                                        onBackClick={this.handleBackClick}
+                                                                        showMessageBar={this.showMessageBar}
+                                                                        hideMessageBar={this.hideMessageBar}
+                                                                        localeStrings={localeStrings}
+                                                                        currentUserId={this.state.currentUserId}
+                                                                        incidentData={this.state.selectedIncident}
+                                                                        existingTeamMembers={this.state.existingTeamMembers}
+                                                                        isEditMode={this.state.isEditMode}
+                                                                        appInsights={appInsights}
+                                                                        userPrincipalName={this.state.userPrincipalName}
+                                                                    />
+                                                                    :
+                                                                    <Dialog
+                                                                        confirmButton="Ok"
+                                                                        content="You don't have access to modify the incident"
+                                                                        header="No Access"
+                                                                        onConfirm={(e) => this.hideUnauthorizedMessage()}
+                                                                        open={this.state.showNoAccessMessage}
+                                                                    />
+                                                                }
+                                                            </>
+                                                            :
                                                             <IncidentDetails
                                                                 graph={this.state.graph}
                                                                 tenantName={this.state.tenantName}
@@ -435,37 +508,12 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
                                                                 appInsights={appInsights}
                                                                 userPrincipalName={this.state.userPrincipalName}
                                                             />
-                                                            :
-                                                            <Dialog
-                                                                confirmButton="Ok"
-                                                                content="You don't have access to modify the incident"
-                                                                header="No Access"
-                                                                onConfirm={(e) => this.hideUnauthorizedMessage()}
-                                                                open={this.state.showNoAccessMessage}
-                                                            />
                                                         }
                                                     </>
-                                                    :
-                                                    <IncidentDetails
-                                                        graph={this.state.graph}
-                                                        tenantName={this.state.tenantName}
-                                                        siteId={this.state.siteId}
-                                                        onBackClick={this.handleBackClick}
-                                                        showMessageBar={this.showMessageBar}
-                                                        hideMessageBar={this.hideMessageBar}
-                                                        localeStrings={localeStrings}
-                                                        currentUserId={this.state.currentUserId}
-                                                        incidentData={this.state.selectedIncident}
-                                                        existingTeamMembers={this.state.existingTeamMembers}
-                                                        isEditMode={this.state.isEditMode}
-                                                        appInsights={appInsights}
-                                                        userPrincipalName={this.state.userPrincipalName}
-                                                    />
                                                 }
                                             </>
-                                        }
-                                    </>
                                 }
+
                             </div>
                         }
                     </>

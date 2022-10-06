@@ -3,10 +3,22 @@ This page contains the release information for Microsoft Teams Emergency Operati
 ## Version history
 | Version | Release Date |
 |----|----|
+| 1.0 | Oct 11, 2022 |
 | 0.5.1 | Apr 28, 2022 |
 | 0.5 | Mar 31, 2022 |
 
 ## Release notes
+
+### v1.0 (Oct 11, 2022)
+
+This app is released in General Availability (GA) status. Below are the changes released with this version - 
+
+- New Feature: Ability to configure the Team Name format from dashboard.
+- New Feature: Ability to view the version history for each incident from dashboard.
+- New Feature: Ability to "Save default users for Roles" and "Save default roles for an Incident Type".
+- New Feature: Local language support (translations) available for 12 languages. 
+- Upgraded the Teams toolkit version from v3.7.0 to v4.0.5
+
 
 ### v0.5.1 (Apr 28, 2022)
 

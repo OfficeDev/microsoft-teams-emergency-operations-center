@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_26997" data-name="Rectangle 26997" width="32" height="32" transform="translate(7556 18447)" fill="#fff" opacity="0.46"/>
+    </clipPath>
+  </defs>
+  <g id="Tableview_icon" transform="translate(-7556 -18447)" clip-path="url(#clip-path)">
+    <path id="Path_48953" data-name="Path 48953" d="M23,146.75A3.75,3.75,0,0,1,26.75,143h14.5A3.75,3.75,0,0,1,45,146.75v14.5A3.75,3.75,0,0,1,41.25,165H26.75A3.75,3.75,0,0,1,23,161.25Zm1.5,11.75v2.75a2.25,2.25,0,0,0,2.25,2.25H29.5v-5Zm5-1.5v-6h-5v6Zm1.5,1.5v5h6v-5Zm6-1.5v-6H31v6Zm1.5,1.5v5h2.75a2.25,2.25,0,0,0,2.25-2.25V158.5Zm5-1.5v-6h-5v6Zm0-10.25a2.25,2.25,0,0,0-2.25-2.25H38.5v5h5ZM37,144.5H31v5h6Zm-7.5,0H26.75a2.25,2.25,0,0,0-2.25,2.25v2.75h5Z" transform="translate(7538 18308.5)" fill="#212121"/>
+  </g>
+</svg>
