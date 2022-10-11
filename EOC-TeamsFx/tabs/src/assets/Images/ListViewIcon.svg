@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_27002" data-name="Rectangle 27002" width="32" height="32" transform="translate(7556 18485)" fill="#fff" opacity="0.46"/>
+    </clipPath>
+  </defs>
+  <g id="List_Icon" transform="translate(-7556 -18485)" clip-path="url(#clip-path)">
+    <g id="Group_18949" data-name="Group 18949" transform="translate(89 -17)">
+      <g id="Rectangle_27001" data-name="Rectangle 27001" transform="translate(7472 18507)" fill="none" stroke="#212121" stroke-width="1.5">
+        <rect width="22" height="22" rx="4" stroke="none"/>
+        <rect x="0.75" y="0.75" width="20.5" height="20.5" rx="3.25" fill="none"/>
+      </g>
+      <g id="Group_18948" data-name="Group 18948" transform="translate(0 -0.184)">
+        <line id="Line_43" data-name="Line 43" x2="8" transform="translate(7481 18514.184)" fill="none" stroke="#212121" stroke-linecap="round" stroke-width="1.5"/>
+        <line id="Line_44" data-name="Line 44" x2="8" transform="translate(7481 18518.184)" fill="none" stroke="#212121" stroke-linecap="round" stroke-width="1.5"/>
+        <line id="Line_45" data-name="Line 45" x2="8" transform="translate(7481 18522.184)" fill="none" stroke="#212121" stroke-linecap="round" stroke-width="1.5"/>
+        <line id="Line_46" data-name="Line 46" y1="8" transform="translate(7478 18514.199)" fill="none" stroke="#212121" stroke-linecap="round" stroke-width="1.5"/>
+      </g>
+    </g>
+  </g>
+</svg>

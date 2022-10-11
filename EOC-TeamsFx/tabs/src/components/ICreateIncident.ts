@@ -10,6 +10,8 @@ export interface IIncidentEntity {
     incidentCommander: UserDetails;
     selectedRole: string;
     assignedUser: UserDetails[];
+    severity: string;
+    reasonForUpdate: string;
 }
 
 // class for incident details form entity
@@ -24,6 +26,8 @@ export class IncidentEntity implements IIncidentEntity {
     public incidentCommander!: UserDetails;
     public selectedRole!: string;
     public assignedUser!: UserDetails[];
+    public severity!: string;
+    public reasonForUpdate!: string;
 }
 
 export interface UserDetails {
@@ -37,6 +41,7 @@ export interface RoleAssignments {
     userNamesString: string;
     userObjString: string;
     userDetailsObj: UserDetails[];
+    saveDefault: any;
 }
 
 export interface ITeamGroupInfo {
@@ -133,6 +138,7 @@ export interface IInputValidationStates {
     incidentDescriptionHasError: boolean;
     incidentStartDateTimeHasError: boolean;
     incidentCommandarHasError: boolean;
+    incidentReasonForUpdateHasError: boolean;
 }
 
 export interface IInputRegexValidationStates {

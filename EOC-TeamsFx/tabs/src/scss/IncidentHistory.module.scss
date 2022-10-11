@@ -1,0 +1,569 @@
+:global {
+    .activity-log-list-main {
+        .ms-List-cell {
+
+            .activity-log-list-item {
+                padding: 10px 10px 8px 24px;
+                cursor: pointer;
+                box-sizing: border-box;
+                text-align: left;
+                letter-spacing: 0px;
+                color: #000000;
+                opacity: 1;
+                border-bottom: 1px solid #C8C8C8;
+
+                .list-version-date {
+                    font: normal normal normal 14px/22px Segoe UI;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+
+                .list-version-modifiedby {
+                    font: normal normal normal 12px/16px Segoe UI;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    margin-top: 3px;
+                }
+
+                @media screen and (max-width:375pt) {
+                    .list-version-date {
+                        font: normal normal normal 11px/22px Segoe UI;
+                    }
+
+                    .list-version-modifiedby {
+                        font: normal normal normal 10px/16px Segoe UI;
+                    }
+                }
+            }
+
+            .activity-log-list-item-selected {
+                border-bottom: 2px solid #33344A;
+                background-color: #FFFFFF;
+            }
+        }
+    }
+
+    .version-details-area {
+
+        .ms-DetailsList {
+
+            .ms-DetailsList-headerWrapper {
+                .ms-DetailsHeader {
+                    background-color: #414156;
+
+                    .ms-DetailsHeader-cell {
+                        color: #fff;
+
+                        .ms-DetailsHeader-cellTitle {
+                            padding: 0px 8px 0px 30px;
+
+                            .ms-DetailsHeader-cellName {
+                                font-size: 16px;
+                                line-height: 20px;
+                            }
+
+                            @media screen and (max-width:375pt) {
+                                .ms-DetailsHeader-cellName {
+                                    font-size: 14px;
+                                }
+                            }
+                        }
+                    }
+
+                    .ms-DetailsHeader-cell:hover {
+                        color: #fff;
+                        background: #414156;
+                    }
+
+                    .ms-DetailsHeader-cellSizer {
+                        cursor: default;
+                    }
+
+                    .ms-DetailsHeader-cellSizer:hover:after {
+                        opacity: 0;
+                        cursor: auto;
+                    }
+                }
+            }
+
+            .ms-DetailsList-contentWrapper {
+                .ms-SelectionZone>.ms-FocusZone {
+                    height: 430px;
+                    overflow-y: overlay;
+                    overflow-x: auto;
+
+                    .ms-DetailsRow {
+                        text-align: left;
+                        font: normal normal normal 16px/19px Segoe UI;
+                        letter-spacing: 0px;
+                        color: #575654;
+                        opacity: 1;
+
+                        .ms-DetailsRow-fields {
+                            .ms-DetailsRow-cell {
+                                padding-left: 30px;
+                                white-space: break-spaces;
+                            }
+
+                            .new-value-cell,
+                            .old-value-cell {
+                                color: #000000;
+                            }
+                        }
+                    }
+
+                    .ms-DetailsRow:hover {
+                        background-color: #fff;
+                    }
+                }
+
+                .ms-SelectionZone>.ms-FocusZone::-webkit-scrollbar-thumb,
+                .ms-SelectionZone>.ms-FocusZone::-webkit-scrollbar-thumb:hover {
+                    background-color: #909090;
+                }
+            }
+        }
+
+        .ms-DetailsList::-webkit-scrollbar-thumb,
+        .ms-DetailsList::-webkit-scrollbar-thumb {
+            background-color: #909090;
+        }
+    }
+
+    .grid-view-table {
+        border: 0px;
+    }
+
+    .rt-table {
+        border: 10px solid #33344A;
+        border-top: none;
+        border-radius: 8px;
+        margin: 0px;
+        table-layout: fixed;
+        width: 100%;
+
+        .rt-thead {
+            .rt-th {
+                background: #33344A;
+                font: normal normal 600 16px/24px Segoe UI;
+                color: #FFFFFF;
+                border-right: 1px solid #FFFFFF;
+                border-bottom: hidden;
+                padding-left: 1%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                width: 200px !important;
+                text-align: left;
+            }
+        }
+
+        .-headerGroups {
+            background-color: #33344A !important;
+            border-bottom-color: #33344A !important;
+            height: 11px !important;
+
+            .rthfc-th-fixed-left-last,
+            .rt-th {
+                border-right: none;
+            }
+        }
+
+        .-header {
+            height: 34px !important;
+        }
+
+        .rt-tbody {
+            .rt-tr {
+                border-bottom: hidden;
+                font: normal normal normal 16px/21px Segoe UI;
+                letter-spacing: 0px;
+                color: #000000;
+                opacity: 1;
+
+                .rt-td {
+                    padding-left: 1%;
+                    text-align: left;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    width: 200px !important;
+
+                    .grid-view-assigned-roles {
+                        color: #5B5FC7;
+                        height: auto;
+                        padding-left: 0;
+                        justify-content: start;
+                    }
+                }
+            }
+
+            .-odd {
+
+                .rt-td {
+                    background: #f2f2f2 0% 0% no-repeat padding-box;
+                    opacity: 1;
+                }
+            }
+
+            .-even {
+                .rt-td {
+                    background: #E6E6E6 0% 0% no-repeat padding-box;
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    .rt-table::-webkit-scrollbar-thumb,
+    .rt-table::-webkit-scrollbar-thumb:hover {
+        background-color: #909090 !important;
+    }
+
+    .ReactTable {
+        .-pagination {
+            .-btn {
+                background-color: #33344A;
+                border-color: #33344A;
+                color: #ffffff;
+            }
+
+            .-btn:focus {
+                box-shadow: 0 0 0 0.25rem rgb(70 71 117 / 25%);
+            }
+
+            .-center {
+                color: #000000;
+            }
+        }
+    }
+
+    .view-roles-popup {
+        max-height: 420px;
+        margin-top: auto;
+        margin-bottom: auto;
+        min-width: 350px;
+
+        .role-assignment-table {
+            margin-top: 10px;
+            text-align: left;
+            overflow-wrap: break-word;
+            max-height: 300px;
+            opacity: 1;
+
+            #role-grid-thead {
+                background: #414157 0% 0% no-repeat padding-box;
+                width: 100%;
+                height: auto;
+                border-top: 0.25px solid #979593;
+                border-left: 0.25px solid #979593;
+                border-right: 0.25px solid #979593;
+                border-radius: 3px 3px 0px 0px;
+                padding: 7px;
+                margin-left: 0px;
+                font: normal normal 600 16px/24px Segoe UI;
+                color: #FFFFFF;
+                text-align: center;
+
+                @media screen and (max-width:1059px) {
+                    font: normal normal 600 13px/20px Segoe UI;
+                }
+
+                .thead-border-left {
+                    border-left: 0.25px solid #FFFFFF;
+                }
+            }
+
+            .role-grid-tbody-area {
+                max-height: 250px;
+                min-height: 0px;
+                overflow-x: auto;
+                overflow-y: overlay;
+                background-color: #fff;
+                width: 100%;
+                border-bottom: 0.25px solid gray;
+
+                #role-grid-tbody {
+                    background: #FFFFFF 0% 0% no-repeat padding-box;
+                    width: 100%;
+                    margin-left: 0px;
+                    border-left: 0.25px solid #979593;
+                    border-right: 0.25px solid #979593;
+                    border-bottom: 0.25px solid #979593;
+                    height: auto;
+                    padding: 10px;
+                    font: normal normal normal 16px/21px Segoe UI;
+                    color: #000000;
+
+                    @media screen and (max-width:1059px) {
+                        font: normal normal normal 13px/20px Segoe UI;
+                    }
+
+                    .role-icon {
+                        width: 20px;
+                        height: 23px;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            .role-grid-tbody-area::-webkit-scrollbar-thumb,
+            .role-grid-tbody-area::-webkit-scrollbar-thumb:hover {
+                background-color: gray;
+            }
+
+
+        }
+
+
+        .roles-popup-btn-close-icon {
+            svg {
+                height: 0.5375rem;
+                width: 0.5375rem;
+            }
+        }
+    }
+}
+
+
+div[class="incident-history"] {
+    background: #F4F4F4 0% 0% no-repeat padding-box;
+    text-align: left;
+    letter-spacing: 0px;
+    opacity: 1;
+
+    div[id="incident-history-path"] {
+        width: 100%;
+        height: auto;
+        max-height: 100vh;
+
+        label {
+            margin: 5px auto;
+            text-align: center;
+            font: normal normal 400 14px/24px Segoe UI;
+            color: #33344A;
+            opacity: 1;
+
+            span[class="back-label"] {
+                font-size: 12px;
+                position: relative;
+                bottom: 1px;
+                margin-left: 1px;
+            }
+
+            span[class="go-back"] {
+                cursor: pointer;
+
+                span[id="path-back-icon"] {
+                    position: relative;
+                    bottom: 2px;
+                }
+            }
+
+            span[class="right-border"] {
+                position: relative;
+                bottom: 1px;
+            }
+        }
+    }
+
+    div[class="incident-history-area"] {
+        background: #E4E9F5 0% 0% no-repeat padding-box;
+        border: 0.25px solid #a3a6b3;
+        padding-bottom: 50px;
+        opacity: 1;
+        min-height: 100vh;
+
+        div[class="heading-and-view-selection-area"] {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px auto;
+
+            div[class="incident-history-label"] {
+                text-align: left;
+                font: normal normal 400 22px/32px Segoe UI;
+                letter-spacing: 0px;
+                color: #000000;
+                opacity: 1;
+                margin-top: auto;
+                margin-bottom: auto;
+            }
+
+            div[class="view-selection-area"] {
+                display: inline-flex;
+                width: 300px;
+                justify-content: space-around;
+                margin-top: auto;
+                margin-bottom: auto;
+
+                label[class="flip-view"] {
+                    display: flex;
+                    cursor: pointer;
+
+                    input[type='radio'] {
+                        transform: scale(1.3);
+                        accent-color: #6264A7;
+                        margin-top: auto;
+                        margin-bottom: auto;
+                        cursor: pointer;
+                    }
+
+                    img {
+                        width: 26px;
+                        height: 26px;
+                        margin: auto 5px auto 10px;
+                    }
+
+                    span {
+                        text-align: left;
+                        font: normal normal 600 16px/22px Segoe UI;
+                        letter-spacing: 0px;
+                        color: #242424;
+                        opacity: 1;
+                        margin-top: auto;
+                        margin-bottom: auto;
+                    }
+                }
+
+
+            }
+        }
+
+        div[class="activity-version-details-area"] {
+            display: flex;
+            width: 100%;
+            border: 10px solid #414156;
+            border-radius: 8px;
+            background-color: #414156;
+
+            div[class="activity-log-area"] {
+                width: 20%;
+                background: #E6E6E6 0% 0% no-repeat padding-box;
+                border-radius: 8px 0px 0px 8px;
+                opacity: 1;
+
+                div[class="activity-log-heading"] {
+                    text-align: left;
+                    font: normal normal 600 16px/20px Segoe UI;
+                    letter-spacing: 0px;
+                    color: #fff;
+                    opacity: 1;
+                    padding-left: 24px;
+                    padding-bottom: 23px;
+                    padding-top: 16px;
+                    background-color: #414156;
+                    cursor: default;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                div[class="activity-log-list-main-area"] {
+                    overflow: auto;
+                    max-height: 428px;
+
+                    div[class="see-all-versions"] {
+                        text-align: center;
+                        margin-left: auto;
+                        margin-right: 50px;
+                        margin-top: 10px;
+                        margin-bottom: 10px;
+                        cursor: pointer;
+                        font: normal normal normal 16px/19px Segoe UI;
+                        letter-spacing: 0px;
+                        color: #5B5FC7;
+                        text-transform: capitalize;
+                        opacity: 1;
+                    }
+                }
+
+                div[class="activity-log-list-main-area"]::-webkit-scrollbar-thumb,
+                div[class="activity-log-list-main-area"]::-webkit-scrollbar-thumb:hover {
+                    background-color: #909090;
+                }
+            }
+
+            div[class="version-details-area"] {
+                width: 80%;
+                height: 500px;
+                background: #FFFFFF 0% 0% no-repeat padding-box;
+                border-radius: 0px 8px 8px 0px;
+                opacity: 1;
+
+                div[class="noDataFound"] {
+                    font: normal normal normal 18px/23px Segoe UI;
+                    letter-spacing: 0px;
+                    color: #5B5FC7;
+                    opacity: 1;
+                    text-align: center;
+                    padding-top: 10%;
+                    width: 100%;
+                    height: 100%;
+
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width:767px) {
+    div[class="incident-history"] {
+        div[class="incident-history-area"] {
+            div[class="activity-version-details-area"] {
+                overflow: overlay;
+
+                div[class="activity-log-area"] {
+                    width: unset;
+
+                    div[class="activity-log-heading"] {
+                        padding-right: 10px;
+                    }
+                }
+
+                div[class="version-details-area"] {
+                    width: unset;
+
+                    div[class="noDataFound"] {
+                        padding: 10%;
+                        width: 400px;
+                    }
+                }
+            }
+
+            div[class="activity-version-details-area"]::-webkit-scrollbar-thumb,
+            div[class="activity-version-details-area"]::-webkit-scrollbar-thumb:hover {
+                background-color: #909090;
+            }
+        }
+    }
+}
+
+//For Mobile View
+@media screen and (max-width:375pt) {
+    div[class="incident-history"] {
+        div[class="incident-history-area"] {
+            div[class="heading-and-view-selection-area"] {
+                display: block;
+
+                div[class="incident-history-label"] {
+                    margin-bottom: 15px;
+                }
+
+                div[class="view-selection-area"] {
+                    justify-content: space-between;
+                }
+            }
+
+            div[class="activity-version-details-area"] {
+                div[class="activity-log-area"] {
+                    div[class="activity-log-heading"] {
+                        font: normal normal 600 14px/20px Segoe UI;
+                    }
+                }
+
+            }
+        }
+    }
+}

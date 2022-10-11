@@ -1,5 +1,111 @@
 :global {
 
+    //css for default-checkbox
+    .save-default-checkbox {
+        padding-left: 30%;
+    }
+
+    //css classes for Slider Control
+    .horizontal-slider {
+        width: 95%;
+        height: 20px;
+        margin: auto;
+    }
+
+    .example-mark {
+        width: 10px;
+        height: 10px;
+        border: 2px solid rgb(0, 0, 0);
+        background-color: rgb(255, 255, 255);
+        cursor: pointer;
+        border-radius: 50%;
+        vertical-align: middle;
+        bottom: calc(50% - 16px);
+    }
+
+    .example-thumb {
+        cursor: pointer;
+        position: absolute;
+        z-index: 100;
+        background: #ffffff;
+        border: 5px solid #464775;
+        border-radius: 100%;
+        display: block;
+        box-shadow: 0 0 2px 0 rgb(0 0 0 / 44%);
+    }
+
+    .critical {
+        border: 5px solid rgb(197, 0, 0);
+    }
+
+    .high {
+        border: 5px solid rgb(255, 103, 8);
+    }
+
+    .medium {
+        border: 5px solid #FFD700;
+    }
+
+    .example-thumb.active {
+        background-color: grey;
+    }
+
+    .example-track {
+        position: relative;
+        background: #979593;
+    }
+
+    .example-track.example-track-0 {
+        background: #BDBDE6;
+    }
+
+    .horizontal-slider .example-track {
+        top: 20px;
+        height: 3px;
+    }
+
+    .horizontal-slider .example-thumb {
+        top: 16px;
+        width: 10px;
+        outline: none;
+        height: 10px;
+        line-height: 39px;
+    }
+
+    .steps-item {
+        padding: 5px;
+        display: inline-block;
+    }
+
+    .example-mark.example-mark-active {
+        border: 2px solid #464775;
+        background-color: rgb(255, 255, 255);
+    }
+
+    .example-mark.example-mark-completed {
+        border: 2px solid rgb(255, 255, 255);
+        background-color: #464775;
+    }
+
+    .slider_labels {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 15px;
+        position: relative;
+    }
+
+    .slider_labels-label {
+        text-align: center;
+        box-sizing: border-box;
+        font: normal normal normal 14px/21px Segoe UI
+    }
+
+    .bold {
+        font-weight: bold;
+    }
+
+    // end slider control
+
     .incident-details-input-field,
     .incident-details-date-field {
         input {
@@ -46,6 +152,21 @@
     .incident-details-description-area {
         textArea {
             height: 83%;
+            font: normal normal normal 16px/21px Segoe UI;
+            background-color: #FFFFFF;
+            color: #000000;
+        }
+
+        textArea::placeholder {
+            font: normal normal normal 14px/21px Segoe UI;
+            color: #979593;
+            opacity: 1;
+        }
+    }
+
+
+    .incident-details-reason-update-area {
+        textArea {
             font: normal normal normal 16px/21px Segoe UI;
             background-color: #FFFFFF;
             color: #000000;
@@ -141,7 +262,7 @@
             height: 40px;
         }
 
-        input[type="text"] {
+        .ui-button__content {
             font: normal normal normal 16px/21px Segoe UI;
             opacity: 1;
             color: #000000;
@@ -280,6 +401,12 @@ div[class="incident-details"] {
                 margin-bottom: 0.25rem;
             }
 
+            @media screen and (max-width:769px) {
+                label[class="severity-label"] {
+                    margin-top: 15px;
+                }
+            }
+
             label[class="FormInput-label"]::after {
                 content: " *";
                 color: #FF0000
@@ -298,7 +425,9 @@ div[class="incident-details"] {
                 color: #ce0000;
             }
 
-            label[class="message-label"]::after {
+            label[class="message-label"]::after,
+            div[class^="ms-Checkbox"]>label[class^="ms-Checkbox-label"]::after,
+            label[class="severity-label"]::after {
                 content: "";
             }
 

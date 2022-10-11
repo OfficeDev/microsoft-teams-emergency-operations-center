@@ -1,12 +1,12 @@
-# How to use this Teams Tab app HelloWorld app
+# How to use this Teams Tab app TEOC app
 
-Microsoft Teams supports the ability to run web-based UI inside "custom tabs" that users can install either for just themselves (personal tabs) or within a team or group chat context.
+Microsoft Teams supports the ability to run web-based UI inside "custom tabs" that users can install either for just themselves (personal tabs) or within a team or group chat context. Please be advised that mgt-teamsfx-provider library in this app is currently in preview stage, please expect breaking changes in the future release.
 
 ## Prerequisites
 
 - [NodeJS](https://nodejs.org/en/)
 - An M365 account. If you do not have M365 account, apply one from [M365 developer program](https://developer.microsoft.com/en-us/microsoft-365/dev-program)
-- [Teams Toolkit Visual Studio Code Extension](https://aka.ms/teams-toolkit) version after 1.55 or [TeamsFx CLI](https://aka.ms/teamsfx-cli)
+- [Teams Toolkit Visual Studio Code Extension](https://aka.ms/teams-toolkit) version after 4.0.0 or [TeamsFx CLI](https://aka.ms/teamsfx-cli)
 
 ## Debug
 
@@ -16,11 +16,10 @@ Microsoft Teams supports the ability to run web-based UI inside "custom tabs" th
 
 ## Edit the manifest
 
-You can find the Teams app manifest in `templates/appPackage` folder. The folder contains two manifest files:
-* `manifest.local.template.json`: Manifest file for Teams app running locally.
-* `manifest.remote.template.json`: Manifest file for Teams app running remotely (After deployed to Azure).
+You can find the Teams app manifest in `templates/appPackage` folder. The folder contains one manifest file:
+* `manifest.template.json`: Manifest file for Teams app running locally or running remotely (After deployed to Azure).
 
-Both files contain template arguments with `{...}` statements which will be replaced at build time. You may add any extra properties or permissions you require to this file. See the [schema reference](https://docs.microsoft.com/en-us/microsoftteams/platform/resources/schema/manifest-schema) for more information.
+This file contains template arguments with `{...}` statements which will be replaced at build time. You may add any extra properties or permissions you require to this file. See the [schema reference](https://docs.microsoft.com/en-us/microsoftteams/platform/resources/schema/manifest-schema) for more information.
 
 ## Deploy to Azure
 
@@ -48,12 +47,12 @@ Once the provisioning and deployment steps are finished, you can preview your ap
 
 To check that your manifest file is valid:
 
-- From Visual Studio Code: open the Teams Toolkit and click `Validate manifest file` or open the command palette and select: `Teams: Validate manifest file`.
+- From Visual Studio Code: open the command palette and select: `Teams: Validate manifest file`.
 - From TeamsFx CLI: run command `teamsfx validate` in your project directory.
 
 ## Package
 
-- From Visual Studio Code: open the command palette and select `Teams: Zip Teams metadata package`.
+- From Visual Studio Code: open the Teams Toolkit and click `Zip Teams metadata package` or open the command palette and select `Teams: Zip Teams metadata package`.
 - Alternatively, from the command line run `teamsfx package` in the project directory.
 
 ## Publish to Teams
@@ -62,3 +61,9 @@ Once deployed, you may want to distribute your application to your organization'
 
 - From Visual Studio Code: open the Teams Toolkit and click `Publish to Teams` or open the command palette and select: `Teams: Publish to Teams`.
 - From TeamsFx CLI: run command `teamsfx publish` in your project directory.
+
+## Add Single Sign On feature
+
+Microsoft Teams provides a mechanism by which an application can obtain the signed-in Teams user token to access Microsoft Graph (and other APIs). Teams Toolkit facilitates this interaction by abstracting some of the Azure Active Directory (AAD) flows and integrations behind some simple, high-level APIs. This enables you to add single sign-on (SSO) features easily to your Teams application.
+
+Please follow this [document](https://aka.ms/teamsfx-add-sso) to add single sign on for your project.

@@ -1,0 +1,244 @@
+:global {
+    .team-name-config-order-dropdown {
+        margin-bottom: 25px;
+
+        label {
+            text-align: left;
+            font: normal normal normal 16px/21px Segoe UI;
+            letter-spacing: 0px;
+            color: #000000;
+            opacity: 1;
+        }
+
+        .ui-dropdown__container {
+            border-bottom: none;
+            width: 150px;
+            height: 40px;
+
+            .ui-dropdown__selected-items {
+                background-color: #FFFFFF;
+                border: 1px solid #FFFFFF;
+                border-radius: 0.1875rem;
+                width: 150px;
+                height: 40px;
+
+                .ui-button {
+                    .ui-button__content {
+                        position: relative;
+                        top: 4px;
+                    }
+                }
+            }
+
+
+            .ui-list {
+                width: 100% !important;
+            }
+        }
+    }
+
+    .team-name-config-input-field {
+        label {
+            text-align: left;
+            font: normal normal normal 16px/21px Segoe UI;
+            letter-spacing: 0px;
+            color: #000000;
+            opacity: 1;
+        }
+
+        input[type="text"] {
+            font: normal normal normal 16px/21px Segoe UI;
+            opacity: 1;
+            width: 180px;
+            height: 40px;
+            color: #000000;
+            background-color: #FFFFFF;
+        }
+
+        input::placeholder {
+            font: normal normal normal 14px/21px Segoe UI;
+            color: #979593;
+            opacity: 1;
+        }
+    }
+
+    .team-name-config-preview-img {
+        border-radius: 12px;
+        opacity: 1;
+        width: 80px;
+        height: 80px;
+        margin-bottom: 20px;
+        background-color: #D83B01;
+    }
+
+    .team-name-config-order-preview-area {
+        margin: auto 0;
+
+        .team-name-config-order-preview {
+            text-align: left;
+            font: normal normal normal 16px/21px Segoe UI;
+            letter-spacing: 0px;
+            color: #33344A;
+            opacity: 1;
+            margin-bottom: 30px;
+        }
+    }
+
+    .team-name-config-btn-area {
+        display: flex;
+        //justify-content: end;
+        margin-top: 20px;
+
+        .team-name-config-save-btn {
+            width: 158px;
+            height: 44px;
+            background: #6264A7 0% 0% no-repeat padding-box;
+            box-shadow: 0px 3px 6px #00000029;
+            border: 1px solid #6264A7;
+            opacity: 1;
+            cursor: pointer;
+
+            .team-name-config-save-btn-label {
+                font: normal normal 600 16px/24px Segoe UI;
+                letter-spacing: 0px;
+                color: #FFFFFF;
+                opacity: 1;
+                cursor: pointer;
+            }
+        }
+
+        .team-name-config-save-btn:hover {
+            border: 1px solid rgb(200, 198, 196);
+        }
+
+        .team-name-config-back-btn {
+            width: 136px;
+            height: 44px;
+            background: #FFFFFF 0% 0% no-repeat padding-box;
+            box-shadow: 0px 3px 6px #00000029;
+            opacity: 1;
+            margin-right: 30px;
+
+            .team-name-config-back-btn-label {
+                width: 37px;
+                height: 24px;
+                font: normal normal 600 16px/24px Segoe UI;
+                letter-spacing: 0px;
+                color: #6264A7;
+                opacity: 1;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .loader-bg {
+        position: fixed;
+        width: 100%;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background-color: rgba(255, 255, 255, 0.7);
+        z-index: 9999;
+
+        .loaderStyle {
+            top: 50%;
+            left: 35%;
+            position: absolute;
+            width: 30%;
+            height: 150px;
+            z-index: 1;
+            opacity: 1;
+
+            div[role="progressbar"] {
+                color: black;
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+
+
+
+div[class="team-name-config"] {
+    div[id="team-name-config-path"] {
+        width: 100%;
+        height: auto;
+        max-height: 100vh;
+
+        label {
+            margin: 5px auto;
+            text-align: center;
+            font: normal normal 400 14px/24px Segoe UI;
+            color: #33344A;
+            opacity: 1;
+
+            span[class="back-label"] {
+                font-size: 12px;
+                position: relative;
+                bottom: 1px;
+                margin-left: 1px;
+            }
+
+            span[class="go-back"] {
+                cursor: pointer;
+
+                span[id="path-back-icon"] {
+                    position: relative;
+                    bottom: 2px;
+                }
+            }
+
+            span[class="right-border"] {
+                position: relative;
+                bottom: 1px;
+            }
+        }
+    }
+
+    div[class="team-name-config-form-area"] {
+        background: #E4E9F5 0% 0% no-repeat padding-box;
+        padding-bottom: 6rem;
+        opacity: 1;
+
+        div[class="team-name-config-page-heading"] {
+            text-align: left;
+            font: normal normal 400 22px/32px Segoe UI;
+            letter-spacing: 0px;
+            color: #33344A;
+            opacity: 1;
+            padding-bottom: 12px;
+            padding-top: 12px;
+        }
+
+        label[class="team-name-config-dropdown-label"] {
+            text-align: left;
+            font: normal normal normal 16px/21px Segoe UI;
+            letter-spacing: 0px;
+            color: #000000;
+            opacity: 1;
+            margin-top: 12px;
+        }
+
+        div[class='team-name-config-preview-heading'] {
+            text-align: left;
+            font: normal normal 400 22px/32px Segoe UI;
+            letter-spacing: 0px;
+            color: #33344A;
+            opacity: 1;
+            margin-bottom: 20px;
+        }
+
+        label[class="message-label"] {
+            color: #ce0000;
+        }
+
+        label[class="message-label"]::after {
+            content: "";
+        }
+    }
+
+
+
+}

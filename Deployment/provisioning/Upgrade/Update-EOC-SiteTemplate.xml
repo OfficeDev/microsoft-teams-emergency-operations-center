@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+<pnp:Provisioning xmlns:pnp="http://schemas.dev.office.com/PnP/2021/03/ProvisioningSchema">
+  <pnp:Preferences Generator="PnP.Framework, Version=1.8.3.0, Culture=neutral, PublicKeyToken=0d501f89f11b748c" />
+  <pnp:Templates ID="CONTAINER-TEMPLATE-8315D078DB6D4FF9A32C5E2397D54645">
+    <pnp:ProvisioningTemplate ID="TEMPLATE-8315D078DB6D4FF9A32C5E2397D54645" Version="1" BaseSiteTemplate="STS#3" Scope="RootSite">
+      <pnp:Lists>         
+       <pnp:ListInstance Title="TEOC-Config" Description="Use this list to configure the format of the Teams name created for each incident" DocumentTemplate="" TemplateType="100" Url="Lists/TEOCConfig" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="50" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/TEOCConfig/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/TEOCConfig/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/TEOCConfig/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+             <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{02967936-92CF-4C84-93A0-CC1C026F7BAB}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Items" Url="{site}/Lists/TEOCConfig/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=47">
+              <Query />
+              <ViewFields>
+                <FieldRef Name="Title" />                
+                <FieldRef Name="Value" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <Aggregations Value="Off" />
+              <JSLink>clienttemplates.js</JSLink>
+              <CustomFormatter />
+              <ViewData />
+            </View>
+          </pnp:Views>
+          <pnp:Fields>
+            <Field DisplayName="Value" Type="Note" Required="FALSE" ID="{51a1e44f-4e67-486a-bcdf-e13efdd07b36}" SourceID="{{listid:TEOC-Config}}" StaticName="Value" Name="Value" ColName="nvarchar5" RowOrdinal="0" Version="1" />
+          </pnp:Fields>
+          <pnp:Webhooks>
+            <pnp:Webhook ServerNotificationUrl="https://southeastasia1-0.pushnp.svc.ms/notifications?token=4b912ca4-6d08-4c59-806c-cf8f8d7ecdf9" ExpiresInDays="1" />
+          </pnp:Webhooks>
+            <pnp:DataRows UpdateBehavior="Overwrite">
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">TeamNameConfig</pnp:DataValue>              
+              <pnp:DataValue FieldName="Value">{"PrefixValue":"TEOC","Prefix":"1","IncidentName":"2","IncidentType":"3","StartDate":"4"}</pnp:DataValue>
+          </pnp:DataRow>          
+        </pnp:DataRows> 
+       </pnp:ListInstance>
+       <pnp:ListInstance Title="TEOC-RoleDefaultValues" Description="" DocumentTemplate="" TemplateType="100" Url="Lists/TEOCRoleDefaultValues" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="50" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/TEOCRoleDefaultValues/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/TEOCRoleDefaultValues/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/TEOCRoleDefaultValues/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+             <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{72838c1f-e01c-4518-bc3e-4281a76f2f42}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Items" Url="{site}/Lists/TEOCRoleDefaultValues/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=47">
+              <Query />
+              <ViewFields>
+                <FieldRef Name="Title" />                
+                <FieldRef Name="Users" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <Aggregations Value="Off" />
+              <JSLink>clienttemplates.js</JSLink>
+              <CustomFormatter />
+              <ViewData />
+            </View>
+          </pnp:Views>
+          <pnp:Fields>
+            <Field DisplayName="Users" Type="Note" Required="FALSE" ID="{37fd4499-e90e-4bac-8206-077682987263}" SourceID="{{listid:TEOC-RoleDefaultValues}}" StaticName="Users" Name="Users" ColName="nvarchar3" RowOrdinal="0" Version="1" />
+          </pnp:Fields>
+       </pnp:ListInstance>
+       <pnp:ListInstance Title="TEOC-IncidentTypeDefaultRoles" Description="" DocumentTemplate="" TemplateType="100" Url="Lists/TEOCIncidentTypeDefaultRoles" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="50" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/TEOCIncidentTypeDefaultRoles/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/TEOCIncidentTypeDefaultRoles/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/TEOCIncidentTypeDefaultRoles/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+             <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{ac325d36-be63-436c-969a-008558afe1ed}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Items" Url="{site}/Lists/TEOCIncidentTypeDefaultRoles/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=47">
+              <Query />
+              <ViewFields>
+                <FieldRef Name="Title" />                
+                <FieldRef Name="RoleAssignment" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <Aggregations Value="Off" />
+              <JSLink>clienttemplates.js</JSLink>
+              <CustomFormatter />
+              <ViewData />
+            </View>
+          </pnp:Views>
+          <pnp:Fields>
+            <Field DisplayName="RoleAssignment" Type="Note" Required="FALSE" ID="{276adc46-b4d8-40dd-8ddf-710285d47069}" SourceID="{{listid:TEOC-IncidentTypeDefaultRoles}}" StaticName="RoleAssignment" Name="RoleAssignment" ColName="nvarchar2" RowOrdinal="0" Version="1" />
+          </pnp:Fields> 
+       </pnp:ListInstance>
+       <pnp:ListInstance Title="TEOC-IncidentTransaction" Description="" DocumentTemplate="" TemplateType="100" Url="Lists/TEOC-IncidentTransaction" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="50" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/TEOC-IncidentTransaction/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/TEOC-IncidentTransaction/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/TEOC-IncidentTransaction/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.gif?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+          <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{AA0A97B3-B232-415E-A75E-5C5516E1E8C9}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Items" Url="{site}/Lists/TEOC-IncidentTransaction/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=47">
+              <Query>
+                <OrderBy>
+                  <FieldRef Name="ID" />
+                </OrderBy>
+              </Query>
+              <ViewFields>
+                <FieldRef Name="LinkTitle" />
+                <FieldRef Name="Description" />
+                <FieldRef Name="IncidentName" />
+                <FieldRef Name="IncidentType" />
+                <FieldRef Name="IncidentStatus" />
+                <FieldRef Name="StartDateTime" />
+                <FieldRef Name="IncidentCommander" />
+                <FieldRef Name="TeamId" />
+                <FieldRef Name="Location" />
+                <FieldRef Name="RoleAssignment" />
+                <FieldRef Name="IncidentId" />
+                <FieldRef Name="Severity" />
+                <FieldRef Name="ReasonForUpdate" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <JSLink>clienttemplates.js</JSLink>
+            </View>
+          </pnp:Views>
+          <pnp:Fields>
+            <Field DisplayName="Severity" Type="Text" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" MaxLength="255" ID="{1a7b870d-3c61-4bff-9920-73b68174e0fe}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="Severity" Name="Severity" ColName="nvarchar18" RowOrdinal="0" />
+            <Field DisplayName="ReasonForUpdate" Type="Note" Required="FALSE" ID="{275f387a-2ed3-411a-a200-7187ab64782f}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="ReasonForUpdate" Name="ReasonForUpdate" ColName="nvarchar19" RowOrdinal="0" Version="1" />               
+          </pnp:Fields>
+       </pnp:ListInstance>
+      </pnp:Lists>
+    </pnp:ProvisioningTemplate>
+  </pnp:Templates>
+</pnp:Provisioning>

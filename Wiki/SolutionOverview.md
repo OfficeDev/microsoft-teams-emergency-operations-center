@@ -3,8 +3,8 @@
 1. The current version of the Microsoft Teams Emergency Operations Center operates as an app in Microsoft Teams that is installed locally in your tenant by your tenant administrator or any user who has the capability to side load the application.
 2. Once installed, it can be accessed via "+Add a tab" option at the top of the channel within a team. **Channel > Add a tab > TEOC**
 3. The app will enable users to create new incidents, modify existing incidents and view the incidents on a dashboard.
-4. The app will create a team for each incident with default channels so that users can track the activities for each incident in specific team.
-5. There are 3 major components in the Microsoft Teams Emergency Operations Center App Template -
+4. The app will create a team for each incident with default channel so that users track the activities for each incident in specific structured Teams channels.
+5. There are 3 major components in the Microsoft Teams Emergency Operations Center App -
     1. Incident Details Dashboard
     2. New Incident Form
     3. Update Incident Form
@@ -15,7 +15,7 @@
 
     ![TEOC Login Page](./Images/LoginPage.png)
 
-2. On click of "Login" button, a pop up will open which will list all the required permissions that the app needs. If you're an IT admin, you can check the checkbox for "Consent on behalf of your organization" to grant the permissions for all users.
+2. On click of "Login" button, a pop up will open which will list all the required permissions that the app needs. If you're an Microsoft 365 admin, you can check the checkbox for "Consent on behalf of your organization" to grant the permissions for all users.
 
     ![TEOC App Permissions](./Images/AppPermissisons.png)
 
@@ -55,35 +55,63 @@
 
 4. From Assign Additional Roles dropdown, user will be able to select roles which are present by default in the system and user will be able to add users who will be performing that role in the incident. 
 
-5. On click of Add button, that role will be added to the incident.
+5. User can additionally check "Save default users for this role" checkbox, by doing so the added users will be auto populated for that specific role while creating new incidents thereafter. On click of Add button, that role will be added to the Role Assignment table.
 
-    > Note: If Add button is not clicked, role will not be added for that incident even though you have selected Role and assigned user for that role in the form.
+    > **Note: If Add button is not clicked, role will not be added for that incident even though you have selected Role and assigned user for that role in the form.**
 
-6. A new role can be added by selecting "New Role" option from the "Assign Additional Roles" dropdown, providing "Role Name" and clicking on "Create Role" button.
+6. User can also check "Save roles for selected incident type" checkbox, by doing so the roles and users will be auto populated in the Role Assignment table for that specific incident type while creating new incidents thereafter.
+
+    ![TEOC Role Assignment](./Images/SaveRolesForIncident.png)
+
+7. A new role can be added by selecting "New Role" option from the "Assign Additional Roles" dropdown, providing "Role Name" and clicking on "Create Role" button.
 
     ![TEOC Add New Role](./Images/CreateNewRole.PNG)
 
-7. On click of "Create New Incident", incident will be created, and user will be redirected to dashboard where newly added incident and details will be present. 
+8. On click of "Create New Incident", incident will be created, and user will be redirected to dashboard where newly added incident and details will be present. 
 
-8. Along with incident below mentioned entities will also be created. 
+9. Along with incident below mentioned entities will also be created. 
 
-    * Teams will be created with 6 channels - General, Announcement, Assessment, Logistics, Planning and Recovery.
+    * A team will be created with 6 channels - General, Announcement, Assessment, Logistics, Planning and Recovery.
     * Incident Commander along with the user who created incident will be added as owners to the Teams.
     * Users added during Role assignment will be added as members to the Teams.
     * Tags will be created for roles added in the incident. Incident Commander tag will be created by default.
 
 ## Edit Incident
 
-1. From Dashboard, on click of "Edit" button for an incident, the user will be redirected to Edit Incident form where they will be able to modify details of the incident. All the fields except "Incident Type" and "Start Date & Time" are editable.
+1. From Dashboard, on click of "Edit" button for an incident, the user will be redirected to Edit Incident form where they will be able to modify details of the incident. All the fields except "Incident Type" and "Start Date & Time" are editable. _It is mandatory to enter Reason for Update while editing the incident_.
 
     ![TEOC Edit Form](Images/EditForm1.png)
-
-    ![TEOC Edit Form_Roles](Images/EditForm2.png)
 
 2. Below points to note while updating the incident,
     * If the Incident commander is updated, old incident commander is removed from the team and the tag as well.
     * If a person is removed from any roles, that person will be removed from the teams membership as well.
     * If a role is deleted, respective tag will also be deleted from the team.
+
+## Incident History
+
+1. From Dashboard, on click of "View Incident History" button for an incident, the user will be redirected to  Incident History screen. By default, user will see the details in list view. User can click on any version listed under the activity log to view the changes for that version.
+
+    ![TEOC History](Images/ListViewHistory.png)
+
+2. On click of Table view option, user can see the incident changes for all versions in the table format. "Date" and "Modified By" are the sticky columns and user can use the scroll bar to view other columns. 
+If there are any changes to the Roles, _View_ link will be available on the Roles column and it will open a popup to show the role changes for that version.
+
+    ![TEOC History](Images/TableViewHistory.png)
+
+## Manage Options
+
+1. From Dashboard, on click of "Manage" button the menu will appear with the available options.
+   
+    ![TEOC Manage Menu](Images/ManageMenu.png)
+
+2. On click of Incident Types, user will be redirected to the SharePoint list to manage the incident types.
+
+3. On click of Roles, user will be redirected to the SharePoint list to manage the roles.
+
+4. On click of Team Name, user will be redirected to the Team Name configuration screen to configure the format of the Team Name. Upon saving the configuration, the incidents created/edited thereafter will have the Team Name in that newly configured format.
+
+   ![TEOC Ground Assessments](Images/TeamNameConfiguration.png)   
+
 
 ## Notify to Teams Extension
 

@@ -1,18 +1,18 @@
-import * as React from "react";
-import '../scss/Dashboard.module.scss';
-import { Client } from "@microsoft/microsoft-graph-client";
-import { Button, Flex, Loader, FormInput, SearchIcon } from "@fluentui/react-northstar";
-import CommonService from "../common/CommonService";
-import { Pivot, IPivotItemProps, PivotItem } from '@fluentui/react';
-import BootstrapTable from "react-bootstrap-table-next";
-import paginationFactory from 'react-bootstrap-table2-paginator';
-import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import siteConfig from '../config/siteConfig.json';
-import * as graphConfig from '../common/graphConfig';
-import * as constants from '../common/Constants';
-import * as microsoftTeams from "@microsoft/teams-js";
+import { Callout, DirectionalHint, Icon, IPivotItemProps, Pivot, PivotItem } from '@fluentui/react';
+import { Button, Flex, FormInput, Loader, SearchIcon } from "@fluentui/react-northstar";
 import { ApplicationInsights } from '@microsoft/applicationinsights-web';
+import { Client } from "@microsoft/microsoft-graph-client";
+import * as microsoftTeams from "@microsoft/teams-js";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import * as React from "react";
+import BootstrapTable from "react-bootstrap-table-next";
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import paginationFactory from 'react-bootstrap-table2-paginator';
+import CommonService from "../common/CommonService";
+import * as constants from '../common/Constants';
+import * as graphConfig from '../common/graphConfig';
+import siteConfig from '../config/siteConfig.json';
+import '../scss/Dashboard.module.scss';
 
 export interface IDashboardProps {
     graph: Client;
@@ -26,6 +26,9 @@ export interface IDashboardProps {
     hideMessageBar(): void;
     appInsights: ApplicationInsights;
     userPrincipalName: any;
+    siteName: any;
+    onShowTeamNameConfigForm: Function;
+    onShowIncidentHistory: Function;
 }
 
 export interface IDashboardState {
@@ -42,6 +45,7 @@ export interface IDashboardState {
     showLoader: boolean;
     loaderMessage: string;
     selectedIncident: any;
+    isManageCalloutVisible: boolean;
 }
 
 // interface for Dashboard fields
@@ -73,7 +77,10 @@ class Dashboard extends React.PureComponent<IDashboardProps, IDashboardState> {
             showLoader: true,
             loaderMessage: this.props.localeStrings.genericLoaderMessage,
             selectedIncident: [],
+            isManageCalloutVisible: false
         };
+
+        this.onActionClick = this.onActionClick.bind(this);
     }
 
     private dataService = new CommonService();
@@ -86,16 +93,28 @@ class Dashboard extends React.PureComponent<IDashboardProps, IDashboardState> {
         window.removeEventListener("resize", this.resize.bind(this));
     }
 
-    // bind edit icon to dashboard if status is not 'Completed'
-    editButton = (cell: any, gridRow: any, rowIndex: any, formatExtraData: any) => {
+    // On Click of edit or view incident history icons this method gets called.
+    public onActionClick(_cell: any, gridRow: any, _rowIndex: any, _formatExtraData: any) {
         return (
-            <img
-                src={require("../assets/Images/GridEditIcon.svg").default}
-                alt={this.props.localeStrings.edit}
-                className="grid-edit-icon"
-                title={this.props.localeStrings.edit}
-                onClick={() => this.props.onEditButtonClick(gridRow)}
-            />
+            <span>
+                {/* bind edit icon to dashboard if status is not 'Completed' */}
+                <img
+                    src={require("../assets/Images/GridEditIcon.svg").default}
+                    alt={this.props.localeStrings.edit}
+                    className="grid-edit-icon"
+                    title={this.props.localeStrings.edit}
+                    onClick={() => this.props.onEditButtonClick(gridRow)}
+                />
+
+                {/* view version history of each incident in dashboard when onclick of history icon */}
+                <img
+                    src={require("../assets/Images/IncidentHistoryIcon.svg").default}
+                    alt={this.props.localeStrings.viewIncidentHistory}
+                    title={this.props.localeStrings.viewIncidentHistory}
+                    className="grid-version-history-icon"
+                    onClick={() => this.props.onShowIncidentHistory(gridRow.incidentId)}
+                />
+            </span>
         );
     }
 
@@ -155,7 +174,7 @@ class Dashboard extends React.PureComponent<IDashboardProps, IDashboardState> {
         }
     }
 
-    // sort dashboard data based on Incident Id
+    // sort data based on order
     sortDashboardData = (allIncidents: any): any => {
         return allIncidents.sort((currIncident: any, prevIncident: any) => (parseInt(currIncident.itemId) < parseInt(prevIncident.itemId)) ? 1 : ((parseInt(prevIncident.itemId) < parseInt(currIncident.itemId)) ? -1 : 0));
     }
@@ -267,6 +286,11 @@ class Dashboard extends React.PureComponent<IDashboardProps, IDashboardState> {
                 headerTitle: true,
                 title: true
             }, {
+                dataField: 'severity',
+                text: this.props.localeStrings.fieldSeverity,
+                headerTitle: true,
+                title: true
+            }, {
                 dataField: 'incidentCommander',
                 text: this.props.localeStrings.incidentCommander,
                 headerTitle: true,
@@ -289,13 +313,17 @@ class Dashboard extends React.PureComponent<IDashboardProps, IDashboardState> {
                 headerTitle: true,
                 title: true
             }, {
-                dataField: 'edit',
-                text: this.props.localeStrings.edit,
-                formatter: this.editButton,
+                dataField: 'action',
+                text: this.props.localeStrings.action,
+                formatter: this.onActionClick,
                 headerTitle: true,
                 title: true
             }
         ]
+        // added constants for manage dropdown menu
+        const manageButtonId = 'manage-callout-button';
+        const manageLabelId = 'manage-callout-label';
+        const manageDescriptionId = 'manage-callout-description';
         return (
             <>
                 {this.state.showLoader ?
@@ -322,28 +350,79 @@ class Dashboard extends React.PureComponent<IDashboardProps, IDashboardState> {
                                             successIndicator={false}
                                         />
                                     </div>
-                                    <div className="dashboard-link">
-                                        <a title="Manage Roles" href={`https://${this.props.tenantName}/sites/${siteConfig.siteName}/lists/${siteConfig.roleAssignmentList}`} target='_blank' rel="noreferrer">
-                                            <img src={require("../assets/Images/Manage Roles.svg").default} alt="Manage Roles" />
-                                            <span>Manage Roles</span>
-                                        </a>
-                                    </div>
-                                    <div className="dashboard-link">
-                                        <a title="Manage Incident Types" href={`https://${this.props.tenantName}/sites/${siteConfig.siteName}/lists/${siteConfig.incTypeList}`} target='_blank' rel="noreferrer">
-                                            <img src={require("../assets/Images/Manage Incident Types.svg").default} alt="Manage Incident Types" />
-                                            Manage Incident Types
-                                        </a>
-                                    </div>
-                                    <Button
-                                        primary id="create-incident-btn"
-                                        fluid={true}
-                                        onClick={() => this.props.onCreateTeamClick()}
-                                        title={this.props.localeStrings.btnCreateIncident}
-                                    >
-                                        <img src={require("../assets/Images/ButtonEditIcon.svg").default} alt="edit icon" />
-                                        {this.props.localeStrings.btnCreateIncident}
-                                    </Button>
+                                    <Flex space="between" wrap={true}>
+                                        <div
+                                            className={`manage-links${this.state.isManageCalloutVisible ? " callout-visible" : ""}`}
+                                            onClick={() => this.setState({ isManageCalloutVisible: !this.state.isManageCalloutVisible })}
+                                            id={manageButtonId}
+                                        >
+                                            <img
+                                                src={require("../assets/Images/ManageIcon.svg").default}
+                                                className="manage-icon"
+                                                alt="Manage Icon"
+                                            />
+                                            <img
+                                                src={require("../assets/Images/ManageIconActive.svg").default}
+                                                className='manage-icon-active'
+                                                alt="Manage Active Icon"
+                                            />
+                                            <div className='manage-label'>{this.props.localeStrings.manageLabel}</div>
+                                            {this.state.isManageCalloutVisible ?
+                                                <Icon iconName="ChevronUp" />
+                                                :
+                                                <Icon iconName="ChevronDown" />
+                                            }
+                                        </div>
+
+                                        <Button
+                                            primary id="create-incident-btn"
+                                            fluid={true}
+                                            onClick={() => this.props.onCreateTeamClick()}
+                                            title={this.props.localeStrings.btnCreateIncident}
+                                        >
+                                            <img src={require("../assets/Images/ButtonEditIcon.svg").default} alt="edit icon" />
+                                            {this.props.localeStrings.btnCreateIncident}
+                                        </Button>
+                                    </Flex>
                                 </Flex>
+                                {this.state.isManageCalloutVisible ? (
+                                    <Callout
+                                        ariaLabelledBy={manageLabelId}
+                                        ariaDescribedBy={manageDescriptionId}
+                                        role="menu"
+                                        className="manage-links-callout"
+                                        gapSpace={10}
+                                        target={`#${manageButtonId}`}
+                                        isBeakVisible={false}
+                                        onDismiss={() => this.setState({ isManageCalloutVisible: false })}
+                                        directionalHint={DirectionalHint.bottomLeftEdge}
+                                    >
+                                        <div>
+                                            <div className="dashboard-link">
+                                                <a title={this.props.localeStrings.manageIncidentTypesTooltip} href={`https://${this.props.tenantName}/sites/${this.props.siteName}/lists/${siteConfig.incTypeList}`} target='_blank' rel="noreferrer">
+                                                    <img src={require("../assets/Images/Manage Incident Types.svg").default} alt={this.props.localeStrings.manageIncidentTypesTooltip} />
+                                                    <span className="manage-callout-text">{this.props.localeStrings.incidentTypesLabel}</span>
+                                                </a>
+                                            </div>
+                                            <div className="dashboard-link">
+                                                <a title={this.props.localeStrings.manageRolesTooltip} href={`https://${this.props.tenantName}/sites/${this.props.siteName}/lists/${siteConfig.roleAssignmentList}`} target='_blank' rel="noreferrer">
+                                                    <img src={require("../assets/Images/Manage Roles.svg").default} alt={this.props.localeStrings.manageRolesTooltip} />
+                                                    <span className="manage-callout-text">{this.props.localeStrings.roles}</span>
+                                                </a>
+                                            </div>
+                                            <div
+                                                className="dashboard-link"
+                                                title={this.props.localeStrings.manageTeamNameTooltip}
+                                                onClick={() => this.props.onShowTeamNameConfigForm()}
+                                            >
+                                                <span className="team-name-link">
+                                                    <img src={require("../assets/Images/TeamNameIcon.svg").default} alt={this.props.localeStrings.manageTeamNameTooltip} />
+                                                    <span className="manage-callout-text">{this.props.localeStrings.teamNameLabel}</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </Callout>
+                                ) : null}
                             </div>
                         </div>
                         <div id="dashboard-pivot-container">

@@ -1,11 +1,11 @@
 - Deployment Guide
     - [Prerequisites](#prerequisites) 
     - [Steps](#Deployment-Steps)
-        - [Register AD Application](#1-register-azure-ad-application)
-        - [Deploy to Azure subscription](#2-deploy-to-your-azure-subscription)
-        - [Set-up Authentication](#3-set-up-authentication)
-        - [Add Permissions to your app](#4-add-permissions-to-microsoft-graph-azure-ad-app)
-        - [Provisioning TEOC Site](#5-provisioning-teoc-site)
+        - [Provisioning TEOC Site](#1-provisioning-teoc-site)
+        - [Register AD Application](#2-register-azure-ad-application)
+        - [Deploy to Azure subscription](#3-deploy-to-your-azure-subscription)
+        - [Set-up Authentication](#4-set-up-authentication)
+        - [Add Permissions to your app](#5-add-permissions-to-microsoft-graph-azure-ad-app)
         - [Create the Teams app packages](#6-create-the-teams-app-packages)
         - [Install the app in Microsoft Teams](#7-install-the-app-in-microsoft-teams)
         - [Deploy NotifyToTeams Extension in SharePoint](#8-deploy-notifytoteams-extension-in-sharepoint)
@@ -27,7 +27,77 @@ To begin deployment for Microsoft Teams Emergency Operations Center (TEOC) appli
 
 # Deployment Steps
 
-## 1. Register Azure AD application
+## 1. Provisioning TEOC Site
+
+To provision the SharePoint site and lists for the TEOC app, 
+
+* Clone the TEOC [repository](https://github.com/OfficeDev/microsoft-teams-emergency-operations-center.git) locally.
+* Open the `Deployment/provisioning` folder to get the latest provisioning files i.e `EOC-Provision.ps1` and `EOC-SiteTemplate.xml`
+
+    ![Provisioning Scripts](images/Provisioning_Scripts.PNG)
+
+>Note: Run below commands with Windows Powershell as Administrator
+
+* Run the below command, this will allow you to run **EOC-Provision.ps1** script. By default, the execution policy is restricted for windows computer. You may change it back to restricted after deployment is completed.
+    >Note: Non-windows computer users can skip this as it is unrestricted by default for them.
+    ```
+    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
+    ```
+
+* Run the below command to unblock the deployment script.
+    >Note: File path should be set to provisioning folder. 
+    ```
+    Unblock-File -Path .\EOC-Provision.ps1
+    ```
+
+Below are the steps you need to perform to provision the TEOC site,  
+
+1. Run the PowerShell script as Administrator, script will ask for below inputs,
+    
+    * XML file path – enter fully qualified path of the XML file (Ex: C:/Scripts/EOC-SiteTemplate.xml) 
+    * Tenant Name – Name of the tenant where root TEOC site needs to be provisioned (Ex: Contoso)
+    * Tenant Admin Email – Email of tenant admin account (Ex: `abc@contoso.com`) 
+    * SharePoint Site Name - Name of the site that needs to be provisioned for TEOC application (Ex: Teams EOC Site)
+    >Note: Make a note of the site name _without spaces_ (i.e. The internal name of the site, which is shown in the URL - Ex: /sites/**TeamsEOCSite**), this will be needed later while deploying the resources in Step #3.
+
+    ![Provisioning Scripts](images/ProvisioningScript.PNG)
+
+2. Once the above details are provided, script will check if the “PnP.PowerShell” module is installed, if not, it will install the module.
+3. If you are running the **PnP.PowerShell** scripts for the first time for that tenant, it will ask for a list of permissions to be granted. 
+    >Note: _PnP.PowerShell_ module requests for all the permissions that are there even if it is not used in the script to ensure smooth running of the scripts. These are delegated permissions, please make sure the user running the script have permissions to perform the action for the script to be executed successfully.
+
+4. Below is the list of permissions it asks,
+
+    ![PnP Permissions](images/PnP_Permissions.PNG)
+
+5. Only SharePoint related permission **Have full control of all site collections** will be utilized in the script so that the site can be provisioned.
+
+6. Please make sure to grant permissions to users who need to use TEOC application, follow the below steps provide permissions,
+    -   Navigate to the URL for the TEOC site as the administrator.
+    -   If you are using the default configuration, this can be found at _`https://<yourtenant>.sharepoint.com/sites/<SiteName>/`_.
+        - Select site permissions
+
+            ![SitePermission](images/SitePermission.PNG)
+
+        - Advanced permissions settings
+
+            ![AdvPermission](images/AdvPermission.PNG)
+
+        - Select Grant permissions 
+
+            ![GrantPermission](images/GrantPermission.PNG)
+
+        - Enter in 'Everyone except external users'        
+
+            ![EveryonePermission](images/Everyone.PNG)
+        
+        >Note: In case access has to be given to specific users, enter specific users instead of directly adding 'Everyone except external users' group.
+
+        - Change permissions to 'TEOC Members [Edit]'
+        - Unselect send an email invitation
+        - Click share
+
+## 2. Register Azure AD application
 
 You need to first create a new Azure AD Application to secure API permissions. Registering your application establishes a trust relationship between your app and the Microsoft identity platform. 
 
@@ -53,7 +123,7 @@ You need to first create a new Azure AD Application to secure API permissions. R
 
 1. You're done with app registration and client secrets for now. This provides the groundwork for our next steps. Please ensure you have the values ready for Application Id, Tenant Id, Client Secret Value.
 
-## 2. Deploy to your Azure subscription
+## 3. Deploy to your Azure subscription
 1. Click on the **Deploy to Azure** button below.
 
     [![Deploy to Azure](images/DeployButton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fgithub.com%2FOfficeDev%2Fmicrosoft-teams-emergency-operations-center%2Ftree%2Fmain%2FDeployment%2Fazuredeploy.json)
@@ -75,10 +145,11 @@ You need to first create a new Azure AD Application to secure API permissions. R
 
    > **Note:** Please ensure that you use lower case and numbers in the field you enter, otherwise the deployment may fail.
 
-1. Update the following fields in the template using the values copied from step 1 in previous section,
+1. Update the following fields in the template using the values copied from step 1 & 2 in previous section,
     1. **Client ID**: The application (client) ID of the app registered
     2. **Client Secret**: The client secret Value of the app registered
     3. **Tenant Id**: The tenant Id
+    4. **Share Point Site Name**: Name of the SharePoint site that was provisioned in step 1 (It should be the exact site name from the URL Ex: ../sites/**TeamsEOCSite**)
 
 1. Other fields have pre-populated default values, do not change it unless you want it to be customized depending on the need.
 
@@ -86,7 +157,7 @@ You need to first create a new Azure AD Application to secure API permissions. R
 
 1. Click on **Review+Create**. Post successful validation clicks on Create. The deployment will take around 30 to 40 Minutes. Please wait for the deployment to be completed and then proceed with the below steps. 
 
-## 3. Set-up Authentication
+## 4. Set-up Authentication
 
 1. Go to **App Registrations** page [here](https://portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredApps) and select the application (TEOC specific) which you created in step 1. Follow the below steps to set up the authentication for the application.
 
@@ -113,7 +184,8 @@ You need to first create a new Azure AD Application to secure API permissions. R
     1. Click **Save** to commit your changes.
 
     1. Click on **Add a scope**, under **Scopes defined by this API**. In the flyout that appears, enter the following values:
-        * **Scope name:** access_as_user (_Enter as it is_)
+        * **Scope name:** access_as_user 
+        > Note: Enter Scope name as _access_as_user_, otherwise it may throw 403 forbidden error while logging in to the app
         * **Who can consent?:** Admins and users
         * **Admin consent display name:** Teams can access app’s web APIs
         * **Admin consent description:**  Allows Teams to call the app’s web APIs as the current user.
@@ -124,7 +196,7 @@ You need to first create a new Azure AD Application to secure API permissions. R
 
     1. Click **Add a client application**, under **Authorized client applications**. In the flyout that appears, enter the following values:
         * **Client ID**: `5e3ce6c0-2b1f-4285-8d4b-75ee78787346` (_Teams WebApp Client Id_)
-        > Note: This Id is different than the Client Id from step 1 
+        > Note: This Id is different than the Client Id from step 2 
         * **Authorized scopes**: Select the scope that ends with `access_as_user`. (There should only be 1 scope in this list.)
 
     1. Click **Add application** to commit your changes.
@@ -141,7 +213,7 @@ You need to first create a new Azure AD Application to secure API permissions. R
         ![Authorized Apps](images/Authorized_Client_Apps.png)
 
 1. Back under **Manage**, click on **Manifest**.
-    1. In the editor that appears, find _accessTokenAcceptedVersion_ and update the value from null to 2
+    1. In the editor that appears, find `accessTokenAcceptedVersion` and update the value from **null** to **2**
     2. Find the `optionalClaims` property in the JSON Azure AD application manifest, and replace it with the following block:
     ```
         "optionalClaims": {
@@ -161,7 +233,7 @@ You need to first create a new Azure AD Application to secure API permissions. R
 
         ![Optional Claims](images/Manifest_Optional_Claims.png)
 
-## 4. Add Permissions to Microsoft Graph Azure AD app
+## 5. Add Permissions to Microsoft Graph Azure AD app
 
 In this section, you’ll be adding the necessary Graph API permissions to the application. 
 
@@ -198,73 +270,6 @@ In this section, you’ll be adding the necessary Graph API permissions to the a
 
     ![API Permissions](images/Api_Permissions.PNG)
 
-## 5. Provisioning TEOC Site
-
-To provision the TEOC site and SharePoint lists, 
-
-* Make sure you have cloned the app [repository](https://github.com/OfficeDev/microsoft-teams-emergency-operations-center.git) locally.
-* Open the `Deployment/provisioning` folder to get the latest provisioning files i.e `EOC-Provision.ps1` and `EOC-SiteTemplate.xml`
-
-    ![Provisioning Scripts](images/Provisioning_Scripts.PNG)
-
->Note: Run below commands with Windows Powershell as Administrator
-
-* Run the below command, this will allow you to run **EOC-Provision.ps1** script. By default, the execution policy is restricted for windows computer. You may change it back to restricted after deployment is completed.
-    >Note: Non-windows computer users can skip this as it is unrestricted by default for them.
-    ```
-    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
-    ```
-
-* Run the below command to unblock the deployment script.
-    >Note: File path should be set to provisioning folder. 
-    ```
-    Unblock-File -Path .\EOC-Provision.ps1
-    ```
-
-Below are the steps you need to perform to provision the TEOC site,  
-
-1. Run the PowerShell script as Administrator, script will ask for below inputs,
-    
-    * XML file path – enter fully qualified path of the XML file (Ex: C:/Scripts/EOC-SiteTemplate.xml) 
-    * Tenant Name – Name of the tenant where root TEOC site needs to be provisioned (Ex: Contoso)
-    * Tenant Admin Email – Email of tenant admin account (Ex: `abc@contoso.com`)  
-
-2. Once the above details are provided, script will check if the “PnP.PowerShell” module is installed, if not, it will install the module.
-3. If you are running the **PnP.PowerShell** scripts for the first time for that tenant, it will ask for a list of permissions to be granted. 
-    >Note: _PnP.PowerShell_ module requests for all the permissions that are there even if it is not used in the script to ensure smooth running of the scripts. These are delegated permissions, please make sure the user running the script have permissions to perform the action for the script to be executed successfully.
-
-4. Below is the list of permissions it asks,
-
-    ![PnP Permissions](images/PnP_Permissions.PNG)
-
-5. Only SharePoint related permission **Have full control of all site collections** will be utilized in the script so that the site can be provisioned.
-
-6. Please make sure to grant permissions to users who need to use TEOC application, follow the below steps provide permissions,
-    -   Navigate to the URL for the TEOC site as the administrator.
-    -   If you are using the default configuration, this can be found at ***`https://<yourtenant>.sharepoint.com/sites/TEOCSite/`***.
-        - Select site permissions
-
-            ![SitePermission](images/SitePermission.PNG)
-
-        - Advanced permissions settings
-
-            ![AdvPermission](images/AdvPermission.PNG)
-
-        - Select Grant permissions 
-
-            ![GrantPermission](images/GrantPermission.PNG)
-
-        - Enter in 'Everyone except external users'        
-
-            ![EveryonePermission](images/Everyone.PNG)
-        
-        >Note: In case access has to be given to specific users, enter specific users instead of directly adding 'Everyone except external users' group.
-
-        - Change permissions to 'TEOC Members [Edit]'
-        - Unselect send an email invitation
-        - Click share
-
-
 ## 6. Create the Teams app packages
 
 Now we build the teams package to upload the TEOC (Teams Emergency Operations Center) app to the Teams client. TEOC in turn will connect to the SharePoint resources/list to the Tenant deployed. 
@@ -285,7 +290,7 @@ To create the team's package,
 
 1. Update the validDomains and webApplicationInfo details.
 
-    * Change the `<<clientId>>` placeholder in the webApplicationInfo setting with the _%clientId%_. This is the application id which we copied in step 1.
+    * Change the `<<clientId>>` placeholder in the webApplicationInfo setting with the _%clientId%_. This is the application id which we copied in step 2.
 
     * Change the `<<appDomain>>` placeholder in the _webApplicationInfo_ and _validDomains_ to the `%appDomain%` value.  
 

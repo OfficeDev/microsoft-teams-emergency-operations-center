@@ -1,4 +1,4 @@
-export const AppVersion = "0.5 (Public Preview) ";
+export const AppVersion = "1.0 ";
 export const EOCAppName = "MIFTEOC";
 export const all = "All";
 export const planning = "Planning";
@@ -41,5 +41,34 @@ export const componentNames = {
     EOCHomeComponent: 'EOCHome',
     DashboardComponent: 'Dashboard',
     IncidentDetailsComponent: 'IncidentDetails',
-    UpdateIncidentCompoent: 'UpdateIncident'
+    UpdateIncidentCompoent: 'UpdateIncident',
+    TeamNameConfiguration: 'TeamNameConfiguration',
+    IncidentHistoryComponent: 'IncidentHistory'
 }
+
+export const severity = ["Low", "Medium", "High", "Critical"]
+export const teamNameConfigOrderDropdown = ["1", "2", "3", "4", "Don't Include"];
+export const maxCharLengthForPrefix = 10;
+
+export const teamNameConfigConstants = {
+    IncidentName: "IncidentName",
+    IncidentType: "IncidentType",
+    Prefix: "Prefix",
+    PrefixValue: "PrefixValue",
+    StartDate: "StartDate",
+    DontInclude: "Don't Include"
+}
+
+//Incident history constants
+export const itemHeight = 30;
+export const numberOfItemsOnPage = 10;
+export const listViewFieldMinWidth = 190;
+export const listViewFieldMaxWidth = 204;
+export const listViewNewMinWidth = 210;
+export const listViewNewMaxWidth = 308;
+export const listViewOldMinWidth = 210;
+export const listViewOldMaxWidth = 308;
+export const listViewItemInitialCount = 8;
+export const modifiedDate = "modifiedDate";
+export const lastModifiedBy = "lastModifiedBy";
+export const roleAssignmentsObj = "roleAssignmentsObj";

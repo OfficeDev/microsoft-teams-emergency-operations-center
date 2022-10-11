@@ -14,6 +14,7 @@ Please note that if you customize the solution according to your organization ne
 Below are the high level steps to get you started on a customizing the template.
 
 ## Site Name Customization
+>**Site Name Customization is not applicable for TEOC v1.0 or higher.**
 
 **Note:**  Please ensure to update Site Name before provisioning.
 
@@ -27,14 +28,15 @@ Below are the high level steps to get you started on a customizing the template.
 
         ![SiteName](images/SiteName.PNG)
 
-1.  Open `ECO-TeamFx/tabs/src/config` folder in visual studio code.
+1.  Open `EOC-TeamFx/tabs/src/config` folder in visual studio code.
 1.  Open `siteConfig.json` file and update `siteName` with new site name.
 
     ![SiteName](images/SiteNameConfig.PNG)
 
+
 ## Text Label Customization
 
-1. Open `ECO-TeamFx/tabs/src/locale` folder.
+1. Open `EOC-TeamFx/tabs/src/locale` folder.
 1. Open the component that you would like to modify and locate the constant name that you wish to modify. 
 1. Open `LocaleStrings.ts` and update the constant value to the new value.
 
@@ -58,7 +60,7 @@ Below are the high level steps to get you started on a customizing the template.
     ![ListName](images/ListNameXML.PNG)
 
 1.  Save the `EOC-SiteTemplate.xml` file and start provisioning site.
-1.  Open `ECO-TeamFx/tabs/src/config` folder.
+1.  Open `EOC-TeamsFx/tabs/src/config` folder.
 1.  Open `siteConfig.json` file and update the list name
 
     ![ListName](images/ListNameConfig.PNG)
@@ -90,7 +92,7 @@ Below are the high level steps to get you started on a customizing the template.
 
 1.  Open the `Deployment/appPackage/resources` folder. 
 1.  Update `outline.png` & `color.png` with new logo images. 
-1.  Open `ECO-TeamFx/tabs/templates/appPackage/resorces` folder.
+1.  Open `EOC-TeamsFx/templates/appPackage/resources` folder.
 1.  Update `outline.png` & `color.png` with new logo images.
 1.  For logo specifications refer [this](https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/build-and-test/apps-package#app-icons) link.
 
