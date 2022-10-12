@@ -9,12 +9,12 @@ Deployment can fail if the base resource name provided is not available and you 
 ## 2. Provisioning failed with error, what do I need to do?
 Provisioning can fail due to some network issue. If it failed and TEOC site collection is created in your tenant then delete the site collection from Active sites as well as Deleted sites. Run the provisioning script again.
 
-![ProvisioningError](Images/ProvisioningError.jpg)
+![ProvisioningError](./Images/ProvisioningError.png)
 
 ## 3. Upgrading to latest version failed with error, what do I need to do?
 App service deployment fails with the error message “Input string was not in a correct format” due to fsevents package.
 
-![UpgradeError](Images/NodeError.JPG)
+![UpgradeError](./Images/NodeError.png)
 
 The fsevents library is causing the app service deployment to fail for already deployed apps.
 

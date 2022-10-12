@@ -65,7 +65,7 @@
 
 7. A new role can be added by selecting "New Role" option from the "Assign Additional Roles" dropdown, providing "Role Name" and clicking on "Create Role" button.
 
-    ![TEOC Add New Role](./Images/CreateNewRole.PNG)
+    ![TEOC Add New Role](./Images/CreateNewRole.png)
 
 8. On click of "Create New Incident", incident will be created, and user will be redirected to dashboard where newly added incident and details will be present. 
 
@@ -80,7 +80,7 @@
 
 1. From Dashboard, on click of "Edit" button for an incident, the user will be redirected to Edit Incident form where they will be able to modify details of the incident. All the fields except "Incident Type" and "Start Date & Time" are editable. _It is mandatory to enter Reason for Update while editing the incident_.
 
-    ![TEOC Edit Form](Images/EditForm1.png)
+    ![TEOC Edit Form](./Images/EditForm1.png)
 
 2. Below points to note while updating the incident,
     * If the Incident commander is updated, old incident commander is removed from the team and the tag as well.
@@ -91,18 +91,18 @@
 
 1. From Dashboard, on click of "View Incident History" button for an incident, the user will be redirected to  Incident History screen. By default, user will see the details in list view. User can click on any version listed under the activity log to view the changes for that version.
 
-    ![TEOC History](Images/ListViewHistory.png)
+    ![TEOC History](./Images/ListViewHistory.png)
 
 2. On click of Table view option, user can see the incident changes for all versions in the table format. "Date" and "Modified By" are the sticky columns and user can use the scroll bar to view other columns. 
 If there are any changes to the Roles, _View_ link will be available on the Roles column and it will open a popup to show the role changes for that version.
 
-    ![TEOC History](Images/TableViewHistory.png)
+    ![TEOC History](./Images/TableViewHistory.png)
 
 ## Manage Options
 
 1. From Dashboard, on click of "Manage" button the menu will appear with the available options.
    
-    ![TEOC Manage Menu](Images/ManageMenu.png)
+    ![TEOC Manage Menu](./Images/ManageMenu.png)
 
 2. On click of Incident Types, user will be redirected to the SharePoint list to manage the incident types.
 
@@ -110,7 +110,7 @@ If there are any changes to the Roles, _View_ link will be available on the Role
 
 4. On click of Team Name, user will be redirected to the Team Name configuration screen to configure the format of the Team Name. Upon saving the configuration, the incidents created/edited thereafter will have the Team Name in that newly configured format.
 
-   ![TEOC Ground Assessments](Images/TeamNameConfiguration.png)   
+   ![TEOC Ground Assessments](./Images/TeamNameConfiguration.png)   
 
 
 ## Notify to Teams Extension
@@ -120,18 +120,18 @@ If there are any changes to the Roles, _View_ link will be available on the Role
     * Navigate to the team and go to "Assessment" Channel.
     * Click on "Ground Assessment" tab.    
     
-    ![TEOC Ground Assessments](Images/AssestmentTab.png)
+    ![TEOC Ground Assessments](./Images/AssestmentTab.png)
 
 3. When you click on ellipses you will find an option to "Open in SharePoint".
 
-    ![TEOC Open In SharePoint](Images/OpenInSharePoint.png)
+    ![TEOC Open In SharePoint](./Images/OpenInSharePoint.png)
 
 4. User will be navigated to SharePoint site. From Left navigation users can navigate to "Pages" Library.
 
 5. If user want to share the content already present in any of the page, user can simply select the page and select **Notify to Teams Group** as below.
 
-    ![TEOC NotifyToTeams Button](Images/NotifyToTeams.png)
+    ![TEOC NotifyToTeams Button](./Images/NotifyToTeams.png)
 
 6. Once notified to teams group, user will be able to view the content in "Announcements" Channel.
 
-    ![TEOC NotifyToTeams Button](Images/Announcement.png)
+    ![TEOC NotifyToTeams Button](./Images/Announcement.png)

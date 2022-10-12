@@ -22,16 +22,16 @@ Below are the high level steps to get you started on a customizing the template.
 1.  Open `EOC-Provision.ps1`
     * Update EOCSiteURL value to new value. (Ex: `$EOCSiteURL = "/sites/NewSiteName"`)
 
-        ![SiteURL](images/SiteURL.PNG)
+        ![SiteURL](./Images/SiteURL.png)
 
     * Update Title property with new site name. (Ex: `New-PnPSite -Type TeamSiteWithoutMicrosoft365Group -Title NewSiteName -Url $TenantURL$EOCSiteURL -Owner $AdminEmail`)
 
-        ![SiteName](images/SiteName.PNG)
+        ![SiteName](./Images/SiteName.png)
 
 1.  Open `EOC-TeamFx/tabs/src/config` folder in visual studio code.
 1.  Open `siteConfig.json` file and update `siteName` with new site name.
 
-    ![SiteName](images/SiteNameConfig.PNG)
+    ![SiteName](./Images/SiteNameConfig.png)
 
 
 ## Text Label Customization
@@ -40,13 +40,13 @@ Below are the high level steps to get you started on a customizing the template.
 1. Open the component that you would like to modify and locate the constant name that you wish to modify. 
 1. Open `LocaleStrings.ts` and update the constant value to the new value.
 
-    ![Config](images/IncidentCommanderConst.PNG)
+    ![Config](./Images/IncidentCommanderConst.png)
 
     Ex: If you wish to update `Commander Name` label to `Commander`, open the `LocaleStrings.ts` find `fieldIncidentCommander` and update its value.
 
-    ![OldLabel](images/OldLabel.PNG)
+    ![OldLabel](./Images/OldLabel.png)
 
-    ![NewLabel](images/UpdatedLabel.PNG)
+    ![NewLabel](./Images/UpdatedLabel.png)
 
 
 ## List Names Customization
@@ -57,13 +57,13 @@ Below are the high level steps to get you started on a customizing the template.
 1.  Open `EOC-SiteTemplate.xml` file.
 1.  Seach for `<pnp:ListInstance` and update the Title and URL property for specific list.
 
-    ![ListName](images/ListNameXML.PNG)
+    ![ListName](./Images/ListNameXML.png)
 
 1.  Save the `EOC-SiteTemplate.xml` file and start provisioning site.
 1.  Open `EOC-TeamsFx/tabs/src/config` folder.
 1.  Open `siteConfig.json` file and update the list name
 
-    ![ListName](images/ListNameConfig.PNG)
+    ![ListName](./Images/ListNameConfig.png)
 
 
 ## List Values Customization
@@ -78,13 +78,13 @@ Below are the high level steps to get you started on a customizing the template.
     * TEOC-RoleAssignments
 1.  Open Master List and click new to create new entry.
 
-    ![NavigateToMaster](images/RoleAssignments.PNG)
+    ![NavigateToMaster](./Images/RoleAssignments.png)
 
-    ![NewEntry](images/NewRole.PNG)
+    ![NewEntry](./Images/NewRole.png)
 
 1.  Once New entry is added in Master, it will be reflected in Create New Incident / Update Incident form.
 
-    ![UpdatedValue](images/UpdatedMasterValue.PNG)
+    ![UpdatedValue](./Images/UpdatedMasterValue.png)
 
 ## Logo Customization and Specifications
 
