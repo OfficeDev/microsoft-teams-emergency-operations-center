@@ -30,7 +30,7 @@ Create the resource group in a location where Application Insights is available.
 
 Click on the Operation details, check for the error message. If the error message is **Gateway error**, this can occur due to network issues.
 
-![Gateway Error](images/Deployment_Failure.png)
+![Gateway Error](./Images/Deployment_Failure.png)
 
 ### Fix
 
@@ -42,7 +42,7 @@ Click on the Operation details, check for the error message. If the error messag
     * Provide the parameters specific to the template.
     * Verify if the deployment has been successful.
 
-        ![Deployment Success](images/Deployment_Success.png)
+        ![Deployment Success](./Images/Deployment_Success.png)
 
 
 ## Problems installing the app in Teams

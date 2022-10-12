@@ -34,7 +34,7 @@ To provision the SharePoint site and lists for the TEOC app,
 * Clone the TEOC [repository](https://github.com/OfficeDev/microsoft-teams-emergency-operations-center.git) locally.
 * Open the `Deployment/provisioning` folder to get the latest provisioning files i.e `EOC-Provision.ps1` and `EOC-SiteTemplate.xml`
 
-    ![Provisioning Scripts](images/Provisioning_Scripts.PNG)
+    ![Provisioning Scripts](./Images/Provisioning_Scripts.png)
 
 >Note: Run below commands with Windows Powershell as Administrator
 
@@ -60,7 +60,7 @@ Below are the steps you need to perform to provision the TEOC site, 
     * SharePoint Site Name - Name of the site that needs to be provisioned for TEOC application (Ex: Teams EOC Site)
     >Note: Make a note of the site name _without spaces_ (i.e. The internal name of the site, which is shown in the URL - Ex: /sites/**TeamsEOCSite**), this will be needed later while deploying the resources in Step #3.
 
-    ![Provisioning Scripts](images/ProvisioningScript.PNG)
+    ![Provisioning Scripts](./Images/ProvisioningScript.png)
 
 2. Once the above details are provided, script will check if the “PnP.PowerShell” module is installed, if not, it will install the module.
 3. If you are running the **PnP.PowerShell** scripts for the first time for that tenant, it will ask for a list of permissions to be granted. 
@@ -68,7 +68,7 @@ Below are the steps you need to perform to provision the TEOC site, 
 
 4. Below is the list of permissions it asks,
 
-    ![PnP Permissions](images/PnP_Permissions.PNG)
+    ![PnP Permissions](./Images/PnP_Permissions.png)
 
 5. Only SharePoint related permission **Have full control of all site collections** will be utilized in the script so that the site can be provisioned.
 
@@ -77,19 +77,19 @@ Below are the steps you need to perform to provision the TEOC site, 
     -   If you are using the default configuration, this can be found at _`https://<yourtenant>.sharepoint.com/sites/<SiteName>/`_.
         - Select site permissions
 
-            ![SitePermission](images/SitePermission.PNG)
+            ![SitePermission](./Images/SitePermission.png)
 
         - Advanced permissions settings
 
-            ![AdvPermission](images/AdvPermission.PNG)
+            ![AdvPermission](./Images/AdvPermission.png)
 
         - Select Grant permissions 
 
-            ![GrantPermission](images/GrantPermission.PNG)
+            ![GrantPermission](./Images/GrantPermission.png)
 
         - Enter in 'Everyone except external users'        
 
-            ![EveryonePermission](images/Everyone.PNG)
+            ![EveryonePermission](./Images/Everyone.png)
         
         >Note: In case access has to be given to specific users, enter specific users instead of directly adding 'Everyone except external users' group.
 
@@ -108,25 +108,25 @@ You need to first create a new Azure AD Application to secure API permissions. R
     - **Supported account types**: Select "Accounts in single organizational directory"
     - Leave the "Redirect URI" field blank for now.
 
-    ![Azure AD app registration page](images/App_Registration_1.png)
+    ![Azure AD app registration page](./Images/App_Registration_1.png)
 
 1. Click **Register** to complete the registration.
 1. When the app is registered, you'll be taken to the app's "Overview" page. Copy the **Application (client) Id and Tenant Id**; we will need it later. 
 
-    ![Azure AD app overview page](images/App_Registration_Overview.png)
+    ![Azure AD app overview page](./Images/App_Registration_Overview.png)
 
 1. On the side rail in the Manage section, navigate to the "Certificates & secrets" section. In the Client secrets section, click on "+ New client secret". Add a description for the secret, and choose when the secret needs to expire (recommended is 12 months) and click "Add".
 
 1. Once the client secret is created, copy its **Value** only; we will need it later. Once you leave this page, you may not be able to copy it again.
 
-    ![Azure AD app secret](images/App_Secret.png)
+    ![Azure AD app secret](./Images/App_Secret.png)
 
 1. You're done with app registration and client secrets for now. This provides the groundwork for our next steps. Please ensure you have the values ready for Application Id, Tenant Id, Client Secret Value.
 
 ## 3. Deploy to your Azure subscription
 1. Click on the **Deploy to Azure** button below.
 
-    [![Deploy to Azure](images/DeployButton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fgithub.com%2FOfficeDev%2Fmicrosoft-teams-emergency-operations-center%2Ftree%2Fmain%2FDeployment%2Fazuredeploy.json)
+    [![Deploy to Azure](./Images/DeployButton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FOfficeDev%2Fmicrosoft-teams-emergency-operations-center%2Fmain%2FDeployment%2Fazuredeploy.json)
 
 1. When prompted, log in to your Azure subscription.
 
@@ -153,7 +153,7 @@ You need to first create a new Azure AD Application to secure API permissions. R
 
 1. Other fields have pre-populated default values, do not change it unless you want it to be customized depending on the need.
 
-    ![Azure App Deploy](images/App_Deploy.png)
+    ![Azure App Deploy](./Images/App_Deploy.png)
 
 1. Click on **Review+Create**. Post successful validation clicks on Create. The deployment will take around 30 to 40 Minutes. Please wait for the deployment to be completed and then proceed with the below steps. 
 
@@ -175,7 +175,7 @@ You need to first create a new Azure AD Application to secure API permissions. R
 
     1. Click **Save** to commit your changes.
 
-        ![Azure Authentication](images/Setup_Authentication.png)
+        ![Azure Authentication](./Images/Setup_Authentication.png)
 
     1. Back under **Manage**, click on **Expose an API**.
 
@@ -192,7 +192,7 @@ You need to first create a new Azure AD Application to secure API permissions. R
 
     1. Click **Add scope** to commit your changes.
 
-        ![API Add Scope](images/Add_Scope.png)
+        ![API Add Scope](./Images/Add_Scope.png)
 
     1. Click **Add a client application**, under **Authorized client applications**. In the flyout that appears, enter the following values:
         * **Client ID**: `5e3ce6c0-2b1f-4285-8d4b-75ee78787346` (_Teams WebApp Client Id_)
@@ -210,7 +210,7 @@ You need to first create a new Azure AD Application to secure API permissions. R
 
     1. After this step you should have **6** client applications listed under **Authorized client applications**.
 
-        ![Authorized Apps](images/Authorized_Client_Apps.png)
+        ![Authorized Apps](./Images/Authorized_Client_Apps.png)
 
 1. Back under **Manage**, click on **Manifest**.
     1. In the editor that appears, find `accessTokenAcceptedVersion` and update the value from **null** to **2**
@@ -231,7 +231,7 @@ You need to first create a new Azure AD Application to secure API permissions. R
     ```    
     3. Click **Save** to commit your changes.
 
-        ![Optional Claims](images/Manifest_Optional_Claims.png)
+        ![Optional Claims](./Images/Manifest_Optional_Claims.png)
 
 ## 5. Add Permissions to Microsoft Graph Azure AD app
 
@@ -268,7 +268,7 @@ In this section, you’ll be adding the necessary Graph API permissions to the a
 
 5. Reach out to your IT admin team to grant consent for the permissions provided. If you’re an admin, click on Grant the admin Consent for ******* 
 
-    ![API Permissions](images/Api_Permissions.PNG)
+    ![API Permissions](./Images/Api_Permissions.png)
 
 ## 6. Create the Teams app packages
 
@@ -286,7 +286,7 @@ To create the team's package,
     * `"contentUrl": "https://<<appDomain>>/index.html#/tab"`
     * `"websiteUrl": "https://<<appDomain>>/index.html#/tab"`
 
-    ![Manifest Updates](images/Manifest_Placeholders.PNG)
+    ![Manifest Updates](./Images/Manifest_Placeholders.png)
 
 1. Update the validDomains and webApplicationInfo details.
 
@@ -306,7 +306,7 @@ To create the team's package,
         } 
      ```
 
-    ![Manifest Updates](images/Manifest_Placeholders_2.PNG)
+    ![Manifest Updates](./Images/Manifest_Placeholders_2.png)
 
 1. Create a ZIP package with the manifest.json and resources folder with color.png, and outline.png. The two image files are the icons for your app in Teams.
 
@@ -314,7 +314,7 @@ To create the team's package,
 
     * Make sure that the files are the top level of the ZIP package, with no nested folders. 
     
-    ![Zip Folder Structure](images/Zip_Folder_Structure.PNG)
+    ![Zip Folder Structure](./Images/Zip_Folder_Structure.png)
 
   
 ## 7. Install the app in Microsoft Teams
@@ -333,43 +333,43 @@ To create the team's package,
 
 1. Get the latest package file `“eoc-extension.sppkg”` under **EOC-Extensions/sharepoint/ solution** folder.  
 
-    ![Extension Package](images/Extension_Package.PNG)
+    ![Extension Package](./Images/Extension_Package.png)
 
 1. Below are the steps you need to perform to add **NotifyToTeams** extension in TEOC site.
 
 1. Open SharePoint admin center.
 
-    ![SharePoint Admin Center](images/SharePoint_Admin_Center.PNG)
+    ![SharePoint Admin Center](./Images/SharePoint_Admin_Center.png)
 
 1. Click on **More features** menu item. Locate the Apps section and click the Open button.
 
-    ![SharePoint More Features](images/SharePoint_More_Features.PNG)
+    ![SharePoint More Features](./Images/SharePoint_More_Features.png)
 
 1. Click on **App Catalog** link. 
 
-    ![App Catalog](images/App_Catalog.PNG)
+    ![App Catalog](./Images/App_Catalog.png)
 
     _If you do not see an app catalog available, use the instructions [here](https://docs.microsoft.com/en-us/sharepoint/use-app-catalog#step-1-create-the-app-catalog-site-collection) to create a new app catalog before continuing._
 
 1. Click the Distribute apps for SharePoint link.
 
-    ![Distribute Apps](images/Distribute_Apps.PNG)
+    ![Distribute Apps](./Images/Distribute_Apps.png)
 
 1. Click the New option.
 
-    ![PnP Permissions](images/SharePoint_New_App.PNG)
+    ![PnP Permissions](./Images/SharePoint_New_App.png)
 
 1. Click the Choose Files button, select the eoc-extension.sppkg file you downloaded or created earlier, and click on OK.
 
-    ![Extension Upload Package](images/Extension_Upload_Package.PNG)
+    ![Extension Upload Package](./Images/Extension_Upload_Package.png)
 
 1. A confirmation dialog is displayed. Ensure the checkbox for **Make this solution	available to all sites in the organization** is chosen and click Deploy.
 
-    ![Extension Deployment Confirmation](images/Extension_Deployment_Confirmation.PNG) 
+    ![Extension Deployment Confirmation](./Images/Extension_Deployment_Confirmation.png) 
 
 1. Return to the SharePoint admin center. Under expand the Advanced menu in the left navigation and select API access. Select and approve all pending requests 	associated with eoc-extension.
 
-    ![Extension API Permission](images/Extension_API_Permission.PNG)
+    ![Extension API Permission](./Images/Extension_API_Permission.png)
 
 # Troubleshooting
 

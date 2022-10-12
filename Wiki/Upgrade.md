@@ -6,7 +6,7 @@
 
   2. If you have customized the site name already as mentioned [here](https://github.com/OfficeDev/microsoft-teams-emergency-operations-center/wiki/Customizations#site-name-customization), then update the same site name in the Update-EOC-Provision.ps1 script, otherwise skip this step.
 
-      ![SiteURL](images/SiteURL.PNG)
+      ![SiteURL](./Images/SiteURL.png)
   
   3. Run the PowerShell script (Update-EOC-Provision.ps1) as an Administrator, script will ask for below inputs,
     
@@ -14,7 +14,7 @@
     * Tenant Name – Name of the tenant where the SharePoint site was already provisioned (Ex: Contoso)
     * Tenant Admin Email – Email of tenant admin account (Ex: `abc@contoso.com`)  
  
-  ![Provisioning Scripts](images/UpgradePSScript.PNG)
+  ![Provisioning Scripts](./Images/UpgradePSScript.png)
 
 ### 2. Add new application setting in the App Service
 
@@ -23,22 +23,22 @@
   2. Click on "New application setting" and add **REACT_APP_SHAREPOINT_SITE_NAME** as the Name and **TEOCSite** as the value and click on OK.
   >Note: If you have already customized the site name during inital deployment, then use that sitename instead of TEOCSite.
 
- ![AppService](images/AddAppSetting.PNG)
+ ![AppService](./Images/AddAppSetting.png)
   
 
 ### 3. Sync latest version
 
   1.  In Azure portal, navigate to TEOC resource group, open app service and click on deployment center.
 
-![AppService](images/Update1.PNG)
+![AppService](./Images/Update1.png)
 
   2.  Click on sync.
 
-![Sync](images/Update2.PNG)
+![Sync](./Images/Update2.png)
 
   3.  Wait until you see status as success for sync.
 
-![SyncLog](images/Update3.PNG)
+![SyncLog](./Images/Update3.png)
 
 ### 4. Update version
 
