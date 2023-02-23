@@ -417,7 +417,7 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
             if (selectedValue.detail.length > 0) {
                 inputValidationObj.incidentCommandarHasError = false;
                 selctedIncCommander.push({
-                    displayName: selectedValue.detail[0] ? selectedValue.detail[0].displayName : '',
+                    displayName: selectedValue.detail[0] ? selectedValue.detail[0].displayName.replace(",", "") : '',
                     userPrincipalName: selectedValue.detail[0] ? selectedValue.detail[0].userPrincipalName : '',
                     id: selectedValue.detail[0] ? selectedValue.detail[0].id : ''
                 })
@@ -427,7 +427,7 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
             }
             // create user object for incident commander
             incInfo.incidentCommander = {
-                userName: selectedValue.detail[0] ? selectedValue.detail[0].displayName : '',
+                userName: selectedValue.detail[0] ? selectedValue.detail[0].displayName.replace(",", "") : '',
                 userEmail: selectedValue.detail[0] ? selectedValue.detail[0].userPrincipalName : '',
                 userId: selectedValue.detail[0] ? selectedValue.detail[0].id : ''
             }
@@ -698,12 +698,12 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
         if (incInfo) {
             incInfo["assignedUser"] = selectedValue.detail.map((user: any) => {
                 selectedUsersArr.push({
-                    displayName: user.displayName,
+                    displayName: user.displayName.replace(",", ""),
                     userPrincipalName: user.userPrincipalName,
                     id: user.id
                 });
                 return {
-                    "userName": user ? user.displayName : "",
+                    "userName": user ? user.displayName.replace(",", "") : "",
                     "userEmail": user ? user.userPrincipalName : "",
                     "userId": user ? user.id : "",
                 }
@@ -721,12 +721,12 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
         if (incInfo) {
             incInfo["assignedUser"] = selectedValue.detail.map((user: any) => {
                 selectedUsersArr.push({
-                    displayName: user.displayName,
+                    displayName: user.displayName.replace(",", ""),
                     userPrincipalName: user.userPrincipalName,
                     id: user.id
                 });
                 return {
-                    "userName": user ? user.displayName : "",
+                    "userName": user ? user.displayName.replace(",", "") : "",
                     "userEmail": user ? user.userPrincipalName : "",
                     "userId": user ? user.id : "",
                 }
