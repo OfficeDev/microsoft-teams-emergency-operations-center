@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@microsoft/rush-stack-compiler-3.9": "^0.4.48",
-    "@microsoft/sp-build-web": "^1.14.0",
+    "@microsoft/sp-build-web": "^1.17.1",
     "@microsoft/sp-module-interfaces": "1.13.0",
     "@microsoft/sp-tslint-rules": "1.13.0",
     "@types/webpack-env": "1.13.1",
