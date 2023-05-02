@@ -53,6 +53,46 @@ You don't see the entry points to upload an app, either using the [Store](https:
 
 This is most likely because sideloading of external apps is not enabled in your tenant. See [here](https://docs.microsoft.com/en-us/microsoftteams/admin-settings) for more information.
 
+## Problems in running PowerShell Script
+
+### 1. Error in registering PnP Powershell App in Azure.
+
+If you see any errors related to missing PnP PowerShell modules, ensure to install these pre-requisites and try again.
+
+### Prerequisites to run the PowerShell Script
+
+You only need to follow these steps ONCE for a specified Windows machine.
+
+* Open a PowerShell console as an administrator (right-click, Run As Administrator).
+    >Note: The latest version of PnP.PowerShell is cross-platform and works with PowerShell Core (v7.x).
+* Ensure unrestricted execution policy is set in your machine. By default, the execution policy is restricted for windows computer. You may change it back to restricted after deployment is completed.
+    >Note: Non-windows computer users can skip this as it is unrestricted by default for them.
+    ```
+    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
+    ```
+
+* Check the installed version of PowerShellGet with the following cmdlet:
+    ```
+    Get-PackageProvider -Name PowerShellGet -ListAvailable​
+    ```
+* If you see version 2.2.5.0 or greater, skip the next two bullets.
+    >Note: If you have PowerShell 5.1 and 7.x installed, you may have different versions of PowerShellGet for each version of PowerShell.
+* Install the required version of PowerShellGet with:
+    ```
+    Install-PackageProvider -Name Nuget -Scope AllUsers -Force
+    Install-PackageProvider -Name PowerShellGet -MinimumVersion 2.2.5.0 -Scope AllUsers -Force​
+    ```
+* Close and reopen your PowerShell console (again, as an administrator).
+* Install PnP.PowerShell with the following:
+    ```
+    Install-Module -Name PnP.PowerShell -AllowPrerelease -SkipPublisherCheck -Scope AllUsers -Force​
+    ```
+* Close and reopen your PowerShell console (run as administrator not required this time).
+* Confirm that PnP.PowerShell is installed with the following:
+    ```
+    Get-Module -Name PnP.PowerShell -ListAvailable​
+    ```
+
 ## Didn't find your problem here?
 
 Please report the issue [here](https://github.com/OfficeDev/microsoft-teams-emergency-operations-center/issues/new)

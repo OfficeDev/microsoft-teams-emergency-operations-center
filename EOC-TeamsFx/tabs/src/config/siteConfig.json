@@ -4,9 +4,10 @@
     "incStatusList": "TEOC-IncidentStatus",
     "incTypeList": "TEOC-IncidentType",
     "roleAssignmentList": "TEOC-RoleAssignments",
-    "teamNameConfigList":"TEOC-Config",
-    "roleDefaultList":"TEOC-RoleDefaultValues",
-    "incidentTypeDefaultRolesList":"TEOC-IncidentTypeDefaultRoles",
+    "configurationList": "TEOC-Config",
+    "roleDefaultList": "TEOC-RoleDefaultValues",
+    "incidentTypeDefaultRolesList": "TEOC-IncidentTypeDefaultRoles",
+    "userRolesList": "TEOC-UserRoles",
     "lists": [
         {
             "listName": "TEOC-Assessments",

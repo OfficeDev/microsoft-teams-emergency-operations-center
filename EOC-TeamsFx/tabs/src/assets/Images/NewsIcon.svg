@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="28" height="24" viewBox="0 0 28 24">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_27305" data-name="Rectangle 27305" width="28" height="24" fill="#fff" opacity="0.51"/>
+    </clipPath>
+    <clipPath id="clip-path-2">
+      <rect id="Rectangle_27301" data-name="Rectangle 27301" width="19.196" height="15.938" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="News" clip-path="url(#clip-path)">
+    <g id="Group_19125" data-name="Group 19125" transform="translate(3.94 5.097)" clip-path="url(#clip-path-2)">
+      <path id="Path_49143" data-name="Path 49143" d="M69.946,5.1H59.437a2.327,2.327,0,0,0-2.325,2.325v.7h-1.9a2.139,2.139,0,0,0-2.137,2.138V18.9a2.14,2.14,0,0,0,2.137,2.137H69.946a2.328,2.328,0,0,0,2.33-2.326h0V7.422A2.329,2.329,0,0,0,69.946,5.1M55.211,19.554a.656.656,0,0,1-.655-.656V10.259a.656.656,0,0,1,.655-.656h1.9V18.71a2.3,2.3,0,0,0,.158.844Zm15.578-.844a.844.844,0,0,1-.844.844H59.437a.844.844,0,0,1-.844-.844V7.422a.844.844,0,0,1,.844-.844H69.946a.844.844,0,0,1,.844.844Z" transform="translate(-53.075 -5.097)" fill="#141313"/>
+      <rect id="Rectangle_27298" data-name="Rectangle 27298" width="8.029" height="1.482" transform="translate(7.58 11.588)" fill="#141313"/>
+      <rect id="Rectangle_27299" data-name="Rectangle 27299" width="8.029" height="1.482" transform="translate(7.58 7.45)" fill="#141313"/>
+      <rect id="Rectangle_27300" data-name="Rectangle 27300" width="8.029" height="1.482" transform="translate(7.58 3.314)" fill="#141313"/>
+    </g>
+  </g>
+</svg>

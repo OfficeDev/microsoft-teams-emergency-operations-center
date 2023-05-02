@@ -1,0 +1,300 @@
+@mixin fontstyles($font-weight, $font-color, $font-size, $line-height, $text-align) {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: $font-color;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: $font-weight;
+    font-size: $font-size;
+    line-height: $line-height;
+    letter-spacing: 0;
+    opacity: 1;
+    text-align: $text-align;
+}
+
+div[class~="admin-settings"] {
+    background-color: rgb(238, 238, 238);
+
+    div[class~="admin-settings-path"] {
+        width: 100%;
+        height: auto;
+        max-height: 100vh;
+
+        label {
+            margin: 5px auto;
+            @include fontstyles(400, #33344A, 14px, 24px, center);
+
+            span[class="back-label"] {
+                font-size: 12px;
+                position: relative;
+                bottom: 1px;
+                margin-left: 1px;
+            }
+
+            span[class="go-back"] {
+                cursor: pointer;
+
+                span[class~="path-back-icon"] {
+                    position: relative;
+                    bottom: 2px;
+                }
+            }
+
+            span[class="right-border"] {
+                position: relative;
+                bottom: 1px;
+            }
+        }
+    }
+
+    div[class~="admin-settings-wrapper"] {
+        background: #E4E9F5 0% 0% no-repeat padding-box;
+        padding-bottom: 6rem;
+        opacity: 1;
+
+        div[class="admin-settings-heading"] {
+            @include fontstyles(normal, #33344A, 20px, 27px, left);
+            padding: 12px 0px 12px 0px;
+        }
+
+        div[class~="toggle-setting-type"] {
+            display: flex;
+            width: 100%;
+            justify-content: flex-start;
+            border-bottom: 1px solid grey;
+            margin-bottom: 20px;
+
+            div[class~="setting-type"] {
+                cursor: pointer;
+                height: fit-content;
+                position: relative;
+                top: 1px;
+                padding: 0px 3px 7px;
+                @include fontstyles(600, #636363, 16px, 24px, left);
+
+                &:nth-child(1) {
+                    margin-right: 30px;
+                }
+
+                &:hover {
+                    border-bottom: 3px solid #8c8d9a;
+                }
+            }
+
+            div[class~="selected-setting"],
+            div[class~="selected-setting"]:hover {
+                color: #404257;
+                border-bottom: 3px solid #404257;
+            }
+        }
+
+        div[class="role-settings-wrapper"] {
+            min-height: 30.5vh;
+
+            div[class~="role-settings-message-bar"] {
+                margin-bottom: 10px;
+
+                div[class~="ms-MessageBar-text"] {
+                    @include fontstyles(normal, rgb(50, 49, 48), 14px, 21px, left);
+                }
+            }
+
+            div[class="role-settings-toggle-btn-wrapper"] {
+                display: flex;
+                align-items: center;
+
+                div[class~="role-settings-toggle-btn"] {
+                    justify-content: flex-end;
+                    flex-direction: row-reverse;
+                    margin-bottom: 10px;
+
+                    label {
+                        margin-left: 0px;
+                        width: 145px;
+                    }
+
+                    div[class~="toggle-btn-label"] {
+                        @include fontstyles(normal, #000000, 18px, 22px, left)
+                    }
+
+                    span[class~="toggle-info-icon"] {
+                        margin-left: 10px;
+                        position: relative;
+                        top: 4px;
+
+                        i {
+                            color: #000000;
+                        }
+                    }
+
+                    div[class~="ms-Toggle-innerContainer"] {
+                        margin: 3px 0 0 15px;
+                    }
+                }
+
+                a[class="assign-roles-link"] {
+                    text-decoration: none;
+
+                    button[class~="assign-roles-btn"] {
+                        margin: 0 0 6px 15px;
+                        cursor: pointer;
+                        @include fontstyles(600, #6264A7, 0.875rem, 1.4286, left);
+
+
+                        i {
+                            font-size: 14px;
+                            font-weight: 700;
+                            transform: rotate(45deg);
+                            padding-top: 3px;
+                        }
+
+                        &:hover {
+                            color: #444578;
+                        }
+                    }
+                }
+            }
+        }
+
+        div[class="team-name-config-wrapper"] {
+            div[class="loader-bg"] {
+                position: fixed;
+                width: 100%;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                background-color: rgba(255, 255, 255, 0.7);
+                z-index: 9999;
+
+                div[class="loaderStyle"] {
+                    top: 50%;
+                    left: 35%;
+                    position: absolute;
+                    width: 30%;
+                    height: 150px;
+                    z-index: 1;
+                    opacity: 1;
+
+                    div[role="progressbar"] {
+                        color: black;
+                        font-weight: bold;
+                    }
+                }
+            }
+
+            div[class="team-name-config-form-area"] {
+                div[class~="team-name-config-order-dropdown"] {
+                    margin-bottom: 25px;
+
+                    div[class~="ui-dropdown__container"] {
+                        border-bottom: none;
+                        width: 150px;
+                        height: 40px;
+
+                        div[class~="ui-dropdown__selected-items"] {
+                            background-color: #FFFFFF;
+                            border: 1px solid #FFFFFF;
+                            border-radius: 0.1875rem;
+                            width: 150px;
+                            height: 40px;
+
+                            button[class~="ui-button"] {
+                                color: rgb(37, 36, 35);
+
+                                span[class~="ui-button__content"] {
+                                    position: relative;
+                                    top: 4px;
+                                }
+                            }
+                        }
+
+
+                        ul[class~="ui-list"] {
+                            width: 100% !important;
+                        }
+                    }
+                }
+
+                div[class~="team-name-config-input-field"] {
+                    input[type="text"] {
+                        width: 180px;
+                        height: 40px;
+                        background-color: #FFFFFF;
+                        @include fontstyles(normal, #000000, 16px, 21px, left);
+
+                        &::placeholder {
+                            @include fontstyles(normal, #979593, 14px, 21px, left);
+                        }
+                    }
+                }
+
+                label[class="message-label"] {
+                    @include fontstyles(normal, #ce0000, 12px, 16px, left);
+                }
+
+                label[class="team-name-config-dropdown-label"],
+                div[class~="team-name-config-order-dropdown"]>label,
+                div[class~="team-name-config-input-field"]>label {
+                    @include fontstyles(normal, #000000, 16px, 21px, left);
+                }
+
+                label[class="team-name-config-dropdown-label"] {
+                    margin-top: 12px;
+                }
+
+                div[class='team-name-config-preview-heading'] {
+                    margin-bottom: 20px;
+                    @include fontstyles(400, #33344A, 22px, 32px, left);
+                }
+
+                img[class="team-name-config-preview-img"] {
+                    border-radius: 12px;
+                    opacity: 1;
+                    width: 80px;
+                    height: 80px;
+                    margin-bottom: 20px;
+                    background-color: #D83B01;
+                }
+
+                div[class~="team-name-config-order-preview-area"] {
+                    margin: auto 0;
+
+                    div[class="team-name-config-order-preview"] {
+                        margin-bottom: 30px;
+                        @include fontstyles(normal, #33344A, 16px, 21px, left);
+                    }
+                }
+            }
+        }
+
+        div[class="admin-settings-btn-wrapper"] {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+
+            button {
+                height: 40px;
+
+                &:hover {
+                    border: 1px solid rgb(200, 198, 196);
+                }
+            }
+
+            button[class~="admin-settings-back-btn"] {
+                background: rgb(255, 255, 255);
+                border: 1px solid #FFFFFF;
+                margin-right: 30px;
+                @include fontstyles(600, rgb(37, 36, 35), 0.875rem, 1.4286, left);
+
+                &:hover {
+                    background: rgb(237, 235, 233);
+                }
+            }
+
+            button[class~="admin-settings-save-btn"] {
+                border: 1px solid #6264A7;
+                @include fontstyles(600, rgb(255, 255, 255), 0.875rem, 1.4286, left);
+            }
+        }
+    }
+}

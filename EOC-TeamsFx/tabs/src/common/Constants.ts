@@ -1,4 +1,6 @@
-export const AppVersion = "1.0 ";
+export const defaultGraphBaseURL = "https://graph.microsoft.com/"
+export const commercialGraphContextURL = "https://graph.microsoft.com/v1.0/"
+export const AppVersion = "2.0 ";
 export const EOCAppName = "MIFTEOC";
 export const all = "All";
 export const planning = "Planning";
@@ -12,7 +14,7 @@ export const maxCharLengthForMultiLine = 500;
 export const teamEOCPrefix = "TEOC";
 export const messageBarType = {
     "error": "error",
-    "success": "success",
+    "success": "success"
 }
 export const regexValidator = "/[^A-Za-z 0-9 @!]/g";
 export const Assessment = "Assessment";
@@ -20,11 +22,15 @@ export const GroundAssessments = "Ground Assessments";
 export const ViewMap = "View Map";
 export const News = "News";
 export const Announcements = "Announcements";
+export const General = "General";
 export const adminTeam = "eoc admin";
 export const errorLogPrefix = "EOC-Error: ";
 export const infoLogPrefix = "EOC-Log: ";
 export const defaultLocale = "en-us";
 export const incidentCommanderRoleName = "Incident Commander";
+export const secondaryIncidentCommanderRole = "Secondary Incident Commander";
+export const yes = "Yes";
+export const no = "No";
 
 //EOC Header 
 
@@ -35,7 +41,10 @@ export const msPublicSectorUrl = "https://aka.ms/MTCPublicSector ";
 export const drivingAdoptionUrl = "https://aka.ms/drivingadoption";
 export const m365EocUrl = "https://aka.ms/m365teoc";
 export const m365EocAppUrl = "https://aka.ms/m365teocapp";
-export const githubEocUrl = "https://aka.ms/m365teocapp"
+export const githubEocUrl = "https://aka.ms/m365teocapp";
+
+export const teamsWebUrl = "https://teams.microsoft.com";
+export const teamsWebUrlGCCH = "https://gov.teams.microsoft.us";
 
 export const componentNames = {
     EOCHomeComponent: 'EOCHome',
@@ -43,7 +52,12 @@ export const componentNames = {
     IncidentDetailsComponent: 'IncidentDetails',
     UpdateIncidentCompoent: 'UpdateIncident',
     TeamNameConfiguration: 'TeamNameConfiguration',
-    IncidentHistoryComponent: 'IncidentHistory'
+    IncidentHistoryComponent: 'IncidentHistory',
+    TasksComponent: "Tasks",
+    MembersComponent: "Members",
+    BridgeComponent: "Bridge",
+    AdminSettingsComponent: "AdminSettings",
+    RoleSettingsComponent: "RoleSettings"
 }
 
 export const severity = ["Low", "Medium", "High", "Critical"]
@@ -59,6 +73,12 @@ export const teamNameConfigConstants = {
     DontInclude: "Don't Include"
 }
 
+export const defaultChannelConstants = {
+    Logistics: "Logistics",
+    Planning: "Planning",
+    Recovery: "Recovery"
+};
+
 //Incident history constants
 export const itemHeight = 30;
 export const numberOfItemsOnPage = 10;
@@ -72,3 +92,10 @@ export const listViewItemInitialCount = 8;
 export const modifiedDate = "modifiedDate";
 export const lastModifiedBy = "lastModifiedBy";
 export const roleAssignmentsObj = "roleAssignmentsObj";
+export const roleLeadsObj = "roleLeadsObj";
+
+//Active Dashboard
+export const plannerBucketTitle = "To do";
+
+//Admin Settigs
+export const adminRole = "Admin";

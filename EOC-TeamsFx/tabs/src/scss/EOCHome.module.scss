@@ -26,22 +26,27 @@
     }
 
     div.message-bar {
-        span {
-            font: normal normal normal 16px/21px Segoe UI;
-        }
+        div.ms-MessageBar-content {
+            padding-left: 0;
+            padding-right: 0;
 
-        i {
-            font-size: 20px;
-            margin-top: 1px;
-        }
+            span {
+                font: normal normal normal 16px/21px Segoe UI;
+            }
 
-        i[data-icon-name="Clear"] {
-            font-size: 15px;
-            margin-top: 5px;
+            i {
+                font-size: 20px;
+                margin-top: 1px;
+            }
+
+            i[data-icon-name="Clear"] {
+                font-size: 15px;
+                margin-top: 5px;
+            }
         }
     }
 
-    .loaderAlign{
+    .loaderAlign {
         height: 100%;
     }
 }

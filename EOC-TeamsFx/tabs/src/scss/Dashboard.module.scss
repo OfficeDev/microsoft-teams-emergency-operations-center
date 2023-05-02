@@ -83,6 +83,7 @@
         i {
             margin-top: 15px;
             color: #000000;
+            font-weight: bolder;
         }
     }
 
@@ -102,7 +103,8 @@
             display: block;
         }
 
-        .manage-label {
+        .manage-label,
+        i {
             color: #6264A7;
         }
     }
@@ -140,6 +142,10 @@ div[id="dashboard-search-btn-area"] {
             padding-left: 1%;
         }
 
+    }
+
+    div[class~="settings-loader"] {
+        width: 300px;
     }
 
     button[id="create-incident-btn"] {
@@ -322,19 +328,19 @@ div[id="dashboard-pivot-container"] {
                         }
 
                         th:nth-child(1) {
-                            width: 11%;
+                            width: 12%;
                         }
 
                         th:nth-child(2) {
-                            width: 20%;
+                            width: 19%;
                         }
 
                         th:nth-child(3) {
-                            width: 10%;
+                            width: 8%;
                         }
 
                         th:nth-child(4) {
-                            width: 18%;
+                            width: 17%;
                         }
 
                         th:nth-child(5) {
@@ -342,11 +348,11 @@ div[id="dashboard-pivot-container"] {
                         }
 
                         th:nth-child(6) {
-                            width: 12%;
+                            width: 11%;
                         }
 
                         th:nth-child(7) {
-                            width: 16%;
+                            width: 14%;
                         }
 
                         th:nth-child(8) {
@@ -369,7 +375,8 @@ div[id="dashboard-pivot-container"] {
                     display: block;
                     overflow-y: overlay;
                     overflow-x: hidden;
-                    height: 442px;
+                    min-height: 44px;
+                    max-height: 442px;
 
                     tr {
                         border-bottom: hidden;
@@ -391,6 +398,13 @@ div[id="dashboard-pivot-container"] {
                                 width: 18px;
                                 height: 18px;
                                 cursor: pointer;
+                                margin-left: 4px;
+                            }
+
+                            img[class="grid-active-bridge-icon"] {
+                                width: 24px;
+                                height: 24px;
+                                cursor: pointer;
                             }
 
                             img[class="grid-version-history-icon"] {
@@ -398,7 +412,7 @@ div[id="dashboard-pivot-container"] {
                                 height: 24px;
                                 cursor: pointer;
                                 margin-top: 1px;
-                                margin-left: 12px;
+                                margin-left: 4px;
                             }
 
                             img[class="status-icon"] {
@@ -408,19 +422,19 @@ div[id="dashboard-pivot-container"] {
                         }
 
                         td:nth-child(1) {
-                            width: 11%;
+                            width: 12%;
                         }
 
                         td:nth-child(2) {
-                            width: 20%;
+                            width: 19%;
                         }
 
                         td:nth-child(3) {
-                            width: 10%;
+                            width: 8%;
                         }
 
                         td:nth-child(4) {
-                            width: 18%;
+                            width: 17%;
                         }
 
                         td:nth-child(5) {
@@ -428,11 +442,11 @@ div[id="dashboard-pivot-container"] {
                         }
 
                         td:nth-child(6) {
-                            width: 12%;
+                            width: 11%;
                         }
 
                         td:nth-child(7) {
-                            width: 16%;
+                            width: 14%;
                         }
 
                         td:nth-child(8) {

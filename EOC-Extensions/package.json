@@ -6,14 +6,13 @@
   "scripts": {
     "build": "gulp bundle",
     "clean": "gulp clean",
-    "test": "gulp test",
-    "preinstall": "npm install --package-lock-only --ignore-scripts && npx npm-force-resolutions"
+    "test": "gulp test"
   },
-  "resolutions": {
+  "overrides": {
     "node-fetch": "2.6.7",
     "node-forge": "1.3.0",
-    "url-parse": "1.5.8",
-    "qs": "6.0.4",
+    "url-parse": ">=1.5.9",
+    "qs": ">=6.2.4",
     "fresh": "0.5.2",
     "minimist": "1.2.6",
     "tar": "4.4.18",
@@ -24,24 +23,32 @@
     "eventsource": ">=1.1.1",
     "terser": "^5.15.0",
     "nth-check": "2.0.1",
-    "scss-tokenizer": "0.4.3"
+    "scss-tokenizer": "0.4.3",
+    "loader-utils": "2.0.4",
+    "jszip": ">=3.8.0",
+    "debug": ">=2.6.9",
+    "json5": ">=2.2.2",
+    "ms": ">=2.0.0",
+    "jsdom": ">=16.5.0",
+    "node-sass": ">=7.0.0",
+    "validator": ">=13.7.0",
+    "node-notifier": ">=8.0.1",
+    "yargs-parser": ">=5.0.1",
+    "mime": ">=1.4.1",
+    "got": ">=11.8.5",
+    "css-modules-loader-core@1.1.0": {
+      "postcss": "7.0.36"
+    },
+    "@microsoft/sp-css-loader@1.16.1": {
+      "postcss": "8.2.13"
+    }
   },
   "dependencies": {
     "@microsoft/decorators": "1.13.0",
     "@microsoft/sp-core-library": "1.13.0",
     "@microsoft/sp-dialog": "1.13.0",
     "@microsoft/sp-listview-extensibility": "1.13.0",
-    "fresh": "0.5.2",
-    "glob-parent": "5.1.2",
-    "lodash.template": "4.5.0",
-    "minimist": "1.2.6",
-    "node-fetch": "2.6.7",
-    "node-forge": "1.3.0",
-    "node-releases": "^2.0.2",
-    "qs": "6.0.4",
-    "tar": "4.4.18",
-    "trim-newlines": "3.0.1",
-    "url-parse": "1.5.8"
+    "node-releases": "^2.0.2"
   },
   "devDependencies": {
     "@microsoft/rush-stack-compiler-3.9": "^0.4.48",
@@ -49,10 +56,7 @@
     "@microsoft/sp-module-interfaces": "1.13.0",
     "@microsoft/sp-tslint-rules": "1.13.0",
     "@types/webpack-env": "1.13.1",
-    "ajv": "~5.2.2",
     "gulp": "~4.0.2",
-    "nth-check": "2.0.1",
-    "scss-tokenizer": "0.4.3",
-    "terser": "^5.15.0"
+    "cssnano": "5.1.15"
   }
 }

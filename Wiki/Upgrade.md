@@ -1,22 +1,26 @@
-## Upgrade to version 1.0 from 0.5 or 0.5.1
+## Upgrade to version 2.0 from 1.0 or 0.5/0.5.1 
 
 ### 1. Run the upgrade PowerShell script
   
-  1. Clone the [repository](https://github.com/OfficeDev/microsoft-teams-emergency-operations-center.git) locally. Open the `Deployment/provisioning/Upgrade` folder to get the latest provisioning files i.e `Update-EOC-Provision.ps1` and `Update-EOC-SiteTemplate.xml`
+  1. Clone the [repository](https://github.com/OfficeDev/microsoft-teams-emergency-operations-center.git) locally. Open the `Deployment/provisioning/Upgrade` folder to get the latest provisioning files i.e `Update-EOC-Provision.ps1` and `Update-EOC-SiteTemplate-From-V1.0.xml` ( If you are upgrading the app from 1.0 version ) or `Update-EOC-SiteTemplate-From-V0.5.xml` ( If you are upgrading the app from 0.5 or 0.5.1 version )
 
-  2. If you have customized the site name already as mentioned [here](https://github.com/OfficeDev/microsoft-teams-emergency-operations-center/wiki/Customizations#site-name-customization), then update the same site name in the Update-EOC-Provision.ps1 script, otherwise skip this step.
-
-      ![SiteURL](./Images/SiteURL.png)
-  
-  3. Run the PowerShell script (Update-EOC-Provision.ps1) as an Administrator, script will ask for below inputs,
+  2. Run the PowerShell script (Update-EOC-Provision.ps1) as an Administrator, script will ask for below inputs:
     
-    * XML file path – enter fully qualified path of the XML file (Ex: C:\Scripts\Update-EOC-SiteTemplate.xml) 
+    * XML file path – enter fully qualified path of the XML file (Ex: C:\Scripts\Update-EOC-SiteTemplate-From-V1.0.xml) 
     * Tenant Name – Name of the tenant where the SharePoint site was already provisioned (Ex: Contoso)
-    * Tenant Admin Email – Email of tenant admin account (Ex: `abc@contoso.com`)  
+    * SharePoint site name – Enter your existing TEOC site name (Ex: TEOCSite)
  
-  ![Provisioning Scripts](./Images/UpgradePSScript.png)
+  ![Provisioning Scripts](./Images/UpgradeScript.png)
 
-### 2. Add new application setting in the App Service
+  3. Once the above script is completed, then run the script (`EOC-UpdateLookupColumn.ps1`) as an Administrator, script will ask for below inputs:
+
+    * Enter the TEOC Site URL - enter the absolute URL of the TEOC SharePoint site. (Ex: https://contoso.sharepoint.com/sites/TEOCSite)
+
+  ![Provisioning Scripts](./Images/LookupColumnScript.png)
+
+  This script will copy the value from the existing IncidentStatus column to a new Status column in the TEOC-IncidentTransaction List. Please wait for the script to complete as it will take sometime depending on the number of items on the list.
+
+### 2. Add new application setting in the App Service ( **This step is applicable only if you upgrade the app from 0.5 or 0.5.1 version** )
 
   1. In Azure portal, navigate to TEOC resource group, open app service and click on Configuration.
 

@@ -11,7 +11,15 @@
     "devDependencies": {
         "@microsoft/teamsfx-cli": "^0.14.0",
         "moment": "^2.29.4",
-        "sass": "^1.44.0"
+        "sass": "^1.44.0",
+        "@xmldom/xmldom": ">=0.7.7",
+        "http-cache-semantics": ">=4.1.1",
+        "jsonwebtoken": ">=9.0.0",
+        "got": ">=11.8.5"
+    },
+    "overrides": {
+        "jsonwebtoken": ">=9.0.0",
+        "xml2js": ">=0.5.0"
     },
     "license": "MIT",
     "dependencies": {
