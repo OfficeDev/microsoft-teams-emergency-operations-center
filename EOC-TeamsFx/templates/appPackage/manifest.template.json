@@ -1,7 +1,7 @@
 {
     "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.11/MicrosoftTeams.schema.json",
     "manifestVersion": "1.11",
-    "version": "1.0",
+    "version": "2.0",
     "id": "{{state.fx-resource-appstudio.teamsAppId}}",
     "packageName": "com.microsoft.teams.extension",
     "developer": {
@@ -19,7 +19,7 @@
         "full": "{{config.manifest.appName.full}}"
     },
     "description": {
-        "short": "Microsoft Teams Emergency Operation Center",
+        "short": "Microsoft Teams Emergency Operations Center",
         "full": "App Template to help facilitate the creation of teams and assets for incident response for designated scenarios. In addition to quick team creation and asset deployment, TEOC also delivers a central dashboard to see and manage incidents from and take further action. Helping you to respond and act quicker powered by the solutions you already have."
     },
     "accentColor": "#FFFFFF",
@@ -38,7 +38,7 @@
     "staticTabs": [
         {
             "entityId": "index",
-            "name": "Team EOC",
+            "name": "Teams EOC",
             "contentUrl": "{{{state.fx-resource-frontend-hosting.endpoint}}}/index.html#/tab",
             "websiteUrl": "{{{state.fx-resource-frontend-hosting.endpoint}}}/index.html#/tab",
             "scopes": [

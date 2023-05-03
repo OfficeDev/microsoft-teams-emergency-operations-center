@@ -2,7 +2,7 @@
 export interface IIncidentEntity {
     incidentId: string;
     incidentName: string;
-    incidentStatus: string;
+    incidentStatus: IIncidentStatus;
     location: string;
     incidentType: string;
     incidentDesc: string;
@@ -10,15 +10,19 @@ export interface IIncidentEntity {
     incidentCommander: UserDetails;
     selectedRole: string;
     assignedUser: UserDetails[];
+    assignedLead: UserDetails[];
     severity: string;
     reasonForUpdate: string;
+    additionalTeamChannels: Array<IAdditionalTeamChannels>;
+    cloudStorageLink: string;
+    guestUsers: Array<IGuestUsers>;
 }
 
 // class for incident details form entity
 export class IncidentEntity implements IIncidentEntity {
     public incidentId!: string;
     public incidentName!: string;
-    public incidentStatus!: string;
+    public incidentStatus!: IIncidentStatus;
     public location!: string;
     public incidentType!: string;
     public incidentDesc!: string;
@@ -26,8 +30,12 @@ export class IncidentEntity implements IIncidentEntity {
     public incidentCommander!: UserDetails;
     public selectedRole!: string;
     public assignedUser!: UserDetails[];
+    public assignedLead!: UserDetails[];
     public severity!: string;
     public reasonForUpdate!: string;
+    public additionalTeamChannels!: IAdditionalTeamChannels[];
+    public cloudStorageLink!: string;
+    public guestUsers!: IGuestUsers[];
 }
 
 export interface UserDetails {
@@ -36,13 +44,38 @@ export interface UserDetails {
     userId: string;
 }
 
+export interface IIncidentStatus {
+    status: string | undefined;
+    id: number | undefined;
+}
+
+export interface IAdditionalTeamChannels {
+    channelName: string;
+    hasRegexError: boolean;
+    regexErrorMessage: string;
+}
+
+export interface IGuestUsers {
+    email: string;
+    displayName: string;
+    hasEmailRegexError: boolean;
+    hasDisplayNameRegexError: boolean;
+    hasDisplayNameValidationError: boolean;
+    hasEmailValidationError: boolean;
+    [propName: string]: any;
+}
+
 export interface RoleAssignments {
     role: string;
     userNamesString: string;
     userObjString: string;
     userDetailsObj: UserDetails[];
+    leadNameString: string;
+    leadObjString: string;
+    leadDetailsObj: UserDetails[];
     saveDefault: any;
 }
+
 
 export interface ITeamGroupInfo {
     "displayName": string;
@@ -58,8 +91,9 @@ export interface ITeamGroupInfo {
 
 export interface ITeamChannel {
     displayName: string;
+    membershipType?: string;
+    members?: Array<any>;
 }
-
 export interface ChannelCreationStatus {
     channelName: string;
     isCreated: boolean;
@@ -72,26 +106,15 @@ export interface ChannelCreationResult {
     isPartiallyCreated: boolean;
     failedEntries: any;
     successEntries: any;
+    failedChannels: any;
 }
+
 export interface Tab {
     id: string;
     displayName: string;
     webUrl: string;
     configuration: any;
 }
-
-// export interface ITeamCreatedResponse {
-//     fully_done: boolean;
-//     partially_done: boolean;
-//     all_failed: boolean;
-//     team_info: any;
-//     error: {
-//         channel_creations: any;
-//         app_installation: any;
-//         member_creations: any;
-//         all_fail: any;
-//     };
-// }
 
 export interface ShiftGroupInfo {
     IncidentCommander: Array<any>;
@@ -139,9 +162,12 @@ export interface IInputValidationStates {
     incidentStartDateTimeHasError: boolean;
     incidentCommandarHasError: boolean;
     incidentReasonForUpdateHasError: boolean;
+    cloudStorageLinkHasError: boolean;
+    guestUsersHasError: boolean;
 }
 
 export interface IInputRegexValidationStates {
     incidentNameHasError: boolean;
     incidentLocationHasError: boolean;
+    incidentCloudStorageLinkHasError: boolean;
 }

@@ -1,5 +1,15 @@
 # Known Limitations
 
+## 1. Tasks in Active Bridge component
+Tasks in Active Bridge component has some known limitations as below -
+
+- User can only search and assign the tasks to the people who are most relevant to the user in the People picker in Add Task section.( *Relevance is determined by the user’s communication and collaboration patterns and business relationships. People can be local contacts or from an organization’s directory, and people from recent communications.* )
+
+![Limitation](./Images/AddTask.png)
+
+- In GCCH tenant, task will not get added when it's assigned to some one through the People Picker, however user can still create a task without an Assignee.
+
+![Limitation](./Images/GCCHTasks.png)
 
 # FAQs
 
@@ -49,3 +59,7 @@ The fsevents library is causing the app service deployment to fail for already d
 ## 5. Does the app support mobile devices?
 
 Yes, TEOC v1.0 supports the desktop, mobile and tab devices.
+
+## 6. Does the app works in GCC/GCCH tenant?
+
+Yes, TEOC v2.0 works in Commercial, GCC and GCCH tenants.

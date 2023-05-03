@@ -1,10 +1,5 @@
 :global {
 
-    //css for default-checkbox
-    .save-default-checkbox {
-        padding-left: 30%;
-    }
-
     //css classes for Slider Control
     .horizontal-slider {
         width: 95%;
@@ -275,14 +270,6 @@
         }
     }
 
-    .thead-border-left {
-        border-left: 0.25px solid #FFFFFF;
-    }
-
-    .col-center {
-        text-align: center;
-    }
-
     .loader-bg {
         position: fixed;
         width: 100%;
@@ -315,16 +302,6 @@
 
     .incNameInfoIcon {
         padding-left: 3px;
-    }
-
-    .role-edit-icon {
-        font-size: 22px;
-        color: #979593;
-        cursor: pointer;
-    }
-
-    .editRoleCol {
-        margin: auto;
     }
 }
 
@@ -416,9 +393,20 @@ div[class="incident-details"] {
                 margin-bottom: 0.25rem;
             }
 
+            span[class~="role-user-info-icon"] {
+                position: relative;
+                top: 3px;
+                margin-left: 5px;
+                font-size: 16px;
+            }
+
             label[class="people-picker-label"]::after {
                 content: " *";
                 color: #FF0000;
+            }
+
+            label[class="lead-people-picker"] {
+                margin-bottom: 0.25rem;
             }
 
             label[class="message-label"] {
@@ -427,7 +415,8 @@ div[class="incident-details"] {
 
             label[class="message-label"]::after,
             div[class^="ms-Checkbox"]>label[class^="ms-Checkbox-label"]::after,
-            label[class="severity-label"]::after {
+            label[class="severity-label"]::after,
+            label[class="lead-people-picker"]::after {
                 content: "";
             }
 
@@ -542,7 +531,11 @@ div[class="incident-details"] {
             overflow-wrap: break-word;
             opacity: 1;
 
-            div[id="role-grid-thead"] {
+            div[class~="col-center"] {
+                text-align: center;
+            }
+
+            div[class~="role-grid-thead"] {
                 background: #414157 0% 0% no-repeat padding-box;
                 width: 100%;
                 height: auto;
@@ -559,9 +552,20 @@ div[class="incident-details"] {
                     font: normal normal 600 13px/20px Segoe UI;
                 }
 
+                div[class~="thead-border-left"] {
+                    border-left: 0.25px solid #FFFFFF;
+
+                    img[class="role-edit-head-icon"],
+                    img[class="role-select-head-icon"],
+                    img[class="role-delete-head-icon"] {
+                        width: 22px;
+                        height: 22px;
+                    }
+                }
+
             }
 
-            div[id="role-grid-tbody"] {
+            div[class~="role-grid-tbody"] {
                 background: #FFFFFF 0% 0% no-repeat padding-box;
                 width: 100%;
                 margin-left: 0px;
@@ -569,7 +573,7 @@ div[class="incident-details"] {
                 border-right: 0.25px solid #979593;
                 border-bottom: 0.25px solid #979593;
                 height: auto;
-                padding: 10px;
+                padding: 7px;
                 font: normal normal normal 16px/21px Segoe UI;
                 color: #000000;
 
@@ -577,12 +581,344 @@ div[class="incident-details"] {
                     font: normal normal normal 13px/20px Segoe UI;
                 }
 
-                img[class="role-icon"] {
-                    width: 20px;
-                    height: 23px;
+                label[class~="role-grid-tbody-peoplepicker-label"] {
+                    font-weight: 600;
+                    margin-bottom: 5px;
+                    margin-top: 3px;
+                }
+
+                label[class~="error-message-label"] {
+                    font: normal normal normal 14px/21px Segoe UI;
+                    max-width: 450px;
+                    color: #ce0000;
+                    opacity: 1;
+                    margin-left: 0.75rem;
+                    margin-bottom: 5px;
+                }
+
+                //css for default-checkbox
+                div[class~="role-body-checkbox"],
+                div[class~="role-body-icons"] {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    img[class="role-icon"] {
+                        width: 20px;
+                        height: 23px;
+                        cursor: pointer;
+                    }
+                }
+
+                div[class~="editRoleCol"] {
+                    font-size: 22px;
+                    color: #979593;
                     cursor: pointer;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
                 }
             }
+        }
+
+        div[class~="inc-assets-wrapper"] {
+            row-gap: 20px;
+
+            div[class~="inc-assets-field"] {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                column-gap: 15px;
+                row-gap: 10px;
+                min-height: 40px;
+
+                label[class~="error-message-label"] {
+                    font: normal normal normal 14px/21px Segoe UI;
+                    max-width: 350px;
+                    color: #ce0000;
+                    opacity: 1;
+                    margin-left: 0.75rem;
+                }
+
+                &:has(label[class~="error-message-label"]) {
+                    align-items: flex-start;
+
+                    div[class~="field-with-error"] {
+                        display: grid;
+                        row-gap: 10px;
+                    }
+                }
+
+                div[class~="inc-assets-tgle-btn"] {
+                    margin-bottom: 0px;
+                    min-width: 320px;
+
+                    label[class~="ms-Toggle-label"] {
+                        text-align: left;
+                        font: normal normal normal 16px/21px Segoe UI;
+                        letter-spacing: 0px;
+                        color: #000000;
+                        opacity: 1;
+                    }
+
+                    div[class~="ms-Toggle-innerContainer"] {
+                        top: 1px;
+                    }
+                }
+
+
+                &:has(div[class~="additional-chnl-fields"]) {
+                    align-items: flex-start;
+                }
+
+                div[class~="additional-chnl-fields"] {
+                    display: grid;
+                    row-gap: 10px;
+                    min-width: 410px;
+
+                    div[class~="chnl-field-with-remove-icon"] {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+
+                        span[class~="chnl-remove-icon"] {
+                            padding-left: 30px;
+                            cursor: pointer;
+
+                            svg {
+                                color: #585858;
+
+                                &:hover {
+                                    color: #303030;
+                                }
+                            }
+                        }
+                    }
+
+                    &:not(div[class~="chnl-field-with-remove-icon"]) {
+
+                        button[class~="add-chnl-btn"] {
+                            margin-top: 0;
+                        }
+                    }
+
+                    &:has(div[class~="chnl-field-with-remove-icon"]) {
+
+                        button[class~="add-chnl-btn"] {
+                            margin-top: 10px;
+                        }
+                    }
+                }
+
+                div[class~="guest-user-fields"] {
+                    display: grid;
+                    row-gap: 10px;
+
+                    div[class~="guest-field-wrapper"] {
+                        display: flex;
+                        column-gap: 20px;
+
+                        div[class~="incident-details-input-field"] {
+                            label {
+                                font: normal normal normal 16px/21px Segoe UI;
+                                color: #000000;
+                                opacity: 1;
+                            }
+
+                            label::after {
+                                content: " *";
+                                color: #FF0000;
+                            }
+                        }
+                    }
+                }
+
+                button[class~="add-chnl-btn"] {
+                    width: 150px;
+                    height: 40px;
+                    background: none;
+                    border: 1px solid #000;
+                    margin-top: 10px;
+
+                    &:hover {
+                        border-color: darkgray;
+                    }
+                }
+
+                div[class~="incident-details-input-field"] {
+                    div[class~="ui-input"] {
+                        width: 380px;
+                    }
+                }
+
+                div[class~="disabled-input"] {
+                    input {
+                        background-color: #D3D3D3;
+                        border: 1px solid #fff;
+                    }
+                }
+
+                div[class~="assets-save-default-checkbox"] {
+                    padding-top: 8px;
+                    padding-left: 35px;
+                    min-width: 175px;
+                    grid-area: 1 / 3 / span 1 / span 3;
+
+                    div[class~="tgle-btn-label"] {
+                        font-size: 14px;
+                        line-height: 16px;
+                    }
+
+                    div[class~="disabled-label"] {
+                        span[class~="tgle-btn-info-icon"] {
+                            i {
+                                color: rgb(179, 176, 173);
+                            }
+                        }
+                    }
+                }
+
+                span[class~="tgle-btn-info-icon"] {
+                    margin-left: 10px;
+                    position: relative;
+                    top: 3px;
+                    cursor: pointer;
+
+                    i {
+                        color: #000000;
+                        font-size: 16px;
+                    }
+                }
+
+                &:has(img[class~="cloud-icon"]) {
+                    div[class~="assets-save-default-checkbox"] {
+                        width: 165px;
+                        padding-left: 10px;
+                    }
+                }
+
+                img[class~="cloud-icon"] {
+                    width: 40px;
+                    height: 32px;
+                    opacity: 1;
+                    cursor: pointer;
+
+                    &:hover {
+                        filter: invert(40%) sepia(68%) saturate(6622%) hue-rotate(191deg) brightness(95%) contrast(101%);
+                    }
+                }
+
+                a[class~="disabled-link"] {
+                    pointer-events: none;
+                }
+
+                @media screen and (max-width:991px) {
+                    display: grid;
+                    grid-template-columns: auto auto auto auto;
+
+                    div[class~="inc-assets-tgle-btn"] {
+                        grid-area: 1 / 1 / span 1 / span 4;
+                    }
+
+                    div[class~="assets-save-default-checkbox"] {
+                        grid-area: 3 / 1 / span 1 / span 3;
+                        width: 145px;
+                        padding-left: 5px;
+                    }
+
+                    div[class~="guest-user-fields"] {
+                        div[class~="guest-field-wrapper"] {
+                            div[class~="incident-details-input-field"] {
+                                div[class~="ui-input"] {
+                                    width: 345px;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                @media screen and (max-width:767px) {
+
+                    div[class~="assets-save-default-checkbox"] {
+                        grid-area: 3 / 1 / span 1 / span 3;
+                        width: fit-content;
+                    }
+
+                    div[class~="additional-chnl-fields"] {
+
+                        div[class~="chnl-field-with-remove-icon"] {
+
+                            span[class~="chnl-remove-icon"] {
+                                padding-left: 10px;
+                            }
+                        }
+                    }
+
+                    span:has(img[class~="cloud-icon"]) {
+                        grid-area: 3 / 1 / span 1 / span 3;
+                        width: fit-content;
+                        margin-left: auto;
+                        margin-right: 40px;
+                    }
+
+                    div[class~="guest-user-fields"] {
+                        row-gap: 25px;
+
+                        div[class~="guest-field-wrapper"] {
+                            display: grid;
+                            row-gap: 5px;
+
+                            div[class~="incident-details-input-field"] {
+                                div[class~="ui-input"] {
+                                    width: 380px;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                @media screen and (max-width:375pt) {
+                    div[class~="incident-details-input-field"] {
+                        div[class~="ui-input"] {
+                            width: 315px;
+
+                            input::placeholder {
+                                font-size: 12px;
+                            }
+                        }
+                    }
+
+                    div[class~="inc-assets-tgle-btn"] {
+                        width: 320px;
+                    }
+
+                    label[class~="error-message-label"] {
+                        width: 315px;
+                    }
+
+                    &:has(label[class~="error-message-label"]) {
+                        align-items: center;
+                    }
+
+                    div[class~="additional-chnl-fields"] {
+                        min-width: 355px;
+
+                        div[class~="chnl-field-with-remove-icon"] {
+                            justify-content: flex-start;
+                        }
+                    }
+                }
+            }
+
+            div[class~="in-assets-guest-fields"] {
+                display: grid;
+                row-gap: 10px;
+            }
+        }
+
+        div[class~="tooltip-host-class"] {
+            display: inline-block;
+            cursor: pointer;
         }
 
         div[class="new-incident-btn-area"] {
@@ -631,11 +967,11 @@ div[class="incident-details"] {
 
             div[class="role-assignment-table"] {
 
-                div[id="role-grid-thead"] {
+                div[class~="role-grid-thead"] {
                     font: normal normal 600 11pt/15pt Segoe UI;
                 }
 
-                div[id="role-grid-tbody"] {
+                div[class~="role-grid-tbody"] {
                     font: normal normal normal 11pt/15pt Segoe UI;
 
                     img[class="role-icon"] {

@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.11/MicrosoftTeams.schema.json",
   "manifestVersion": "1.11",
-  "version": "1.0",
+  "version": "2.0",
   "id": "bef61400-db9b-41d4-a617-403deb7bbe77",
   "packageName": "com.microsoft.teams.extension",
   "developer": {
@@ -19,7 +19,7 @@
     "full": "Microsoft Teams Emergency Operations Center"
   },
   "description": {
-    "short": "Microsoft Teams Emergency Operation Center",
+    "short": "Microsoft Teams Emergency Operations Center",
     "full": "The Microsoft Teams Emergency Operations Center (TEOC) solution template leverages the power of the Microsoft 365 platform to centralize incident response, information sharing and field communications using powerful services like Microsoft Lists, SharePoint and more. An open-source solution supported by Microsoft it provides core functionality out of the box or can be extended to meet specific agency requirements."
   },
   "accentColor": "#FFFFFF",
@@ -40,7 +40,7 @@
       "entityId": "index",
       "name": "Teams EOC",
       "contentUrl": "https://<<appDomain>>/index.html#/tab",
-      "websiteUrl": "https://<<appDomain>>/index.html#/tab",
+      "websiteUrl": "https://<<websiteUrl>>",
       "scopes": [
         "personal"
       ]

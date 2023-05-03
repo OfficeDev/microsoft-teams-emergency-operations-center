@@ -1,0 +1,543 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "baseResourceName": {
+        "type": "string",
+        "minLength": 1,
+        "metadata": {
+          "description": "The base name to use for the resources that will be provisioned."
+        }
+      },
+      "ClientId": {
+        "type": "string",
+        "minLength": 1,
+        "metadata": {
+          "description": "The client Id of the Azure AD app, e.g., 123e4567-e89b-12d3-a456-426655440000."
+        }
+      },
+      "ClientSecret": {
+        "type": "string",
+        "minLength": 1,
+        "metadata": {
+          "description": "The client secret of the Azure AD app."
+        }
+      },
+      "TenantId": {
+        "type": "string",
+        "minLength": 1,
+        "metadata": {
+          "description": "The ID of the tenant to which the app will be deployed."
+        }
+      },
+      "SharePointSiteName": {
+        "type": "string",
+        "minLength": 1,
+        "metadata": {
+          "description": "The SharePoint Site Name."
+        }
+      },
+      "m365OauthAuthorityHost": {
+        "type": "string",
+        "minLength": 1,
+        "metadata": {
+          "description": "The m365 Oauth authority host"
+        },
+        "defaultValue": "https://login.microsoftonline.us"
+      },
+      "GraphBaseUrl": {
+        "type": "string",
+        "minLength": 1,
+        "metadata": {
+          "description": "A default base url for a graph request"
+        },
+        "defaultValue": "https://graph.microsoft.us/"
+      },
+      "hostingPlanSku": {
+        "type": "string",
+        "allowedValues": [
+          "Standard",
+          "Premium"
+        ],
+        "defaultValue": "Standard",
+        "metadata": {
+          "description": "The pricing tier for the hosting plan."
+        }
+      },
+      "hostingPlanSize": {
+        "type": "string",
+        "allowedValues": [
+          "2",
+          "3"
+        ],
+        "defaultValue": "2",
+        "metadata": {
+          "description": "The size of the hosting plan (small, medium, or large)."
+        }
+      },
+      "location": {
+        "type": "string",
+        "defaultValue": "[resourceGroup().location]",
+        "metadata": {
+          "description": "Location for all resources."
+        }
+      },
+      "gitRepoUrl": {
+        "type": "string",
+        "metadata": {
+          "description": "The URL to the GitHub repository to deploy."
+        },
+        "defaultValue": "https://github.com/OfficeDev/microsoft-teams-emergency-operations-center.git"
+      },
+      "gitBranch": {
+        "type": "string",
+        "metadata": {
+          "description": "The branch of the GitHub repository to deploy."
+        },
+        "defaultValue": "main"
+      }
+    },
+    "variables": {
+      "siteName": "[parameters('baseResourceName')]",
+      "hostingPlanName": "[parameters('baseResourceName')]",
+      "appInsightsName": "[parameters('baseResourceName')]",
+      "sharedSkus": [
+        "Free",
+        "Shared"
+      ],
+      "isSharedPlan": "[contains(variables('sharedSkus'), parameters('hostingPlanSku'))]",
+      "skuFamily": "[if(equals(parameters('hostingPlanSku'), 'Shared'), 'D', take(parameters('hostingPlanSku'), 1))]"
+    },
+    "resources": [
+      {
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2020-10-01",
+        "name": "userAssignedIdentityProvision",
+        "properties": {
+          "expressionEvaluationOptions": {
+            "scope": "inner"
+          },
+          "mode": "Incremental",
+          "parameters": {
+            "baseResourceName": {
+              "value": "[parameters('baseResourceName')]"
+            }
+          },
+          "template": {
+            "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+            "contentVersion": "1.0.0.0",
+            "metadata": {
+              "_generator": {
+                "name": "bicep",
+                "version": "0.4.1124.51302",
+                "templateHash": "2643633197136821950"
+              }
+            },
+            "parameters": {
+              "baseResourceName": {
+                "type": "string",
+                "minLength": 1,
+                "metadata": {
+                  "description": "The base name to use for the resources that will be provisioned."
+                }
+              }
+            },
+            "variables": {
+              "baseResourceName": "[parameters('baseResourceName')]",
+              "identityName": "[format('{0}', variables('baseResourceName'))]"
+            },
+            "resources": [
+              {
+                "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+                "apiVersion": "2018-11-30",
+                "name": "[variables('identityName')]",
+                "location": "[resourceGroup().location]"
+              }
+            ],
+            "outputs": {
+              "identityName": {
+                "type": "string",
+                "value": "[variables('identityName')]"
+              },
+              "identityClientId": {
+                "type": "string",
+                "value": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName'))).clientId]"
+              },
+              "identityResourceId": {
+                "type": "string",
+                "value": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName'))]"
+              },
+              "identityPrincipalId": {
+                "type": "string",
+                "value": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName'))).principalId]"
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2020-10-01",
+        "name": "simpleAuthProvision",
+        "dependsOn": [
+          "[resourceId('Microsoft.Resources/deployments', 'userAssignedIdentityProvision')]"
+        ],
+        "properties": {
+          "expressionEvaluationOptions": {
+            "scope": "inner"
+          },
+          "mode": "Incremental",
+          "parameters": {
+            "userAssignedIdentityId": {
+              "value": "[reference(resourceId('Microsoft.Resources/deployments', 'userAssignedIdentityProvision'), '2020-10-01').outputs.identityResourceId.value]"
+            },
+            "baseResourceName": {
+              "value": "[parameters('baseResourceName')]"
+            }
+          },
+          "template": {
+            "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+            "contentVersion": "1.0.0.0",
+            "metadata": {
+              "_generator": {
+                "name": "bicep",
+                "version": "0.4.1124.51302",
+                "templateHash": "7059311261656381061"
+              }
+            },
+            "parameters": {
+              "baseResourceName": {
+                "type": "string",
+                "minLength": 1,
+                "metadata": {
+                  "description": "The base name to use for the resources that will be provisioned."
+                }
+              },
+              "userAssignedIdentityId": {
+                "type": "string"
+              }
+            },
+            "variables": {
+              "baseResourceName": "[parameters('baseResourceName')]",
+              "sku": "F1",
+              "serverFarmsName": "[format('{0}simpleAuth', variables('baseResourceName'))]",
+              "webAppName": "[format('{0}simpleAuth', variables('baseResourceName'))]",
+              "simpleAuthPackageUri": "https://github.com/OfficeDev/TeamsFx/releases/download/simpleauth@0.1.0/Microsoft.TeamsFx.SimpleAuth_0.1.0.zip"
+            },
+            "resources": [
+              {
+                "type": "Microsoft.Web/serverfarms",
+                "apiVersion": "2021-02-01",
+                "name": "[variables('serverFarmsName')]",
+                "location": "[resourceGroup().location]",
+                "sku": {
+                  "name": "[variables('sku')]"
+                },
+                "kind": "app",
+                "properties": {}
+              },
+              {
+                "type": "Microsoft.Web/sites",
+                "apiVersion": "2021-02-01",
+                "name": "[variables('webAppName')]",
+                "kind": "app",
+                "location": "[resourceGroup().location]",
+                "properties": {
+                  "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('serverFarmsName'))]",
+                  "keyVaultReferenceIdentity": "[reference(resourceId('Microsoft.Resources/deployments', 'userAssignedIdentityProvision'), '2020-10-01').outputs.identityResourceId.value]"
+                },
+                "identity": {
+                  "type": "UserAssigned",
+                  "userAssignedIdentities": {
+                    "[format('{0}', parameters('userAssignedIdentityId'))]": {}
+                  }
+                },
+                "dependsOn": [
+                  "[resourceId('Microsoft.Web/serverfarms', variables('serverFarmsName'))]"
+                ]
+              },
+              {
+                "type": "Microsoft.Web/sites/extensions",
+                "apiVersion": "2021-02-01",
+                "name": "[format('{0}/{1}', variables('webAppName'), 'MSDeploy')]",
+                "properties": {
+                  "packageUri": "[variables('simpleAuthPackageUri')]"
+                },
+                "dependsOn": [
+                  "[resourceId('Microsoft.Web/sites', variables('webAppName'))]"
+                ]
+              }
+            ],
+            "outputs": {
+              "webAppResourceId": {
+                "type": "string",
+                "value": "[resourceId('Microsoft.Web/sites', variables('webAppName'))]"
+              },
+              "endpoint": {
+                "type": "string",
+                "value": "[format('https://{0}', reference(resourceId('Microsoft.Web/sites', variables('webAppName'))).defaultHostName)]"
+              }
+            }
+          }
+        }
+      },
+      {
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2020-10-01",
+        "name": "addTeamsFxSimpleAuthConfiguration",
+        "dependsOn": [
+          "[resourceId('Microsoft.Resources/deployments', 'userAssignedIdentityProvision')]",
+          "[resourceId('Microsoft.Resources/deployments', 'simpleAuthProvision')]"
+        ],
+        "properties": {
+          "expressionEvaluationOptions": {
+            "scope": "inner"
+          },
+          "mode": "Incremental",
+          "parameters": {
+            "baseResourceName": {
+              "value": "[parameters('baseResourceName')]"
+            },
+            "ClientId": {
+              "value": "[parameters('ClientId')]"
+            },
+            "ClientSecret": {
+              "value": "[parameters('ClientSecret')]"
+            },
+            "TenantId": {
+              "value": "[parameters('TenantId')]"
+            },
+            "m365OauthAuthorityHost": {
+              "value": "[parameters('m365OauthAuthorityHost')]"
+            },
+            "SharePointSiteName": {
+              "value": "[parameters('SharePointSiteName')]"
+            },
+            "GraphBaseUrl":{
+                "value": "[parameters('GraphBaseUrl')]" 
+            }
+          },
+          "template": {
+            "$schema": "https: //schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+            "contentVersion": "1.0.0.0",
+            "metadata": {
+              "_generator": {
+                "name": "bicep",
+                "version": "0.4.1124.51302",
+                "templateHash": "8799157700473297472"
+              }
+            },
+            "parameters": {
+              "baseResourceName": {
+                "type": "string",
+                "minLength": 1,
+                "metadata": {
+                  "description": "The base name to use for the resources that will be provisioned."
+                }
+              },
+              "ClientId": {
+                "type": "string",
+                "minLength": 1,
+                "metadata": {
+                  "description": "The base name to use for the resources that will be provisioned."
+                }
+              },
+              "ClientSecret": {
+                "type": "string",
+                "minLength": 1,
+                "metadata": {
+                  "description": "The base name to use for the resources that will be provisioned."
+                }
+              },
+              "TenantId": {
+                "type": "string",
+                "minLength": 1,
+                "metadata": {
+                  "description": "The base name to use for the resources that will be provisioned."
+                }
+              },
+              "m365OauthAuthorityHost": {
+                "type": "string",
+                "minLength": 1,
+                "metadata": {
+                  "description": "The base name to use for the resources that will be provisioned."
+                }
+              },
+              "SharePointSiteName": {
+                "type": "string",
+                "minLength": 1,
+                "metadata": {
+                  "description": "Provide name for the sharepoint site that will be provisioned."
+                }
+              },
+              "GraphBaseUrl":{
+                "type": "string",
+                "minLength": 1,
+                "metadata": {
+                  "description": "The default base url for graph request."
+                }
+              }
+            },
+            "variables": {
+              "baseResourceName": "[parameters('baseResourceName')]",
+              "webAppName": "[format('{0}simpleAuth', variables('baseResourceName'))]",
+              "ClientId": "[parameters('ClientId')]",
+              "ClientSecret": "[parameters('ClientSecret')]",
+              "oauthAuthority": "[uri(parameters('m365OauthAuthorityHost'), parameters('TenantId'))]",
+              "aadMetadataAddress": "[uri(parameters('m365OauthAuthorityHost'), format('{0}/v2.0/.well-known/openid-configuration', parameters('TenantId')))]",
+              "teamsMobileOrDesktopAppClientId": "1fec8e78-bce4-4aaf-ab1b-5451cc387264",
+              "teamsWebAppClientId": "5e3ce6c0-2b1f-4285-8d4b-75ee78787346",
+              "officeWebAppClientId1": "4345a7b9-9a63-4910-a426-35363201d503",
+              "officeWebAppClientId2": "4765445b-32c6-49b0-83e6-1d93765276ca",
+              "outlookDesktopAppClientId": "d3590ed6-52b3-4102-aeff-aad2292ab01c",
+              "outlookWebAppClientId": "00000002-0000-0ff1-ce00-000000000000",
+              "authorizedClientApplicationIds": "[format('{0};{1};{2};{3};{4};{5}', variables('teamsMobileOrDesktopAppClientId'), variables('teamsWebAppClientId'), variables('officeWebAppClientId1'), variables('officeWebAppClientId2'), variables('outlookDesktopAppClientId'), variables('outlookWebAppClientId'))]",
+              "identifierURI": "[concat(parameters('baseResourceName'), '.azurewebsites.us')]",
+              "tabAppEndpoint": "[concat(parameters('baseResourceName'), '.azurewebsites.us')]",
+              "SharePointSiteName": "[parameters('SharePointSiteName')]",
+              "GraphBaseUrl": "[parameters('GraphBaseUrl')]"
+            },
+            "resources": [
+              {
+                "type": "Microsoft.Web/sites/config",
+                "apiVersion": "2021-02-01",
+                "name": "[format('{0}/appsettings', variables('webAppName'))]",
+                "properties": "[createObject('AAD_METADATA_ADDRESS', variables('aadMetadataAddress'),'ALLOWED_APP_IDS', variables('authorizedClientApplicationIds'),'IDENTIFIER_URI', format('api://{0}/{1}', variables('identifierURI'),parameters('ClientId')),'CLIENT_ID', variables('ClientId'),'CLIENT_SECRET', variables('ClientSecret'),'OAUTH_AUTHORITY',variables('oauthAuthority'), 'TAB_APP_ENDPOINT', format('https://{0}', variables('tabAppEndpoint')),'WEBSITE_NODE_DEFAULT_VERSION','6.9.1')]"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "type": "Microsoft.Web/serverfarms",
+        "apiVersion": "2016-09-01",
+        "name": "[variables('hostingPlanName')]",
+        "location": "[parameters('location')]",
+        "properties": {
+          "name": "[variables('hostingPlanName')]",
+          "hostingEnvironment": "",
+          "numberOfWorkers": 1
+        },
+        "sku": {
+          "name": "[if(variables('isSharedPlan'), concat(variables('skuFamily'), '1'), concat(variables('skuFamily'), parameters('hostingPlanSize')))]",
+          "tier": "[parameters('hostingPlanSku')]",
+          "size": "[concat(variables('skuFamily'), parameters('hostingPlanSize'))]",
+          "family": "[variables('skuFamily')]",
+          "capacity": 0
+        }
+      },
+      {
+        "apiVersion": "2016-08-01",
+        "type": "Microsoft.Web/sites",
+        "name": "[variables('siteName')]",
+        "location": "[parameters('location')]",
+        "kind": "app",
+        "properties": {
+          "name": "[variables('siteName')]",
+          "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
+          "enabled": true,
+          "reserved": false,
+          "clientAffinityEnabled": true,
+          "clientCertEnabled": false,
+          "hostNamesDisabled": false,
+          "containerSize": 0,
+          "dailyMemoryTimeQuota": 0,
+          "httpsOnly": true,
+          "siteConfig": {
+            "alwaysOn": "[not(variables('isSharedPlan'))]",
+            "appSettings": [
+              {
+                "name": "SITE_ROLE",
+                "value": "app"
+              },
+              {
+                "name": "ApplicationInsightsAgent_EXTENSION_VERSION",
+                "value": "~2"
+              },
+              {
+                "name": "REACT_APP_CLIENT_ID",
+                "value": "[parameters('ClientId')]"
+              },
+              {
+                "name": "REACT_APP_START_LOGIN_PAGE_URL",
+                "value": "auth-start.html"
+              },
+              {
+                "name": "REACT_APP_TEAMSFX_ENDPOINT",
+                "value": "[reference(resourceId('Microsoft.Resources/deployments', 'simpleAuthProvision'), '2020-10-01').outputs.endpoint.value]"
+              },
+              {
+                "name": "REACT_APP_APPINSIGHTS_INSTRUMENTATIONKEY",
+                "value": "[reference(resourceId('Microsoft.Insights/components/', variables('appInsightsName')), '2015-05-01').InstrumentationKey]"
+              },
+              {
+                "name": "WEBSITE_NODE_DEFAULT_VERSION",
+                "value": "16.13.0"
+              },
+              {
+                "name": "REACT_APP_SHAREPOINT_SITE_NAME",
+                "value": "[parameters('SharePointSiteName')]"
+              },
+              {
+                "name": "REACT_APP_GRAPH_BASE_URL",
+                "value": "[parameters('GraphBaseUrl')]"
+              }
+            ]
+          }
+        },
+        "dependsOn": [
+          "[resourceId('Microsoft.Resources/deployments', 'simpleAuthProvision')]",
+          "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
+          "[resourceId('Microsoft.Insights/components', variables('appInsightsName'))]"
+        ],
+        "resources": [
+          {
+            "apiVersion": "2016-08-01",
+            "name": "web",
+            "type": "sourcecontrols",
+            "condition": "[not(empty(parameters('gitRepoUrl')))]",
+            "dependsOn": [
+              "[resourceId('Microsoft.Web/sites', variables('siteName'))]"
+            ],
+            "properties": {
+              "RepoUrl": "[parameters('gitRepoUrl')]",
+              "branch": "[parameters('gitBranch')]",
+              "IsManualIntegration": true
+            }
+          }
+        ]
+      },
+      {
+        "apiVersion": "2015-05-01",
+        "name": "[variables('appInsightsName')]",
+        "type": "Microsoft.Insights/components",
+        "location": "[parameters('location')]",
+        "tags": {
+          "[concat('hidden-link:', resourceGroup().id, '/providers/Microsoft.Web/sites/', variables('siteName'))]": "Resource"
+        },
+        "properties": {
+          "Application_Type": "web",
+          "Request_Source": "rest"
+        }
+      }
+    ],
+    "outputs": {
+      "identityOutput": {
+        "type": "Object",
+        "value": {
+          "teamsFxPluginId": "fx-resource-identity",
+          "identityName": "[reference(resourceId('Microsoft.Resources/deployments', 'userAssignedIdentityProvision'), '2020-10-01').outputs.identityName.value]",
+          "identityResourceId": "[reference(resourceId('Microsoft.Resources/deployments', 'userAssignedIdentityProvision'), '2020-10-01').outputs.identityResourceId.value]",
+          "identityClientId": "[reference(resourceId('Microsoft.Resources/deployments', 'userAssignedIdentityProvision'), '2020-10-01').outputs.identityClientId.value]"
+        }
+      },
+      "simpleAuthOutput": {
+        "type": "Object",
+        "value": {
+          "teamsFxPluginId": "fx-resource-simple-auth",
+          "endpoint": "[reference(resourceId('Microsoft.Resources/deployments', 'simpleAuthProvision'), '2020-10-01').outputs.endpoint.value]",
+          "webAppResourceId": "[reference(resourceId('Microsoft.Resources/deployments', 'simpleAuthProvision'), '2020-10-01').outputs.webAppResourceId.value]"
+        }
+      }
+    }
+  }

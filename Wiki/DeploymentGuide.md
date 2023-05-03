@@ -58,7 +58,7 @@ Below are the steps you need to perform to provision the TEOC site, 
     * Tenant Name – Name of the tenant where root TEOC site needs to be provisioned (Ex: Contoso)
     * Tenant Admin Email – Email of tenant admin account (Ex: `abc@contoso.com`) 
     * SharePoint Site Name - Name of the site that needs to be provisioned for TEOC application (Ex: Teams EOC Site)
-    >Note: Make a note of the site name _without spaces_ (i.e. The internal name of the site, which is shown in the URL - Ex: /sites/**TeamsEOCSite**), this will be needed later while deploying the resources in Step #3.
+    >Note: Make a note of the site name _without spaces_ (i.e. The internal name of the site, which is shown in the URL - Ex: **TeamsEOCSite**), this will be needed later while deploying the resources in Step #3.
 
     ![Provisioning Scripts](./Images/ProvisioningScript.png)
 
@@ -149,7 +149,7 @@ You need to first create a new Azure AD Application to secure API permissions. R
     1. **Client ID**: The application (client) ID of the app registered
     2. **Client Secret**: The client secret Value of the app registered
     3. **Tenant Id**: The tenant Id
-    4. **Share Point Site Name**: Name of the SharePoint site that was provisioned in step 1 (It should be the exact site name from the URL Ex: ../sites/**TeamsEOCSite**)
+    4. **Share Point Site Name**: Name of the SharePoint site that was provisioned in step 1 (It should be the exact site name from the URL Ex: **TeamsEOCSite**)
 
 1. Other fields have pre-populated default values, do not change it unless you want it to be customized depending on the need.
 
@@ -280,11 +280,16 @@ To create the team's package,
 
 1. Open the `Deployment\appPackage\manifest.json` file in a text editor.
     
-1. Change the `<<appDomain>>` placeholder in the below setting to your app domain URL, for example    
+1. Change the `<<appDomain>>` placeholder in the below settings to your app domain URL, for example    
         
     * `"configurationUrl": "https://<<appDomain>>/index.html#/config"`
     * `"contentUrl": "https://<<appDomain>>/index.html#/tab"`
-    * `"websiteUrl": "https://<<appDomain>>/index.html#/tab"`
+  
+
+1. Change the `<<websiteUrl>>` placeholder in the below setting to the URL of the TEOC SharePoint site
+
+    * `"websiteUrl": "https://<<websiteUrl>>"`
+
 
     ![Manifest Updates](./Images/Manifest_Placeholders.png)
 

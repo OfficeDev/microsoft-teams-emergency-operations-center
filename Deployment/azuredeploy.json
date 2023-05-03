@@ -45,6 +45,14 @@
       },
       "defaultValue": "https://login.microsoftonline.com"
     },
+    "GraphBaseUrl": {
+      "type": "string",
+      "minLength": 1,
+      "metadata": {
+        "description": "A default base url for a graph request"
+      },
+      "defaultValue": "https://graph.microsoft.com/"
+    },
     "hostingPlanSku": {
       "type": "string",
       "allowedValues": [
@@ -304,6 +312,9 @@
           },
           "SharePointSiteName": {
             "value": "[parameters('SharePointSiteName')]"
+          },
+          "GraphBaseUrl":{
+              "value": "[parameters('GraphBaseUrl')]" 
           }
         },
         "template": {
@@ -358,6 +369,13 @@
               "metadata": {
                 "description": "Provide name for the sharepoint site that will be provisioned."
               }
+            },
+            "GraphBaseUrl":{
+              "type": "string",
+              "minLength": 1,
+              "metadata": {
+                "description": "The default base url for graph request."
+              }
             }
           },
           "variables": {
@@ -376,7 +394,8 @@
             "authorizedClientApplicationIds": "[format('{0};{1};{2};{3};{4};{5}', variables('teamsMobileOrDesktopAppClientId'), variables('teamsWebAppClientId'), variables('officeWebAppClientId1'), variables('officeWebAppClientId2'), variables('outlookDesktopAppClientId'), variables('outlookWebAppClientId'))]",
             "identifierURI": "[concat(parameters('baseResourceName'), '.azurewebsites.net')]",
             "tabAppEndpoint": "[concat(parameters('baseResourceName'), '.azurewebsites.net')]",
-            "SharePointSiteName": "[parameters('SharePointSiteName')]"
+            "SharePointSiteName": "[parameters('SharePointSiteName')]",
+            "GraphBaseUrl": "[parameters('GraphBaseUrl')]"
           },
           "resources": [
             {
@@ -458,6 +477,10 @@
             {
               "name": "REACT_APP_SHAREPOINT_SITE_NAME",
               "value": "[parameters('SharePointSiteName')]"
+            },
+            {
+              "name": "REACT_APP_GRAPH_BASE_URL",
+              "value": "[parameters('GraphBaseUrl')]"
             }
           ]
         }

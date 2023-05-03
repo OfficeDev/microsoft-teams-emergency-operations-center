@@ -155,15 +155,16 @@
                 <FieldRef Name="Description" />
                 <FieldRef Name="IncidentName" />
                 <FieldRef Name="IncidentType" />
-                <FieldRef Name="IncidentStatus" />
+                <FieldRef Name="Status" />
                 <FieldRef Name="StartDateTime" />
-                <FieldRef Name="IncidentCommander" />
-                <FieldRef Name="TeamId" />
+                <FieldRef Name="IncidentCommander" />                
                 <FieldRef Name="Location" />
                 <FieldRef Name="RoleAssignment" />
+                <FieldRef Name="RoleLeads" />
                 <FieldRef Name="IncidentId" />
                 <FieldRef Name="Severity" />
                 <FieldRef Name="ReasonForUpdate" />
+                <FieldRef Name="CloudStorageLink" />
               </ViewFields>
               <RowLimit Paged="TRUE">30</RowLimit>
               <JSLink>clienttemplates.js</JSLink>
@@ -173,23 +174,26 @@
             <Field DisplayName="Description" Type="Note" Required="FALSE" ID="{717d7908-3441-42b1-8468-3ce96811e94d}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="Description" Name="Description" ColName="nvarchar4" RowOrdinal="0" Version="1" />
             <Field DisplayName="IncidentName" Type="Text" Required="FALSE" ID="{eb457654-d965-46d2-900d-374282a2bb71}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="IncidentName" Name="IncidentName" ColName="nvarchar5" RowOrdinal="0" Version="1" />
             <Field DisplayName="IncidentType" Type="Text" Required="FALSE" ID="{89e2af99-6f53-40db-87d6-31c0a7f03093}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="IncidentType" Name="IncidentType" ColName="nvarchar6" RowOrdinal="0" Version="1" />
-            <Field DisplayName="IncidentStatus" Type="Text" Required="FALSE" ID="{3099fe5b-8791-44ff-97df-b6e48115ddd7}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="IncidentStatus" Name="IncidentStatus" ColName="nvarchar7" RowOrdinal="0" Version="1" />
+            <Field DisplayName="Status" Type="Lookup" Required="FALSE" EnforceUniqueValues="FALSE" List="{listid:TEOC-IncidentStatus}" ShowField="Title" UnlimitedLengthInDocumentLibrary="FALSE" RelationshipDeleteBehavior="None" ID="{ca05aae9-7cbf-41a2-9d3c-6902dd0925bb}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="Status" Name="Status" ColName="int1" RowOrdinal="0" /> 
             <Field DisplayName="StartDateTime" Type="DateTime" Required="FALSE" ID="{9100a987-5b2b-48c8-a235-90c6a923f274}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="StartDateTime" Name="StartDateTime" ColName="datetime1" RowOrdinal="0" Version="1" />
-            <Field DisplayName="IncidentCommander" Type="Note" Required="FALSE" ID="{a2638677-efdb-4f86-b265-43182e2d2fab}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="IncidentCommander" Name="IncidentCommander" ColName="nvarchar8" RowOrdinal="0" Version="1" />
-            <Field DisplayName="TeamId" Type="Text" Required="FALSE" ID="{4849e924-f5e3-43c6-9127-71ebef9afdec}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="TeamId" Name="TeamId" ColName="nvarchar13" RowOrdinal="0" Version="1" />
+            <Field DisplayName="IncidentCommander" Type="Note" Required="FALSE" ID="{a2638677-efdb-4f86-b265-43182e2d2fab}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="IncidentCommander" Name="IncidentCommander" ColName="nvarchar8" RowOrdinal="0" Version="1" />            
             <Field DisplayName="Location" Type="Text" Required="FALSE" ID="{ac1ca70c-b889-4a96-a1e6-084a87e455aa}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="Location" Name="Location" ColName="nvarchar14" RowOrdinal="0" Version="1" />
             <Field Name="RoleAssignment" FromBaseType="FALSE" Type="Note" DisplayName="RoleAssignment" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" NumLines="6" RichText="FALSE" Sortable="FALSE" ID="{4d358bc3-6b55-41ea-a23b-543fe291aaec}" Version="2" StaticName="RoleAssignment" SourceID="{{listid:TEOC-IncidentTransaction}}" ColName="ntext2" RowOrdinal="0" />
             <Field Type="Text" DisplayName="IncidentId" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" MaxLength="255" ID="{b4eaf27a-d1fc-47da-80a9-1dc1ea805c31}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="IncidentId" Name="IncidentId" ColName="nvarchar16" RowOrdinal="0" />
             <Field DisplayName="TeamWebURL" Type="Note" Required="FALSE" ID="{ac01043f-5b8b-4c5f-8255-2b0a17552eec}" SourceID="{{listid:IncidentTransaction}}" StaticName="TeamWebURL" Name="TeamWebURL" ColName="nvarchar17" RowOrdinal="0" Version="1" />
             <Field DisplayName="Severity" Type="Text" Required="FALSE" EnforceUniqueValues="FALSE" Indexed="FALSE" MaxLength="255" ID="{1a7b870d-3c61-4bff-9920-73b68174e0fe}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="Severity" Name="Severity" ColName="nvarchar18" RowOrdinal="0" />
             <Field DisplayName="ReasonForUpdate" Type="Note" Required="FALSE" ID="{275f387a-2ed3-411a-a200-7187ab64782f}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="ReasonForUpdate" Name="ReasonForUpdate" ColName="nvarchar19" RowOrdinal="0" Version="1" />
-      
+            <Field DisplayName="BridgeID" Type="Note" Required="FALSE" ID="{67fad31f-7dda-4f72-903c-d603081a9afc}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="BridgeID" Name="BridgeID" ColName="nvarchar20" RowOrdinal="0" Version="1" />
+            <Field DisplayName="BridgeLink" Type="Note" Required="FALSE" ID="{dbe61549-2981-4da6-9536-59cbbc6587f5}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="BridgeLink" Name="BridgeLink" ColName="nvarchar21" RowOrdinal="0" Version="1" />
+            <Field DisplayName="NewsTabLink" Type="Note" Required="FALSE" ID="{c6f0e6c5-9f35-4c2b-85d5-ae4c682372a9}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="NewsTabLink" Name="NewsTabLink" ColName="nvarchar22" RowOrdinal="0" Version="1" />
+            <Field DisplayName="PlanID" Type="Note" Required="FALSE" ID="{7573bd78-d600-4aab-a0a6-0eaab04be0fa}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="PlanID" Name="PlanID" ColName="nvarchar23" RowOrdinal="0" Version="1" />
+            <Field DisplayName="RoleLeads" Type="Note" Required="FALSE" ID="{ed99d759-68c6-4bd1-a167-2b3dc87a48b3}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="RoleLeads" Name="RoleLeads" ColName="nvarchar24" RowOrdinal="0" Version="1" />
+            <Field DisplayName="CloudStorageLink" Type="Note" Required="FALSE" ID="{709bfe98-d2b6-4d99-bd45-29590b1ca07f}" SourceID="{{listid:TEOC-IncidentTransaction}}" StaticName="CloudStorageLink" Name="CloudStorageLink" ColName="nvarchar25" RowOrdinal="0" Version="1" />
           </pnp:Fields>
         </pnp:ListInstance>
         <pnp:ListInstance Title="TEOC-IncidentType" Description="" DocumentTemplate="" TemplateType="100" Url="Lists/TEOC-IncidentType" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="50" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/TEOC-IncidentType/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/TEOC-IncidentType/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/TEOC-IncidentType/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.gif?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
           <pnp:ContentTypeBindings>
-            <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />
-            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+            <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />            
           </pnp:ContentTypeBindings>
           <pnp:Views>
             <View Name="{4EF377C3-9B4A-448B-955B-430D1BCF0ED0}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Items" Url="{site}/Lists/TEOC-IncidentType/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=47">
@@ -515,6 +519,10 @@
           <pnp:DataRow>
               <pnp:DataValue FieldName="Title">TeamNameConfig</pnp:DataValue>              
               <pnp:DataValue FieldName="Value">{"PrefixValue":"TEOC","Prefix":"1","IncidentName":"2","IncidentType":"3","StartDate":"4"}</pnp:DataValue>
+          </pnp:DataRow> 
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">EnableRoles</pnp:DataValue>              
+              <pnp:DataValue FieldName="Value">False</pnp:DataValue>
           </pnp:DataRow>          
         </pnp:DataRows> 
        </pnp:ListInstance>
@@ -529,6 +537,7 @@
               <ViewFields>
                 <FieldRef Name="Title" />                
                 <FieldRef Name="Users" />
+                <FieldRef Name="RoleLead" />
               </ViewFields>
               <RowLimit Paged="TRUE">30</RowLimit>
               <Aggregations Value="Off" />
@@ -539,6 +548,7 @@
           </pnp:Views>
           <pnp:Fields>
             <Field DisplayName="Users" Type="Note" Required="FALSE" ID="{37fd4499-e90e-4bac-8206-077682987263}" SourceID="{{listid:TEOC-RoleDefaultValues}}" StaticName="Users" Name="Users" ColName="nvarchar5" RowOrdinal="0" Version="1" />
+            <Field DisplayName="RoleLead" Type="Note" Required="FALSE" ID="{8c116299-7bb1-47ab-b4c0-0f743d269948}" SourceID="{{listid:TEOC-RoleDefaultValues}}" StaticName="RoleLead" Name="RoleLead"/>
           </pnp:Fields>
       </pnp:ListInstance>
         <pnp:ListInstance Title="TEOC-IncidentTypeDefaultRoles" Description="" DocumentTemplate="" TemplateType="100" Url="Lists/TEOCIncidentTypeDefaultRoles" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="50" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/TEOCIncidentTypeDefaultRoles/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/TEOCIncidentTypeDefaultRoles/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/TEOCIncidentTypeDefaultRoles/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
@@ -552,6 +562,9 @@
               <ViewFields>
                 <FieldRef Name="Title" />                
                 <FieldRef Name="RoleAssignment" />
+                <FieldRef Name="RoleLeads" /> 
+                <FieldRef Name="AdditionalChannels" />
+                <FieldRef Name="CloudStorageLink" /> 
               </ViewFields>
               <RowLimit Paged="TRUE">30</RowLimit>
               <Aggregations Value="Off" />
@@ -562,7 +575,40 @@
           </pnp:Views>
           <pnp:Fields>
             <Field DisplayName="RoleAssignment" Type="Note" Required="FALSE" ID="{276adc46-b4d8-40dd-8ddf-710285d47069}" SourceID="{{listid:TEOC-IncidentTypeDefaultRoles}}" StaticName="RoleAssignment" Name="RoleAssignment" ColName="nvarchar5" RowOrdinal="0" Version="1" />
+            <Field DisplayName="RoleLeads" Type="Note" Required="FALSE" ID="{7a3a00aa-0250-4cce-a546-791ec5025128}" SourceID="{{listid:TEOC-IncidentTypeDefaultRoles}}" StaticName="RoleLeads" Name="RoleLeads"/>
+            <Field DisplayName="AdditionalChannels" Type="Note" Required="FALSE" ID="{0d576882-9d78-494d-bd9f-044a183735a7}" SourceID="{{listid:TEOC-IncidentTypeDefaultRoles}}" StaticName="AdditionalChannels" Name="AdditionalChannels" ColName="nvarchar2" RowOrdinal="0" Version="1" />
+            <Field DisplayName="CloudStorageLink" Type="Note" Required="FALSE" ID="{df32ec5d-2038-4b67-bb2a-b596f700c303}" SourceID="{{listid:TEOC-IncidentTypeDefaultRoles}}" StaticName="CloudStorageLink" Name="CloudStorageLink" ColName="nvarchar2" RowOrdinal="0" Version="1" /> 
           </pnp:Fields> 
+      </pnp:ListInstance>
+      <pnp:ListInstance Title="TEOC-UserRoles" Description="" DocumentTemplate="" TemplateType="100" Url="Lists/TEOCUserRoles" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="50" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/TEOCUserRoles/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/TEOCUserRoles/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/TEOCUserRoles/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
+             <pnp:ContentTypeBindings>
+            <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />
+            <pnp:ContentTypeBinding ContentTypeID="0x0120" />
+          </pnp:ContentTypeBindings>
+          <pnp:Views>
+            <View Name="{7f139869-b045-4994-95a5-055bedbefb79}" DefaultView="TRUE" MobileView="TRUE" MobileDefaultView="TRUE" Type="HTML" DisplayName="All Items" Url="{site}/Lists/TEOCUserRoles/AllItems.aspx" Level="1" BaseViewID="1" ContentTypeID="0x" ImageUrl="/_layouts/15/images/generic.png?rev=47">
+              <Query />
+              <ViewFields>
+                <FieldRef Name="LinkTitle" />   
+                <FieldRef Name="Name" />             
+                <FieldRef Name="Role" />
+              </ViewFields>
+              <RowLimit Paged="TRUE">30</RowLimit>
+              <Aggregations Value="Off" />
+              <JSLink>clienttemplates.js</JSLink>
+              <CustomFormatter />
+              <ViewData />
+            </View>
+          </pnp:Views>
+          <pnp:Fields>
+          <Field DisplayName="Email" Type="Text" Required="TRUE" ID="{fa564e0f-0c70-4ab9-b863-0177e6ddd247}"  SourceID="{{listid:TEOC-UserRoles}}"  StaticName="Title"  Name="Title"  Indexed="true" />
+          <Field DisplayName="Name" Type="Text" Required="FALSE" ID="{26e07d70-173a-4a67-bbfa-47476092c913}" SourceID="{{listid:TEOC-UserRoles}}" StaticName="Name" Name="Name" />
+          <Field DisplayName="Role" Type="Choice" Required="FALSE" ID="{da789c76-bb5b-446a-a3dc-b5253486179d}" SourceID="{{listid:TEOC-UserRoles}}" StaticName="Role" Name="Role" >
+            <CHOICES>
+              <CHOICE>Admin</CHOICE>
+            </CHOICES>
+        </Field>
+        </pnp:Fields> 
       </pnp:ListInstance>
          
       </pnp:Lists>
