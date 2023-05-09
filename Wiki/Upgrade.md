@@ -65,7 +65,7 @@
 
 1. Reach out to your IT admin team to grant consent for the permissions provided. If you’re an admin, click on Grant the admin Consent for ******* 
 
-    ![API Permissions](./Images/Api_Permissions.png)
+    ![API Permissions](./Images/ApiPermissions.png)
 
 ### 5. Update version
 
