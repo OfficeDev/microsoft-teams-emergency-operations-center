@@ -44,11 +44,48 @@
 
 ![SyncLog](./Images/Update3.png)
 
-### 4. Update version
+### 4 . Add additional API Permissions to the TEOC Azure application.
+
+1. In Azure Portal, navigate to App registrations and open the TEOC Azure application.
+
+1. Select **API Permissions** blade from the left hand side.
+
+1. Click on **Add a permission** button to add permission to your app.
+
+1. In the fly out, click **Microsoft Graph**, then select **Delegated permissions** and enter the following permissions one by one,
+
+    *  Tasks.Read
+    *  Tasks.ReadWrite
+    *  Group.Read.All
+    *  OnlineMeetings.ReadWrite
+    *  TeamsAppInstallation.ReadWriteSelfForTeam
+    *  Mail.Send
+
+1. Click on **Add Permissions** to commit your changes.
+
+1. Reach out to your IT admin team to grant consent for the permissions provided. If you’re an admin, click on Grant the admin Consent for ******* 
+
+    ![API Permissions](./Images/ApiPermissions.png)
+
+### 5. Update version
 
 1.  Delete existing app from teams admin center.
 
 2.  Refer [6.Create the Teams app packages](https://github.com/OfficeDev/microsoft-teams-emergency-operations-center/wiki/Deployment-Guide#6-create-the-teams-app-packages) section of deployment guide.
 
 3.  Refer [7.Install the app in Microsoft Teams](https://github.com/OfficeDev/microsoft-teams-emergency-operations-center/wiki/Deployment-Guide#7-install-the-app-in-microsoft-teams) section from deployment guide to upload updated zip.
+
+### 6. Launch the TEOC app in Teams.
+
+1. When the app is launched for the first time after the upgrade, it may show a login button to the users as below -
+
+    ![TEOC Login Page](./Images/LoginPage.png)
+
+1. On click of "Login" button, a pop up will open which will list all the required permissions that the app needs. If you're an Microsoft 365 admin, you can check the checkbox for "Consent on behalf of your organization" to grant the permissions for all users.
+
+    ![TEOC App Permissions](./Images/AppPermissisons.png)
+
+1. Once you accept the permissions, app will load, and "Dashboard" will appear.
+
+    ![TEOC Dashboard](./Images/Dashboard.png)
 

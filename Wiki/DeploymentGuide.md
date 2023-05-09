@@ -252,6 +252,12 @@ In this section, you’ll be adding the necessary Graph API permissions to the a
     *  TeamworkTag.ReadWrite
     *  User.Read
     *  User.ReadBasic.All
+    *  Tasks.Read
+    *  Tasks.ReadWrite
+    *  Group.Read.All
+    *  OnlineMeetings.ReadWrite
+    *  TeamsAppInstallation.ReadWriteSelfForTeam
+    *  Mail.Send
 
 4. Click on **Add Permissions** to commit your changes. 
 5. Below is the description/reason for each permission granted above, 
@@ -265,10 +271,16 @@ In this section, you’ll be adding the necessary Graph API permissions to the a
     7.  **TeamworkTag.ReadWrite** :  Allows the app to read and write tags in Teams without a signed-in user. TEOC app uses this permission to create and update the tags which gets created along with the incident. 
     8.  **User.Read** : Allows users to sign-in to the app and allows the app to read the profile of signed-in users. It also allows the app to read basic company information of signed-in users. TEOC app uses to get the current user details in the app. 
     9.  **User.ReadBasic.All** : Allows the app to read a basic set of profile properties of other users in your organization on behalf of the signed-in user. TEOC app uses this permission search for other users and assign them roles while creating the incident.
+    10. **Tasks.Read** : Allows the app to read the signed-in user's tasks and task lists, including any shared with the user. Doesn't include permission to create, delete, or update anything. TEOC app uses this permission to read the planner tasks of the signed in users, including any shared with the user.
+    11. **Tasks.ReadWrite** : Allows the app to create, read, update, and delete the signed-in user's tasks and task lists, including any shared with the user.TEOC app uses this permission to create, read, update, and delete the planner tasks of the signed-in users, including any shared with the user.
+    12. **Group.Read.All** : Allows the app to list groups, and to read their properties and all group memberships on behalf of the signed-in user. Also allows the app to read calendar, conversations, files, and other group content for all groups the signed-in user can access. TEOC app uses this permission for fetching and reading tasks as it has Microsoft Planner data source configured for Tasks component.
+    13. **OnlineMeetings.ReadWrite** : Allows an app to create, read online meetings on behalf of the signed-in user. TEOC app uses this permission to create and join bridge (instant meeting) on behalf of the signed-in user.
+    14. **TeamsAppInstallation.ReadWriteSelfForTeam** : Allows a Teams app to read, install, upgrade, and uninstall itself to teams the signed-in user can access. TEOC app uses this permission to install and read the Tab apps in the incident team.
+    15. **Mail.Send** : Allows the app to send mail as users in the organization. TEOC app uses this permission to send a welcome email to guest users for joining incident team.
 
 5. Reach out to your IT admin team to grant consent for the permissions provided. If you’re an admin, click on Grant the admin Consent for ******* 
 
-    ![API Permissions](./Images/Api_Permissions.png)
+    ![API Permissions](./Images/ApiPermissions.png)
 
 ## 6. Create the Teams app packages
 
