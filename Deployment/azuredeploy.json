@@ -222,7 +222,7 @@
             "sku": "F1",
             "serverFarmsName": "[format('{0}simpleAuth', variables('baseResourceName'))]",
             "webAppName": "[format('{0}simpleAuth', variables('baseResourceName'))]",
-            "simpleAuthPackageUri": "https://github.com/OfficeDev/TeamsFx/releases/download/simpleauth@0.1.0/Microsoft.TeamsFx.SimpleAuth_0.1.0.zip"
+            "simpleAuthPackageUri": "https://github.com/OfficeDev/TeamsFx/releases/download/simpleauth%400.1.2/Microsoft.TeamsFx.SimpleAuth_0.1.2.zip"
           },
           "resources": [
             {
