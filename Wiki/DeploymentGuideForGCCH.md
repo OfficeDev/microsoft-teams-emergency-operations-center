@@ -354,13 +354,25 @@ To create the team's package,
   
 ## 7. Install the app in Microsoft Teams
 
-1. Upload the app (the teoc.zip package) to Teams. 
+> Note: Due to unique differences with the Teams App Store in GCCH environments the Teams app must be uploaded from inside of Microsoft Teams by a user who has permission to upload a custom app for the organization and not through the Teams Admin center. Please see the example screenshots below to upload. 
 
-1. If your tenant has sideloading apps enabled, you can install your app by following the instructions [here](https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/apps/apps-upload#load-your-package-into-teams) 
+1. Log in to the Teams desktop client.
 
-1. You can also upload it to your tenant's app catalog so that it can be available for everyone in your tenant to install. See [here](https://docs.microsoft.com/en-us/microsoftteams/tenant-apps-catalog-teams) 
+1. Select Apps > Upload a custom app and Upload for my org.
 
-    > Note: Please review [app permission policies](https://docs.microsoft.com/en-us/microsoftteams/teams-app-permission-policies) to allow access to the app
+    ![Upload App](./Images/UploadAppGCCH.png)
+
+1. Select the app package (teoc.zip) file.
+
+1. Agree to the terms in the caution popup.
+
+    ![Upload App](./Images/UploadAppTerms.png)
+
+1. App will be uploaded and available in Teams.
+
+    ![Upload App](./Images/UploadedAppGCCH.png)
+
+Please review [app permission policies](https://learn.microsoft.com/en-us/microsoftteams/manage-apps#manage-org-wide-app-settings-for-microsoft-365-government) to allow access to the app.
 
 ## 8. Deploy “NotifyToTeams” Extension in SharePoint
 
