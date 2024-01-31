@@ -3113,8 +3113,7 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
                 });
                 const channelGraphEndpoint = graphConfig.teamsGraphEndpoint + "/" + team_id + graphConfig.channelsGraphEndpoint;
                 const channelObj = {
-                    "displayName": constants.Assessment,
-                    isFavoriteByDefault: true
+                    "displayName": constants.Assessment
                 };
 
                 const channelResult = await this.dataService.createChannel(channelGraphEndpoint, this.props.graph, channelObj);
@@ -3164,8 +3163,7 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
 
                 const tabObj = {
                     "displayName": constants.Announcements,
-                    "description": "",
-                    isFavoriteByDefault: true
+                    "description": ""
                 };
                 const channelResult = await this.dataService.sendGraphPostRequest(this.graphEndpoint, this.props.graph, tabObj);
                 console.log(constants.infoLogPrefix + "Announcements channel created");
