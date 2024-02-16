@@ -139,6 +139,21 @@ export default class Bridge extends React.Component<BridgeProps, BridgeState> {
             this.setState({ showConfirmDialog: false });
             this.props.updateMessagebar(-1, "", true, false);
 
+            //Get Team Group id from the TeamWebURL
+            const teamGroupId: string | undefined = this.props.incidentData.teamWebURL?.split("?")[1]
+                .split("&")[0].split("=")[1].trim();
+
+            //Get the team display name
+            const response = await this.commonService.getGraphData(
+                graphConfig.teamsGraphEndpoint + "/" + teamGroupId, this.props.graph);
+            const teamDisplayName = response.displayName;
+
+            //Get the Announcements channel ID
+            const announcementsChannelId = await this.commonService.getChannelId(
+                this.props.graph,
+                teamGroupId,
+                constants.Announcements);
+
             //If toggle turned on create a meeting and update the the Bridge details in Incident Transaction list
             if (checked) {
                 //Create online meeting for the incident
@@ -158,6 +173,9 @@ export default class Bridge extends React.Component<BridgeProps, BridgeState> {
                     incidentData.bridgeID = meetingResult.id;
                     incidentData.bridgeLink = meetingResult.joinUrl;
                     this.props.updateIncidentData(incidentData);
+
+                    //Send bridge enabled announcement to the Announcements channel
+                    await this.sendAnnouncement(teamDisplayName, teamGroupId, announcementsChannelId);
                     this.setState({ bridgeID: meetingResult.id, bridgeLink: meetingResult.joinUrl });
                     this.props.updateMessagebar(4, this.props.localeStrings.bridgeActivationMsg, false, false);
                 }
@@ -174,6 +192,9 @@ export default class Bridge extends React.Component<BridgeProps, BridgeState> {
                 incidentData.bridgeID = "";
                 incidentData.bridgeLink = "";
                 this.props.updateIncidentData(incidentData);
+
+                //Send bridge disabled announcement to the Announcements channel
+                await this.sendAnnouncement(teamDisplayName, teamGroupId, announcementsChannelId);
                 this.setState({ bridgeID: "", bridgeLink: "" });
                 this.props.updateMessagebar(4, this.props.localeStrings.bridgeDeactivationMsg, false, false);
             }
@@ -191,6 +212,79 @@ export default class Bridge extends React.Component<BridgeProps, BridgeState> {
             this.commonService.trackException(this.props.appInsights, error,
                 constants.componentNames.BridgeComponent, 'activateBridge', this.props.userPrincipalName);
 
+        }
+    }
+
+    //Method to create and send adaptive card to Annoucement channel
+    private async sendAnnouncement(teamDisplayName: string, teamGroupId: any, channelId: string) {
+        try {
+            let cardBody = {
+                "body": {
+                    "contentType": "html",
+                    "content": "<at id='0'>" + teamDisplayName + "</at><attachment id='4465B062-EE1C-4E0F-B944-3B7AF61EAF40'></attachment>",
+                },
+                "attachments": [
+                    {
+                        "id": "4465B062-EE1C-4E0F-B944-3B7AF61EAF40",
+                        "contentType": "application/vnd.microsoft.card.adaptive",
+                        "content": JSON.stringify({
+                            "type": "AdaptiveCard",
+                            "body": [
+                                {
+                                    "type": "TextBlock",
+                                    "size": "Large",
+                                    "weight": "Bolder",
+                                    "text": "Teams Emergency Operations Center",
+                                    "style": "heading",
+                                    "color": "Accent",
+                                },
+                                {
+                                    "type": "TextBlock",
+                                    "text": this.state.toggleStatus ? "The Bridge meeting for the incident has been enabled. To join the bridge click the below button." : "The Bridge meeting for the incident has been disabled. The bridge meeting is no longer active.",
+                                    "wrap": "true"
+                                },
+                                {
+                                    "type": "ActionSet",
+                                    "isVisible": this.state.toggleStatus,
+                                    "actions": [
+                                        {
+                                            "type": "Action.OpenUrl",
+                                            "title": "Join Bridge",
+                                            "url": this.props.incidentData.bridgeLink
+                                        }
+                                    ],
+                                }
+                            ],
+                            "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                            "version": "1.5"
+                        })
+                    },
+                ],
+                "mentions": [
+                    {
+                        "id": 0,
+                        "mentionText": teamDisplayName,
+                        "mentioned": {
+                            "conversation": {
+                                "id": teamGroupId,
+                                "displayName": teamDisplayName,
+                                "conversationIdentityType": "team"
+                            }
+                        }
+                    }
+                ],
+            };
+
+            const channelMessageEndpoint = graphConfig.teamsGraphEndpoint + "/" + teamGroupId +
+                graphConfig.channelsGraphEndpoint + "/" + channelId + graphConfig.messagesGraphEndpoint;
+            await this.commonService.sendGraphPostRequest(channelMessageEndpoint, this.props.graph, cardBody);
+        }
+        catch (error) {
+            console.error(
+                constants.errorLogPrefix + "Bridge_sendAnnouncement \n",
+                JSON.stringify(error)
+            );
+            throw error;
         }
     }
 
@@ -304,7 +398,7 @@ export default class Bridge extends React.Component<BridgeProps, BridgeState> {
                                                 content={this.props.localeStrings.bridgeToggleBtnInfoText}
                                                 calloutProps={{ gapSpace: 0 }}
                                             >
-                                                <Icon iconName="Info" />
+                                                <Icon iconName="Info" aria-label={this.props.localeStrings.bridgeToggleBtnInfoText} role="img"/>
                                             </TooltipHost>
                                         </span>
                                     </div>

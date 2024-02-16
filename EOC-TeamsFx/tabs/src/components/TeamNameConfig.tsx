@@ -28,20 +28,25 @@ export interface ITeamNameConfigProps {
     userPrincipalName: any;
     showMessageBar(message: string, type: string): void;
     hideMessageBar(): void;
+    currentThemeName: string;
 }
 
 const teamNameConfigString = "TeamNameConfiguration";
 export class TeamNameConfig extends React.PureComponent<ITeamNameConfigProps, ITeamNameConfigState>  {
+    //ref variables declaration to create unique reference for DOM element
+    private prefixOrder: any;
     constructor(props: ITeamNameConfigProps) {
         super(props);
         this.state = {
             showLoader: false,
-            loaderMessage: this.props.localeStrings.loaderMessage,
+            loaderMessage: this.props.localeStrings.genericLoaderMessage,
             configListData: { itemId: 0, Title: '', value: {} },
             configValue: {},
             previewString: '',
             prefixIsMissing: true
         }
+        //initialize ref object to assign unique reference for DOM element.
+        this.prefixOrder = React.createRef();
     }
 
     //common service object
@@ -51,6 +56,10 @@ export class TeamNameConfig extends React.PureComponent<ITeamNameConfigProps, IT
     public async componentDidMount() {
         // Get Team Name Config List Data
         this.getTeamNameConfigData();
+        //setting initial focus
+        setTimeout(() => {
+            this.prefixOrder?.current?.querySelector("button")?.focus()
+        }, 2000);
     }
 
     //get data from team name configurations list
@@ -58,15 +67,15 @@ export class TeamNameConfig extends React.PureComponent<ITeamNameConfigProps, IT
         try {
             //graph endpoint to get data from team name configuration list
             let graphEndpoint = `${graphConfig.spSiteGraphEndpoint}${this.props.siteId}/lists/${siteConfig.configurationList}/items?$expand=fields&$Top=5000`;
-            let configData = await this.dataService.getConfigData(graphEndpoint, this.props.graph, 'TeamNameConfig');
-            configData = { ...configData, value: JSON.parse(configData.value) };
+            let configData = await this.dataService.getConfigData(graphEndpoint, this.props.graph, [constants.teamNameConfig]);
+            configData = { ...configData[0], value: JSON.parse(configData[0]?.value) };
             const sortedData = this.dataService.sortConfigData(configData.value);
             const previewString = this.formatPreviewString(sortedData);
             this.setState({
                 configListData: configData,
                 configValue: configData.value,
                 previewString: previewString,
-                prefixIsMissing: configData.value[constants.teamNameConfigConstants.Prefix] !== constants.teamNameConfigConstants.DontInclude && configData.value[constants.teamNameConfigConstants.Prefix] === '' ? true : false
+                prefixIsMissing: configData.value[constants.teamNameConfigConstants.Prefix] !== constants.teamNameConfigConstants.DontInclude && configData.value[constants.teamNameConfigConstants.PrefixValue] === '' ? true : false
             })
         }
         catch (error: any) {
@@ -313,13 +322,18 @@ export class TeamNameConfig extends React.PureComponent<ITeamNameConfigProps, IT
     }
 
     public render() {
+
         return (<>
             <div className="team-name-config-wrapper">
                 <>
                     {this.state.showLoader &&
                         <div className="loader-bg">
                             <div className="loaderStyle">
-                                <Loader label={this.state.loaderMessage} size="largest" />
+                                {this.state.loaderMessage === this.props.localeStrings.genericLoaderMessage ?
+                                    <Loader label={this.state.loaderMessage} size="largest" />
+                                    :
+                                    <Loader aria-live="polite" role="alert" label={this.state.loaderMessage} size="largest" />
+                                }
                             </div>
                         </div>
                     }
@@ -331,8 +345,12 @@ export class TeamNameConfig extends React.PureComponent<ITeamNameConfigProps, IT
                                         <Col xl={5} lg={6} md={7} sm={12} xs={12}>
                                             <Row xl={2} lg={2} md={2} sm={2} xs={2}>
                                                 <Col xl={5} lg={5} md={5} sm={5} xs={5}>
+                                                    <label className="order-label">{this.props.localeStrings.orderLabel}</label>
                                                     <FormDropdown
-                                                        label={this.props.localeStrings.orderLabel}
+                                                        ref={this.prefixOrder}
+                                                        label={{ content: this.props.localeStrings.prefixLabel + this.props.localeStrings.orderLabel, styles: { display: "none" } }}
+                                                        aria-label={this.props.localeStrings.prefixLabel + this.props.localeStrings.orderLabel}
+                                                        role="combobox"
                                                         items={constants.teamNameConfigOrderDropdown}
                                                         className="team-name-config-order-dropdown"
                                                         value={this.state.configValue.Prefix}
@@ -357,13 +375,16 @@ export class TeamNameConfig extends React.PureComponent<ITeamNameConfigProps, IT
                                                             prefixIsMissing: this.state.configValue.Prefix !== constants.teamNameConfigConstants.DontInclude && event.target.value === '' ? true : false
                                                         })}
                                                     />
-                                                    {this.state.prefixIsMissing ? <label className="message-label" >{this.props.localeStrings.prefixValueRequired}</label> : <></>}
+                                                    {this.state.prefixIsMissing && !this.state.showLoader ? <label aria-live="polite" role="alert" className="message-label" >{this.props.localeStrings.prefixValueRequired}</label> : <></>}
                                                 </Col>
                                             </Row>
                                             <Row xl={2} lg={2} md={2} sm={2} xs={2}>
                                                 <Col xl={5} lg={5} md={5} sm={5} xs={5}>
                                                     <FormDropdown
                                                         items={constants.teamNameConfigOrderDropdown}
+                                                        label={{ content: this.props.localeStrings.incidentNameLabel + this.props.localeStrings.orderLabel, styles: { display: "none" } }}
+                                                        aria-label={this.props.localeStrings.incidentNameLabel + this.props.localeStrings.orderLabel}
+                                                        role="combobox"
                                                         className="team-name-config-order-dropdown"
                                                         value={this.state.configValue.IncidentName}
                                                         onChange={(_evt, val) => this.updateOrder(val, this.state.configValue, constants.teamNameConfigConstants.IncidentName)}
@@ -377,6 +398,9 @@ export class TeamNameConfig extends React.PureComponent<ITeamNameConfigProps, IT
                                                 <Col xl={5} lg={5} md={5} sm={5} xs={5}>
                                                     <FormDropdown
                                                         items={constants.teamNameConfigOrderDropdown}
+                                                        label={{ content: this.props.localeStrings.incidentTypeLabel + this.props.localeStrings.orderLabel, styles: { display: "none" } }}
+                                                        aria-label={this.props.localeStrings.incidentTypeLabel + this.props.localeStrings.orderLabel}
+                                                        role="combobox"
                                                         className="team-name-config-order-dropdown"
                                                         value={this.state.configValue.IncidentType}
                                                         onChange={(_evt, val) => this.updateOrder(val, this.state.configValue, constants.teamNameConfigConstants.IncidentType)}
@@ -390,6 +414,9 @@ export class TeamNameConfig extends React.PureComponent<ITeamNameConfigProps, IT
                                                 <Col xl={5} lg={5} md={5} sm={5} xs={5}>
                                                     <FormDropdown
                                                         items={constants.teamNameConfigOrderDropdown}
+                                                        label={{ content: this.props.localeStrings.startDate + this.props.localeStrings.orderLabel, styles: { display: "none" } }}
+                                                        aria-label={this.props.localeStrings.startDate + this.props.localeStrings.orderLabel}
+                                                        role="combobox"
                                                         className="team-name-config-order-dropdown"
                                                         value={this.state.configValue.StartDate}
                                                         onChange={(evt, val) => this.updateOrder(val, this.state.configValue, constants.teamNameConfigConstants.StartDate)}
@@ -425,7 +452,7 @@ export class TeamNameConfig extends React.PureComponent<ITeamNameConfigProps, IT
                                 <div className="admin-settings-btn-wrapper">
                                     <Button
                                         onClick={() => this.props.onBackClick("")}
-                                        className='admin-settings-back-btn'
+                                        className={`admin-settings-back-btn`}
                                         title={this.props.localeStrings.btnBack}
                                         content={this.props.localeStrings.btnBack}
                                     />

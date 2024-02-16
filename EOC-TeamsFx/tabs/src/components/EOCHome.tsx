@@ -1,24 +1,28 @@
-import { initializeIcons, MessageBar, MessageBarType } from '@fluentui/react';
+import { initializeIcons, MessageBar, MessageBarType } from "@fluentui/react";
+import { FluentProvider, teamsDarkTheme, teamsHighContrastTheme, teamsLightTheme, Theme } from "@fluentui/react-components";
 import { Button, Dialog, Loader } from "@fluentui/react-northstar";
-import { ApplicationInsights } from '@microsoft/applicationinsights-web';
-import { Providers, ProviderState, SimpleProvider, Graph } from '@microsoft/mgt-element';
+import loadable from "@loadable/component";
+import { ApplicationInsights } from "@microsoft/applicationinsights-web";
+import { Graph, Providers, ProviderState, SimpleProvider } from "@microsoft/mgt-element";
 import { Client } from "@microsoft/microsoft-graph-client";
 import * as microsoftTeams from "@microsoft/teams-js";
 import { MsGraphAuthProvider, TeamsUserCredential } from "@microsoft/teamsfx";
-import React from 'react';
-import LocalizedStrings from 'react-localization';
+import "bootstrap/dist/css/bootstrap.min.css";
+import React from "react";
+import LocalizedStrings from "react-localization";
 import CommonService, { IListItem } from "../common/CommonService";
-import * as constants from '../common/Constants';
-import * as graphConfig from '../common/graphConfig';
+import * as constants from "../common/Constants";
+import * as graphConfig from "../common/graphConfig";
+import siteConfig from "../config/siteConfig.json";
 import { localizedStrings } from "../locale/LocaleStrings";
 import "../scss/EOCHome.module.scss";
-import ActiveBridge from './ActiveBridge';
-import AdminSettings from './AdminSettings';
-import Dashboard from './Dashboard';
-import EocHeader from './EocHeader';
-import IncidentDetails from './IncidentDetails';
-import { IncidentHistory } from './IncidentHistory';
-import siteConfig from '../config/siteConfig.json';
+import EocHeader from "./EocHeader";
+const Dashboard = loadable(() => import("./Dashboard"));
+const ActiveBridge = loadable(() => import("./ActiveBridge"));
+const AdminSettings = loadable(() => import("./AdminSettings"));
+const IncidentDetails = loadable(() => import("./IncidentDetails"));
+const IncidentHistory = loadable(() => import("./IncidentHistory"));
+
 
 initializeIcons();
 //Global Variables
@@ -29,7 +33,7 @@ let siteName = process.env.REACT_APP_SHAREPOINT_SITE_NAME?.toString().replace(/\
 
 //Get graph base URL from ARMS template(environment variable)
 let graphBaseURL = process.env.REACT_APP_GRAPH_BASE_URL?.toString().replace(/\s+/g, '');
-graphBaseURL = graphBaseURL ? graphBaseURL : constants.defaultGraphBaseURL
+graphBaseURL = graphBaseURL || constants.defaultGraphBaseURL
 
 interface IEOCHomeState {
     showLoginPage: boolean;
@@ -65,6 +69,15 @@ interface IEOCHomeState {
     configRoleData: any;
     settingsLoader: boolean;
     tenantID: any;
+    currentTeamsTheme: Theme;
+    currentThemeName: string;
+    activeDashboardIncidentId: string;
+    fromActiveDashboardTab: boolean;
+    appSettings: any;
+    isMapViewerEnabled: boolean;
+    bingMapsKeyConfigData: any;
+    appTitle: string;
+    appTitleData: any;
 }
 
 interface IEOCHomeProps {
@@ -125,8 +138,17 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
             isRolesEnabled: false,
             isUserAdmin: false,
             configRoleData: {},
-            settingsLoader: true,
-            tenantID: ""
+            settingsLoader: false,
+            tenantID: "",
+            currentTeamsTheme: teamsLightTheme,
+            currentThemeName: constants.defaultMode,
+            activeDashboardIncidentId: "",
+            fromActiveDashboardTab: false,
+            appSettings: {},
+            isMapViewerEnabled: false,
+            bingMapsKeyConfigData: {},
+            appTitle: siteConfig.appTitle,
+            appTitleData: {},
         }
 
         this.showActiveBridge = this.showActiveBridge.bind(this);
@@ -139,6 +161,19 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
         await this.checkIsConsentNeeded();
 
         try {
+            /*Identify the context of the app, whether its being opened as Personal app or from Teams tab.
+             If opened from Teams tab retrieve Incident ID from the current Teams Name*/
+            microsoftTeams.getContext(ctx => {
+                microsoftTeams.getMruTabInstances((tabInfo: any) => {
+                    if (ctx.channelId && ctx.channelName && tabInfo.teamTabs[0].tabName === constants.activeDashboardTabTitle) {
+                        this.setState({
+                            activeDashboardIncidentId: ctx.teamSitePath?.split("_")[1] as any,
+                            fromActiveDashboardTab: true
+                        });
+                    }
+                });
+            });
+
             // get current user's language from Teams App settings
             microsoftTeams.getContext(ctx => {
                 if (ctx && ctx.locale && ctx.locale !== "") {
@@ -155,7 +190,22 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
                         tenantID: ctx.tid
                     })
                 }
-            })
+
+                //get current theme from the teams context
+                const theme = ctx.theme ?? constants.defaultMode;
+                this.updateTheme(theme);
+            });
+
+            //Get the app settings from the teams context. This is required to create the 'ActiveDashboard' tab
+            microsoftTeams.settings.getSettings((settings) => {
+                console.log(constants.infoLogPrefix + "settings ", settings);
+                this.setState({ appSettings: settings });
+            });
+
+            //binds the current theme to the inbuilt teams hook which is called whenever the theme changes 
+            microsoftTeams.registerOnThemeChangeHandler((theme: string) => {
+                this.updateTheme(theme);
+            });
 
             //Initialize App Insights
             appInsights = new ApplicationInsights({
@@ -179,8 +229,8 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
             await this.getTenantAndSiteDetails();
             await this.getCurrentUserDetails();
 
-            //method to get roles setting from config list
-            await this.getRolesConfigSetting();
+            //method to get settings from config list
+            await this.getConfigSettings();
         }
     }
     //create MS Graph client
@@ -204,6 +254,31 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
             this.errorMessagebarRef?.current?.getElementsByClassName("ms-MessageBar-content")[0].setAttribute("class", classes + " container");
         }
     }
+
+    //method to set the current theme to state variables
+    updateTheme = (theme: string) => {
+        switch (theme.toLocaleLowerCase()) {
+            case constants.defaultMode:
+                this.setState({
+                    currentTeamsTheme: teamsLightTheme,
+                    currentThemeName: constants.defaultMode
+                });
+                break;
+            case constants.darkMode:
+                this.setState({
+                    currentTeamsTheme: teamsDarkTheme,
+                    currentThemeName: constants.darkMode
+                });
+                break;
+            case constants.contrastMode:
+                this.setState({
+                    currentTeamsTheme: teamsHighContrastTheme,
+                    currentThemeName: constants.contrastMode
+                });
+                break;
+        }
+    };
+
 
     // Initialize the toolkit and get access token
     async initGraphToolkit(credential: any, scopeVar: any) {
@@ -328,17 +403,33 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
     }
 
     //Get data from TEOC-Config sharepoint list
-    private getRolesConfigSetting = async () => {
+    private getConfigSettings = async () => {
         try {
+            this.setState({
+                settingsLoader: true
+            });
 
             //graph endpoint to get data from TEOC-Config list
             let graphEndpoint = `${graphConfig.spSiteGraphEndpoint}${this.state.siteId}/lists/${siteConfig.configurationList}/items?$expand=fields&$Top=5000`;
-            const configData = await this.dataService.getConfigData(graphEndpoint, this.state.graph, 'EnableRoles');
-
+            const configDataRecords = [constants.enableRoles, constants.bingMapsKey, constants.appTitleKey];
+            const configData = await this.dataService.getConfigData(graphEndpoint, this.state.graph, configDataRecords);
             await this.checkUserRoleIsAdmin();
+            const appTitleItem = configData.filter((item: any) => item.title === constants.appTitleKey);
+            if (appTitleItem.length > 0) {
+                this.setState({
+                    appTitle: appTitleItem[0].value,
+                    appTitleData: appTitleItem[0]
+                });
+            }
+            if (configData.length > 1 && configData[1]?.title === constants.bingMapsKey) {
+                this.setState({
+                    isMapViewerEnabled: configData[1].value?.trim() !== "" && configData[1].value?.trim() !== undefined,
+                    bingMapsKeyConfigData: configData[1]
+                });
+            }
             this.setState({
-                isRolesEnabled: configData.value === "True",
-                configRoleData: configData,
+                isRolesEnabled: configData[0].value === "True",
+                configRoleData: configData[0],
                 settingsLoader: false
             });
         }
@@ -347,6 +438,9 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
                 constants.errorLogPrefix + `${constants.componentNames.EOCHomeComponent}_getConfigSetting \n`,
                 JSON.stringify(error)
             );
+            this.setState({
+                settingsLoader: false
+            });
             // Log Exception
             this.dataService.trackException(appInsights, error,
                 constants.componentNames.EOCHomeComponent,
@@ -624,7 +718,7 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
             localeStrings.setLanguage(this.state.locale);
         }
         return (
-            <>
+            <FluentProvider theme={this.state.currentTeamsTheme}>
                 {this.state.locale === "" ?
                     <>
                         <Loader className="loaderAlign" label={this.state.loaderMessage} size="largest" />
@@ -633,7 +727,11 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
                     <>
                         <EocHeader clickcallback={() => { }}
                             localeStrings={localeStrings}
-                            currentUserName={this.state.currentUserName} />
+                            currentUserName={this.state.currentUserName}
+                            currentThemeName={this.state.currentThemeName}
+                            appTitle={this.state.appTitle}
+                        />
+
                         {this.state.showLoginPage &&
                             <div className='loginButton'>
                                 <Button primary content={localeStrings.btnLogin} disabled={!this.state.showLoginPage} onClick={this.loginClick} />
@@ -649,6 +747,8 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
                                             dismissButtonAriaLabel="Close"
                                             onDismiss={() => this.setState({ showSuccessMessageBar: false, successMessage: "" })}
                                             className="message-bar"
+                                            role="alert"
+                                            aria-live="polite"
                                         >
                                             {this.state.successMessage}
                                         </MessageBar>
@@ -662,6 +762,8 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
                                             dismissButtonAriaLabel="Close"
                                             onDismiss={() => this.setState({ showErrorMessageBar: false, errorMessage: "" })}
                                             className="message-bar"
+                                            role="alert"
+                                            aria-live="polite"
                                         >
                                             {this.state.errorMessage}
                                         </MessageBar>
@@ -674,6 +776,8 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
                                     : this.state.showAdminSettings ?
                                         <AdminSettings
                                             localeStrings={localeStrings}
+                                            appTitle={this.state.appTitle}
+                                            appTitleData={this.state.appTitleData}
                                             onBackClick={this.handleBackClick}
                                             siteId={this.state.siteId}
                                             graph={this.state.graph}
@@ -689,6 +793,9 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
                                             setState={this.setState}
                                             tenantName={this.state.tenantName}
                                             siteName={siteName}
+                                            currentThemeName={this.state.currentThemeName}
+                                            isMapViewerEnabled={this.state.isMapViewerEnabled}
+                                            bingMapsKeyConfigData={this.state.bingMapsKeyConfigData}
                                         />
                                         : this.state.showIncidentHistory ?
                                             <IncidentHistory
@@ -701,6 +808,7 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
                                                 showMessageBar={this.showMessageBar}
                                                 hideMessageBar={this.hideMessageBar}
                                                 incidentId={this.state.incidentId}
+                                                currentThemeName={this.state.currentThemeName}
                                             />
                                             : this.state.showActiveBridge ?
                                                 <>
@@ -720,7 +828,9 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
                                                             onEditButtonClick={this.showEditForm}
                                                             graphContextURL={this.state.graphContextURL}
                                                             tenantID={this.state.tenantID}
-                                                        /> :
+                                                            fromActiveDashboardTab={this.state.fromActiveDashboardTab}
+                                                        />
+                                                        :
                                                         <Dialog
                                                             confirmButton={localeStrings.okLabel}
                                                             content={localeStrings.bridgeAccessMessage}
@@ -751,6 +861,11 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
                                                             isRolesEnabled={this.state.isRolesEnabled}
                                                             isUserAdmin={this.state.isUserAdmin}
                                                             settingsLoader={this.state.settingsLoader}
+                                                            currentThemeName={this.state.currentThemeName}
+                                                            activeDashboardIncidentId={this.state.activeDashboardIncidentId}
+                                                            fromActiveDashboardTab={this.state.fromActiveDashboardTab}
+                                                            isMapViewerEnabled={this.state.isMapViewerEnabled}
+                                                            bingMapsKeyConfigData={this.state.bingMapsKeyConfigData}
                                                         />
                                                         :
                                                         <>
@@ -773,6 +888,8 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
                                                                             appInsights={appInsights}
                                                                             userPrincipalName={this.state.userPrincipalName}
                                                                             tenantID={this.state.tenantID}
+                                                                            currentThemeName={this.state.currentThemeName}
+                                                                            appSettings={this.state.appSettings}
                                                                         />
                                                                         :
                                                                         <Dialog
@@ -801,6 +918,8 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
                                                                     appInsights={appInsights}
                                                                     userPrincipalName={this.state.userPrincipalName}
                                                                     tenantID={this.state.tenantID}
+                                                                    currentThemeName={this.state.currentThemeName}
+                                                                    appSettings={this.state.appSettings}
                                                                 />
                                                             }
                                                         </>
@@ -811,7 +930,7 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
                         }
                     </>
                 }
-            </>
+            </FluentProvider>
         )
     }
 }

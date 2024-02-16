@@ -19,6 +19,11 @@ export const sharepointPageAndListTabGraphEndpoint = "appCatalogs/teamsApps/2a52
 export const tasksbyPlannerAppGraphEndPoint = "appCatalogs/teamsApps/com.microsoft.teamspace.tab.planner";
 export const invitationsGraphEndpoint = "/invitations";
 export const emailInvitationsGraphEndpoint = "/me/sendMail";
+export const installedAppsEndpoint = "/installedApps";
+export const teamsAppsEndpoint = "/appCatalogs/teamsApps";
+
+// 'bef61400-db9b-41d4-a617-403deb7bbe77' is the TEOC app externalId. This is the id from Manifest file thats going to be constant.
+export const appCatalogsTEOCAppEndpoint = "/appCatalogs/teamsApps?$filter=externalId eq 'bef61400-db9b-41d4-a617-403deb7bbe77'";
 
 export const scope = [
     "User.Read",
@@ -35,5 +40,6 @@ export const scope = [
     "Group.Read.All",
     "OnlineMeetings.ReadWrite",
     "TeamsAppInstallation.ReadWriteSelfForTeam",
-    "Mail.Send"
+    "Mail.Send",
+    "AppCatalog.Read.All"
 ]

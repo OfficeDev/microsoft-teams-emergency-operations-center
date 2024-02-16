@@ -7,6 +7,8 @@ export interface IIncidentEntity {
     incidentType: string;
     incidentDesc: string;
     startDateTime: string;
+    startDate: Date;
+    startTime: Date;
     incidentCommander: UserDetails;
     selectedRole: string;
     assignedUser: UserDetails[];
@@ -27,6 +29,8 @@ export class IncidentEntity implements IIncidentEntity {
     public incidentType!: string;
     public incidentDesc!: string;
     public startDateTime!: string;
+    public startDate!: Date;
+    public startTime!: Date;
     public incidentCommander!: UserDetails;
     public selectedRole!: string;
     public assignedUser!: UserDetails[];
@@ -51,8 +55,12 @@ export interface IIncidentStatus {
 
 export interface IAdditionalTeamChannels {
     channelName: string;
+    channelType?: string;
     hasRegexError: boolean;
     regexErrorMessage: string;
+    selectedRoleUsers?: string;
+    selectedRoleUserIds?: string;
+    expandedGroups?: any;
 }
 
 export interface IGuestUsers {
@@ -168,6 +176,24 @@ export interface IInputValidationStates {
 
 export interface IInputRegexValidationStates {
     incidentNameHasError: boolean;
-    incidentLocationHasError: boolean;
+    incidentLocationHasError?: boolean;
     incidentCloudStorageLinkHasError: boolean;
+}
+
+export interface ILocation {
+    EntityType: string,
+    Address: {
+        City: string,
+        CountryOrRegion: string,
+        PostalCode: string,
+        State: string,
+        Street: string
+    },
+    Coordinates: {
+        Latitude: string,
+        Longitude: string
+    },
+    DisplayName: string,
+    LocationUri: string,
+    UniqueId: string
 }

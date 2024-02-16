@@ -2,7 +2,6 @@ import { Provider, teamsTheme, Loader } from "@fluentui/react-northstar";
 import { HashRouter as Router, Redirect, Route } from "react-router-dom";
 import { useTeamsFx } from "./lib/useTeamsFx";
 import Tab from "./Tab";
-import "./App.css";
 import TabConfig from './TabConfig';
 /**
  * The main app which handles the initialization and routing

@@ -80,7 +80,9 @@ export default class PlannerTasks extends React.Component<PlannerTasksProps, Pla
                     let maxPlanCreationAttempt = 5, isPlanCreated = false;
                     while (isPlanCreated === false && maxPlanCreationAttempt > 0) {
                         try {
-                            plannerPlanId = await this.commonService.createPlannerPlan(teamGroupId, incidentId, this.props.graph, this.props.graphContextURL, this.props.tenantID);
+
+                            plannerPlanId = await this.commonService.createPlannerPlan(teamGroupId, incidentId, this.props.graph,
+                                this.props.graphContextURL, this.props.tenantID, "", true);
                             //Set state variable for Plan ID
                             this.setState({
                                 planID: plannerPlanId
@@ -191,7 +193,7 @@ export default class PlannerTasks extends React.Component<PlannerTasksProps, Pla
 
                     //fix for GCC tenant - adding the incident creator and incident commander to the team as owners
                     await this.timeout(10000);
-                    
+
                     const ownersObj = {
                         "values": usersToAddAsOwnersToTeam
                     }
