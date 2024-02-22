@@ -93,6 +93,45 @@ You only need to follow these steps ONCE for a specified Windows machine.
     Get-Module -Name PnP.PowerShell -ListAvailable​
     ```
 
+## Problems in Creating a New Incident
+
+### 1. Create Incident fails with below error message:
+
+**"An error has occurred, You do not have permission to create M365 groups which is required to create an incident. Please check with your tenant administrator."**
+
+To be able to create incidents the users need to have permissions to create M365 groups. Refer to section **Verify M365 group creation policy in Azure Portal** in the deployment guide for additional details.
+
+![Azure Settings](./Images/M365GroupPolicy.png)
+
+## Other Problems with the App
+
+### 1. Client Secret Expiry
+
+If the client secret for the TEOC App Registration expires the Dashboard shows Login button and nothing happens on click of Login button. Check Azure portal if Client Secret for the TEOC app registration expired. If yes, follow the below steps to create a new secret and update.
+
+#### Generate new client secret
+1. Open registered TEOC application from app registrations and generate new client secret from Certificates and secrets section. Copy new client secret Value. 
+
+![Azure AD app secret](./Images/App_Secret.png)
+
+#### Update new client secret
+
+1. Open azure portal and navigate to resource group created for TEOC. Open SimpleAuth app service which is created. 
+Navigate to Environment variables or Configuration under settings which ever applies to your tenant.
+
+![Azure AD app secret](./Images/Envvariables.png)
+
+![Azure AD app secret](./Images/Configuration.png)
+
+1. Click show values and update value of new client secret and save. 
+
+![Azure AD app secret](./Images/Clientsecretupdate.png)
+
+1. Once value is updated, navigate to Overview and Restart the app service. 
+
+![Azure AD app secret](./Images/Appservicerestart.png)
+
+
 ## Didn't find your problem here?
 
 Please report the issue [here](https://github.com/OfficeDev/microsoft-teams-emergency-operations-center/issues/new)

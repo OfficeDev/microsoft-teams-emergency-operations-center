@@ -36,6 +36,7 @@
 1. Users can click on **Active Dashboard** icon to join bridge, post announcements and manage planner tasks of an existing incident.
 1. Users can click on **Edit** icon to edit the details of an existing incident.
 1. Users can click on **View Incident History** icon to view the version history of an existing incident.
+1. On hovering over "Incident Manager" person cards are shown.
 1. Users can click on Incident Number to navigate to the General Channel of the Team associated with that incident.
 
     ![TEOC Dashboard](./Images/Dashboard.png)
@@ -45,6 +46,35 @@
    1. Support - This link redirects to a support page where the users can raise queries related to the app.
    1. Feedback - This links redirects to a feedback page to share the feedback for the app.
 1. Admins can click on "Admin Settings" from the "Manage" menu for managing "Team Name Configuration" and "Role Settings".
+
+## Incidents Map Viewer
+
+### Enable Map Viewer
+Admins can follow the steps below to enable "Map Viewer" for Incidents in the dashboard.
+
+1. Generate a Bing Map Key from https://www.bingmapsportal.com/
+
+1. Navigate to Admin Settings -> Config Settings
+
+1. Toggle the "Enable Map Viewer" and provide the Bing Maps Key and click "Save".
+ ![TEOC Enable Map Viewer](./Images/Enablemapviewer.png)
+1. Toggle the "Enable Map Viewer" and provide the Bing Maps Key and click "Save".
+
+1. To disable the map viewer turn off the toggle for "Enable Map Viewer".
+
+1. If an incorrect Bing Map key is entered "Map Viewer" is not shown in the dashboard.
+
+
+### Dashboard Map Viewer
+
+1. Once the map viewer is enabled the Map Viewer tab starts to appear on the Incidents Dashboard.
+
+1. On the "Map Viewer" tab the incidents are shown as pins on the map as per the location picked using the Location picker while creating incidents. Different pins are shown depending on the Status of the incident. On hover of pins, incident details are shown.
+ ![TEOC Map Viewer](./Images/Mapviewer.png)
+
+1. If a custom location is entered while creating the incident instead of picking up the suggested location from the Location picker, the incident will not be shown on the map.
+
+1. Old incidents created before version 3.0 will not be shown on the map as older version did not have Location Picker. The incidents can still be edited and location can be picked up from the picker. The incident will then start to show up in the Map Viewer.
 
 ## Create Incident
 
@@ -83,21 +113,22 @@
 
      * "Cloud Storage Location" is available only in Create Incident form and user can add the link to the cloud storage location that is used to maintain the files related to the incident. User can select the Save Default option to save the entered location as the default value for the incident type, so it will be prepopulated for any new incident created thereafter with the same incident type. This link cannot be changed after the incident is created.
 
-     * "Create or Modify Team Channels" is available only on Create New Incident Form. By default the teams will be created with "General", "Announcements" and "Assessment" Channels. The user can configure additional channels to be created in this section. "Logistics", "Planning", "Recovery" are pre populated in this section as suggestions. User can select the "Save Default option" to save the default channels for the incident type, so it will be prepopulated for any new incident created therafter with the same incident type.
+     * "Create or Modify Team Channels" is available only on Create New Incident Form. By default the teams will be created with "General", "Announcements" and "Assessment" Channels. The user can configure additional channels to be created in this section. "Logistics", "Planning", "Recovery" are pre populated in this section as suggestions. On selecting "Private", the channel will be created as a Private channel. User can select the "Save Default option" to save the default channels for the incident type, so it will be prepopulated for any new incident created therafter with the same incident type.
      
         ![TEOC Assest Section](./Images/AssetsSection2.png)
 
 1. On click of "Create New Incident", incident will be created, and user will be redirected to dashboard where newly added incident and details will be present. 
 
-1. Along with incident below mentioned entities will also be created. 
+1. Along with the incident, below mentioned entities will also be created. 
 
     * A Team will be created with default 3 channels - General, Announcements, Assessment and any additional channels that are added in Create or Modify Team Channels section.
     * Users assigned with Secondary Incident Commander role, Incident Commander and the user who creates the incident will be added as owners to the Team.
     * Users added in the Role assignment section except Secondary Incident Commander will be added as members to the Team.
     * Tags will be created for roles added in the incident. Incident Commander tag will be created by default.
     * Planner plan will be created for the Team and the Tasks app will be added as a tab in the General Channel.
-    * News tab will added to the Announcements Channel to show all the news posted on the Team Site.
-    * Ground Assessments list will be created in the Team Site and added as a tab to Assessment Channel.
+    * "Active Dashboard" tab will be created in the General channel. This is a direct link to the "Active Dashboard" for that particular incident.
+    * "News" tab will added to the Announcements Channel to show all the news posted on the Team Site.
+    * "Ground Assessments" list will be created in the Team Site and added as a tab to "Assessment" Channel.
     * Adaptive card message will be posted to the General Channel to notify all the Team members about the creation of a team for the incident.
 
 ## Edit Incident
@@ -121,7 +152,7 @@
     
     ![TEOC Active Dashboard](./Images/PostAnnouncement.png)
 
-    * Under "Bridge", the team owners can Activate (Create an Instant Meeting) a bridge. Once activated, the team members can "Join Bridge" anytime.Below are other options in this section -
+    * Under "Bridge", the team owners can Activate (Create an Instant Meeting) a bridge. Once activated, the team members would be notified in the "Announcements" channel and they can "Join Bridge" anytime.Below are other options in this section -
        * Edit - Visible to Team owners and it is redirected to Edit Incident form.
        * Incident History - This will redirect the users to Incident History screen.
        * Team Chat - This will redirect the users to the "Posts" tab in "General" Channel.
@@ -140,6 +171,8 @@ If there are any changes to the Roles, _View_ link will be available on the Role
 
     ![TEOC History](./Images/TableViewHistory.png)
 
+1. "Download PDF" option downloads the version history of the incident to a PDF file that can be saved to local.
+
 ## Manage Options
 
 1. From Dashboard, on click of "Manage" button the menu will appear with the available options.
@@ -155,13 +188,20 @@ If there are any changes to the Roles, _View_ link will be available on the Role
 
         ![TEOC Admin Settings](./Images/TeamNameConfiguration.png)   
 
-   * In the "Role Settings" tab, user can enable the "Role based access" to control access for the "Manage" and "Create New Incident" options in the Dashboard. 
+   * In the "Config Settings" tab, an admin can perform below configurations:
 
-        ![TEOC Admin Settings](./Images/EnableRoles1.png) 
+       
+     1. Enable Role-Based access: An admin can enable the "Role based access" to control access for the "Manage" and "Create New Incident" options in the Dashboard.        
 
-   * Upon enabling the role and saving the setting, the current user details will be added with "Admin" role in the "T"EOC-UserRoles" SharePoint list. User can click on "Assign Roles" link to add additional users with "Admin" role and only the users available in the "TEOC-UserRoles" list will be able to "Manage" and "Create New Incident" thereafter. User can also disable the role based access for the application at any time by turning off this toggle button.
+        Upon enabling the roles and saving the setting, the current user details will be added with "Admin" role in the "TEOC-UserRoles" SharePoint list. Users can click on "Assign Roles" link to add additional users with "Admin" role and only the users available in the "TEOC-UserRoles" list will be able to "Manage" and "Create New Incident" thereafter. User can also disable the role-based access for the application at any time by turning off this toggle button.
+        
+        ![TEOC Admin Settings](./Images/EnableRoles.png) 
 
-        ![TEOC Admin Settings](./Images/EnableRoles2.png) 
+      1. Modify App Title: The TEOC App title can be changed from Config Settings as shown below. Once modified the changed title will reflect in the App Header.
+
+         ![TEOC Admin Settings](./Images/AppTitle.png) 
+
+      1. Enable Map Viewer: Refer to the [Enable Map Viewer](#enable-map-viewer) section. 
 
 
 ## Notify to Teams Extension

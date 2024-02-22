@@ -278,6 +278,7 @@ In this section, you’ll be adding the necessary Graph API permissions to the a
     *  OnlineMeetings.ReadWrite
     *  TeamsAppInstallation.ReadWriteSelfForTeam
     *  Mail.Send
+    *  AppCatalog.Read.All
 
 4. Click on **Add Permissions** to commit your changes. 
 5. Below is the description/reason for each permission granted above, 
@@ -297,12 +298,31 @@ In this section, you’ll be adding the necessary Graph API permissions to the a
     13. **OnlineMeetings.ReadWrite** : Allows an app to create, read online meetings on behalf of the signed-in user. TEOC app uses this permission to create and join bridge (instant meeting) on behalf of the signed-in user.
     14. **TeamsAppInstallation.ReadWriteSelfForTeam** : Allows a Teams app to read, install, upgrade, and uninstall itself to teams the signed-in user can access. TEOC app uses this permission to install and read the Tab apps in the incident team.
     15. **Mail.Send** : Allows the app to send mail as users in the organization. TEOC app uses this permission to send a welcome email to guest users for joining incident team.
+    16. **AppCatalog.Read.All** : Allows the app to read the apps in the app catalogs. TEOC app uses this permission to read the app id of the TEOC app to add it as a tab on the General channel of the incident team.
 
 5. Reach out to your IT admin team to grant consent for the permissions provided. If you’re an admin, click on Grant the admin Consent for ******* 
 
-    ![API Permissions](./Images/ApiPermissions.png)
+    ![API Permissions](./Images/Api_Permissions.png)
 
-## 6. Create the Teams app packages
+## 6. Add Permissions for Office 365 Exchange Online 
+
+In this section, you’ll be adding the Office 365 Exchange Online API permissions to the application.
+
+1. Select **API Permissions** blade from the left hand side.
+
+2. Click on **Add a permission** button to add permission to your app.
+
+3. In the fly out, click **Office 365 Exchange Online**, then select **Delegated permissions** and enter the following permission
+    *  Calendars.Read
+
+4. Click on **Add Permissions** to commit your changes. 
+5. This permission reads the user calendar and provides suggestions for the Location picker while creating the incident.
+6. Reach out to your IT admin team to grant consent for the permissions provided. If you’re an admin, click on Grant the admin Consent for *******
+
+    ![API Permissions](./Images/Calendarspermission.png)
+
+
+## 7. Create the Teams app packages
 
 Now we build the teams package to upload the TEOC (Teams Emergency Operations Center) app to the Teams client. TEOC in turn will connect to the SharePoint resources/list to the Tenant deployed. 
 
@@ -352,29 +372,30 @@ To create the team's package,
     ![Zip Folder Structure](./Images/Zip_Folder_Structure.png)
 
   
-## 7. Install the app in Microsoft Teams
+## 8. Install the app in Microsoft Teams
 
-> Note: Due to unique differences with the Teams App Store in GCCH environments the Teams app must be uploaded from inside of Microsoft Teams by a user who has permission to upload a custom app for the organization and not through the Teams Admin center. Please see the example screenshots below to upload. 
+1. Upload the app (the teoc.zip package) to Teams. 
 
-1. Log in to the Teams desktop client.
+1. If your tenant has sideloading apps enabled, you can install your app by following the instructions [here](https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/apps/apps-upload#load-your-package-into-teams) 
 
-1. Select Apps > Upload a custom app and Upload for my org.
+1. You can also upload it to your tenant's app catalog so that it can be available for everyone in your tenant to install. See [here](https://docs.microsoft.com/en-us/microsoftteams/tenant-apps-catalog-teams) 
 
-    ![Upload App](./Images/UploadAppGCCH.png)
+    > Note: Please review [app permission policies](https://learn.microsoft.com/en-us/microsoftteams/manage-apps#manage-org-wide-app-settings-for-microsoft-365-government) to allow access to the app.
 
-1. Select the app package (teoc.zip) file.
 
-1. Agree to the terms in the caution popup.
+## 9. Verify M365 group creation policy in Azure Portal
 
-    ![Upload App](./Images/UploadAppTerms.png)
+1. Log in to the Azure Portal in the tenant where the TEOC app registration is done.
 
-1. App will be uploaded and available in Teams.
+2. Navigate to Groups, check for the setting "Users can create Microsoft 365 groups in Azure portals, API or PowerShell".
 
-    ![Upload App](./Images/UploadedAppGCCH.png)
+    ![Azure Settings](./Images/M365GroupPolicy.png)
 
-Please review [app permission policies](https://learn.microsoft.com/en-us/microsoftteams/manage-apps#manage-org-wide-app-settings-for-microsoft-365-government) to allow access to the app.
+3. If it is set to **No**, then follow this [documentation](https://learn.microsoft.com/en-us/microsoft-365/solutions/manage-creation-of-groups?view=o365-worldwide) to create a M365 group that can be used to control who is able to create Microsoft 365 Groups in the tenant and add the users from your organization who will be creating incidents in the TEOC application to that M365 group.
 
-## 8. Deploy “NotifyToTeams” Extension in SharePoint
+4. If it is set to **Yes**, no action is required.
+
+## 10. Deploy “NotifyToTeams” Extension in SharePoint
 
 1. To get the latest package for extension, make sure you have cloned the app [repository](https://github.com/OfficeDev/microsoft-teams-emergency-operations-center.git) locally.  
 

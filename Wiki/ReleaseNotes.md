@@ -3,12 +3,30 @@ This page contains the release information for Microsoft Teams Emergency Operati
 ## Version history
 | Version | Release Date |
 |----|----|
+| 3.0 | Feb 23, 2024 |
 | 2.0 | May 02, 2023 |
 | 1.0 | Oct 11, 2022 |
 | 0.5.1 | Apr 28, 2022 |
 | 0.5 | Mar 31, 2022 |
 
 ## Release notes
+
+### v3.0 (Feb 19, 2024)
+
+Below are the changes released with this version:
+
+- New Feature: Accessibility compliant UI
+- New Feature: Map Viewer on dashboard for Incidents
+- New Feature: Ability for the admins to enable/disable map viewer and provide Bing maps key
+- New Feature: Location picker while creating incidents
+- New Feature: Incident Manager names in dash board replaced by person cards
+- New Feature: Sorting implemented for all columns in dashboard table
+- New Feature: Export to PDF functionality for Incident History
+- New Feature: Dashboard tab created automatically in 'General' channel in the teams created for an incident
+- New Feature: Ability to create 'Private' channels while creating incidents
+- New Feature: Adaptive cards sent to Incident teams when a bridge is enabled/disabled through 'Active Dashboard'
+- New Feature: Admins can modify the App Title
+- Migration of classic Application Insights to workspace-based Application Insights.
 
 ### v2.0 (May 02, 2023)
 
