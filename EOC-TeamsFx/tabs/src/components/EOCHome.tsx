@@ -415,16 +415,17 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
             const configData = await this.dataService.getConfigData(graphEndpoint, this.state.graph, configDataRecords);
             await this.checkUserRoleIsAdmin();
             const appTitleItem = configData.filter((item: any) => item.title === constants.appTitleKey);
+            const bingMapItem = configData.filter((item: any) => item.title === constants.bingMapsKey);
             if (appTitleItem.length > 0) {
                 this.setState({
                     appTitle: appTitleItem[0].value,
                     appTitleData: appTitleItem[0]
                 });
             }
-            if (configData.length > 1 && configData[1]?.title === constants.bingMapsKey) {
+            if (bingMapItem.length > 0) {
                 this.setState({
-                    isMapViewerEnabled: configData[1].value?.trim() !== "" && configData[1].value?.trim() !== undefined,
-                    bingMapsKeyConfigData: configData[1]
+                    isMapViewerEnabled: bingMapItem[0].value?.trim() !== "" && bingMapItem[0].value?.trim() !== undefined,
+                    bingMapsKeyConfigData: bingMapItem[0]
                 });
             }
             this.setState({
