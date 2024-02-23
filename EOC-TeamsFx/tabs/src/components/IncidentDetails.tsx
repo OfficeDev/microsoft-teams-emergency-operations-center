@@ -2411,6 +2411,31 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
         });
     }
 
+    // Check string is JSON or not
+    private isJSON = (str: string) => {
+        try {
+            JSON.parse(str);
+        } catch (e) {
+            return false;
+        }
+        return true;
+    }
+
+    // get the location display name
+    private getLocationDisplayName = (location: any): string => {
+        let displayName: string;
+        if (typeof location === "string") {
+            if (this.isJSON(location)) {
+                displayName = JSON.parse(location).DisplayName;
+            } else {
+                displayName = location;
+            }
+        } else {
+            displayName = location.DisplayName;
+        }
+        return displayName;
+    }
+
 
     //post adaptive card message to General channel
     private async postIncidentMessage(teamGroupId: any) {
@@ -2469,7 +2494,7 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
                                                 {
                                                     "type": "TextBlock",
                                                     "spacing": "None",
-                                                    "text": "**Location:**  " + this.state.incDetailsItem.location,
+                                                    "text": "**Location:**  " + this.getLocationDisplayName(this.state.selectedLocation),
                                                     "wrap": true
                                                 },
                                                 {
@@ -4164,7 +4189,7 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
                                                     <div className="incident-grid-item">
                                                         <label className="FormInput-label">{this.props.localeStrings.fieldIncidentName}</label>
                                                         <TooltipHost
-                                                            content={this.props.localeStrings.infoIncName}                                                            
+                                                            content={this.props.localeStrings.infoIncName}
                                                             calloutProps={calloutProps}
                                                             hostClassName="tooltip-host-class"
                                                         >
