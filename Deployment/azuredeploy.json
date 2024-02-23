@@ -106,7 +106,9 @@
       "Shared"
     ],
     "isSharedPlan": "[contains(variables('sharedSkus'), parameters('hostingPlanSku'))]",
-    "skuFamily": "[if(equals(parameters('hostingPlanSku'), 'Shared'), 'D', take(parameters('hostingPlanSku'), 1))]"
+    "skuFamily": "[if(equals(parameters('hostingPlanSku'), 'Shared'), 'D', take(parameters('hostingPlanSku'), 1))]",
+    "workspaceAnalyticsName": "[concat(parameters('baseResourceName'), '-log-analytics')]",
+    "workspaceAnalyticsSku": "pergb2018"
   },
   "resources": [
     {
@@ -313,8 +315,8 @@
           "SharePointSiteName": {
             "value": "[parameters('SharePointSiteName')]"
           },
-          "GraphBaseUrl":{
-              "value": "[parameters('GraphBaseUrl')]" 
+          "GraphBaseUrl": {
+            "value": "[parameters('GraphBaseUrl')]"
           }
         },
         "template": {
@@ -370,7 +372,7 @@
                 "description": "Provide name for the sharepoint site that will be provisioned."
               }
             },
-            "GraphBaseUrl":{
+            "GraphBaseUrl": {
               "type": "string",
               "minLength": 1,
               "metadata": {
@@ -508,16 +510,31 @@
       ]
     },
     {
-      "apiVersion": "2015-05-01",
+      "type": "Microsoft.OperationalInsights/workspaces",
+      "apiVersion": "2017-03-15-preview",
+      "name": "[variables('workspaceAnalyticsName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "sku": {
+          "name": "[variables('workspaceAnalyticsSku')]"
+        }
+      }
+    },
+    {
+      "apiVersion": "2020-02-02-preview",
       "name": "[variables('appInsightsName')]",
       "type": "Microsoft.Insights/components",
       "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.OperationalInsights/workspaces', variables('workspaceAnalyticsName'))]"
+      ],
       "tags": {
         "[concat('hidden-link:', resourceGroup().id, '/providers/Microsoft.Web/sites/', variables('siteName'))]": "Resource"
       },
       "properties": {
         "Application_Type": "web",
-        "Request_Source": "rest"
+        "Request_Source": "rest",
+        "WorkspaceResourceId": "[resourceId('Microsoft.OperationalInsights/workspaces', variables('workspaceAnalyticsName'))]"
       }
     }
   ],

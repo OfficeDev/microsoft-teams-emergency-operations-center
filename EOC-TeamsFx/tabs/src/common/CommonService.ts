@@ -1,8 +1,8 @@
-import { Client } from "@microsoft/microsoft-graph-client";
-import * as constants from './Constants';
 import { SeverityLevel } from "@microsoft/applicationinsights-common";
-import * as graphConfig from '../common/graphConfig';
-import { IIncidentStatus, IInputRegexValidationStates } from "../components/ICreateIncident";
+import { Client } from "@microsoft/microsoft-graph-client";
+import * as graphConfig from "../common/graphConfig";
+import { IIncidentStatus, IInputRegexValidationStates, ILocation } from "../components/ICreateIncident";
+import * as constants from "./Constants";
 
 export interface IListItem {
     itemId?: string;
@@ -90,7 +90,7 @@ export default class CommonService {
                     incidentCommander: this.formatIncidentCommander(item.fields.IncidentCommander),
                     incidentCommanderObj: item.fields.IncidentCommander,
                     incidentStatusObj: { status: item.fields.Status, id: item.fields.StatusLookupId },
-                    location: item.fields.Location,
+                    location: item.fields.Location !== "null" ? JSON.stringify(this.formatGeoLocation(item)) : "",
                     startDate: this.formatDate(item.fields.StartDateTime),
                     startDateUTC: new Date(item.fields.StartDateTime).toISOString().slice(0, new Date(item.fields.StartDateTime).toISOString().length - 1),
                     modifiedDate: item.fields.Modified,
@@ -107,6 +107,7 @@ export default class CommonService {
                     cloudStorageLink: item.fields.CloudStorageLink,
                     createdById: item.createdBy.user.id
                 });
+                formattedIncidentsData = formattedIncidentsData.filter((e: any) => e.location !== "");
             });
             return formattedIncidentsData;
 
@@ -233,6 +234,11 @@ export default class CommonService {
     // Generic method to update item to SharePoint list
     public async updateItemInList(graphEndpoint: any, graph: Client, listItemObj: any): Promise<any> {
         return await graph.api(graphEndpoint).update(listItemObj);
+    }
+
+    // Generic method to add new item to SharePoint list
+    public async addItemInList<T>(graphEndpoint: any, graph: Client, listItemObj: any): Promise<T> {
+        return await graph.api(graphEndpoint).post(listItemObj) as T;
     }
 
     // create channel
@@ -376,7 +382,6 @@ export default class CommonService {
     public getInputRegexValidationInitialState(): IInputRegexValidationStates {
         return {
             incidentNameHasError: false,
-            incidentLocationHasError: false,
             incidentCloudStorageLinkHasError: false
         };
     };
@@ -387,9 +392,6 @@ export default class CommonService {
         let inputRegexValidationObj = this.getInputRegexValidationInitialState();
         if (incidentInfo.incidentName.indexOf("#") > -1 || incidentInfo.incidentName.indexOf("&") > -1) {
             inputRegexValidationObj.incidentNameHasError = true;
-        }
-        if (incidentInfo.location.indexOf("#") > -1 || incidentInfo.location.indexOf("&") > -1) {
-            inputRegexValidationObj.incidentLocationHasError = true;
         }
         //for Guest Users
         const emailRegexString = /^[^~!#$%^&*()+=[\]{}\\/|;:"<>?,.-]+[^~!#$%^&*()+=[\]{}\\/|;:"<>?,]*@[^~!#$%^&*()+=[\]{}\\/|;:"<>?,]+\.[^~!#$%^&*()+=[\]{}\\/|;:"<>?,]*[^~!#$%^&*()+=[\]{}\\/|;:"<>?,.-]+$/;
@@ -402,7 +404,7 @@ export default class CommonService {
                 guestUsers[idx].hasEmailRegexError = false;
             }
             else {
-                guestUsers[idx].hasEmailRegexError = trimmedEmail !== "" ? true : false;
+                guestUsers[idx].hasEmailRegexError = trimmedEmail !== "";
             }
         });
         regexObject.guestUsers = guestUsers;
@@ -428,18 +430,16 @@ export default class CommonService {
 
     // get existing  members of the team
     public async getExistingTeamMembers(graphEndpoint: string, graph: Client): Promise<any> {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const members = await this.getGraphData(graphEndpoint, graph);
-                resolve(members);
-            } catch (ex) {
-                console.error(
-                    constants.errorLogPrefix + "CommonService_GetExistingTeamMembers \n",
-                    JSON.stringify(ex)
-                );
-                reject(ex);
-            }
-        });
+        try {
+            const members = await this.getGraphData(graphEndpoint, graph);
+            return members;
+        } catch (ex) {
+            console.error(
+                constants.errorLogPrefix + "CommonService_GetExistingTeamMembers \n",
+                JSON.stringify(ex)
+            );
+            throw ex;
+        }
     }
 
     //Log exception to App Insights
@@ -465,7 +465,7 @@ export default class CommonService {
     //#region Team Name Configuration
 
     // get team name configuration list data
-    public async getConfigData(graphEndpoint: any, graph: Client, key: any): Promise<any> {
+    public async getConfigData(graphEndpoint: any, graph: Client, recordsRequired: any): Promise<any> {
         try {
             const configData = await graph.api(graphEndpoint).get();
 
@@ -473,13 +473,14 @@ export default class CommonService {
             let formattedData: IConfigSettingItem;
 
             //filter data based on key
-            const filteredObject = configData.value.filter((e: any) => e.fields.Title === key);
-
-            formattedData = {
-                itemId: filteredObject[0].fields.id,
-                title: filteredObject[0].fields.Title,
-                value: filteredObject[0].fields.Value
-            };
+            const filteredData = configData.value.filter((e: any) => recordsRequired.includes(e.fields.Title));
+            formattedData = filteredData.map((item: any) => {
+                return {
+                    itemId: item.fields.id,
+                    title: item.fields.Title,
+                    value: item.fields.Value
+                };
+            });
 
             return formattedData;
         } catch (error) {
@@ -524,33 +525,7 @@ export default class CommonService {
             const incidentsData = await graph.api(graphEndpoint).get();
 
             // Prepare the output array
-            let formattedIncidentsData: Array<IListItem> = new Array<IListItem>();
-
-            // Map the JSON response to the output array
-            incidentsData.value.forEach((item: any) => {
-                //Skipping version 2.0 since those changes are updated by system.
-                if (item.id !== "2.0") {
-                    formattedIncidentsData.push({
-                        incidentName: item.fields.IncidentName,
-                        incidentCommander: this.formatIncidentCommander(item.fields.IncidentCommander),
-                        status: item.fields.Status ? item.fields.Status : item.fields.IncidentStatus,
-                        location: item.fields.Location,
-                        startDate: this.formatDate(item.fields.StartDateTime),
-                        modifiedDate: new Date(item.fields.Modified).toDateString().slice(4) + " " + new Date(item.fields.Modified).toLocaleTimeString(),
-                        incidentDescription: item.fields.Description,
-                        incidentType: item.fields.IncidentType,
-                        roleAssignments: item.fields.RoleAssignment ? this.formatRoleAssignments(item.fields.RoleAssignment) : item.fields.RoleAssignment,
-                        roleAssignmentsObj: item.fields.RoleAssignment ? this.formatRoleAssignmentsForGrid(item.fields.RoleAssignment) : item.fields.RoleAssignment,
-                        roleLeads: item.fields.RoleLeads ? this.formatRoleAssignments(item.fields.RoleLeads) : item.fields.RoleLeads,
-                        roleLeadsObj: item.fields.RoleLeads ? this.formatRoleAssignmentsForGrid(item.fields.RoleLeads) : item.fields.RoleLeads,
-                        severity: item.fields.Severity ? item.fields.Severity : "",
-                        lastModifiedBy: item.lastModifiedBy.user.displayName,
-                        reasonForUpdate: item.fields.ReasonForUpdate,
-                        bridgeID: item.fields.BridgeID,
-                        cloudStorageLink: item.fields.CloudStorageLink
-                    });
-                }
-            });
+            let formattedIncidentsData: Array<IListItem> = this.getFormattedIncidentsData(incidentsData);
             return formattedIncidentsData;
         } catch (error) {
             console.error(
@@ -560,9 +535,40 @@ export default class CommonService {
         }
     }
 
+    private getFormattedIncidentsData(incidentsData: any) {
+        let formattedIncidentsData: Array<IListItem> = new Array<IListItem>();
+
+        // Map the JSON response to the output array
+        incidentsData.value.forEach((item: any) => {
+            //Skipping version 2.0 since those changes are updated by system.
+            if (item.id !== "2.0") {
+                formattedIncidentsData.push({
+                    incidentName: item.fields.IncidentName,
+                    incidentCommander: this.formatIncidentCommander(item.fields.IncidentCommander),
+                    status: item.fields.Status ? item.fields.Status : item.fields.IncidentStatus,
+                    location: item.fields.Location !== "null" ? this.formatGeoLocation(item).DisplayName : "",
+                    startDate: this.formatDate(item.fields.StartDateTime),
+                    modifiedDate: new Date(item.fields.Modified).toDateString().slice(4) + " " + new Date(item.fields.Modified).toLocaleTimeString(),
+                    incidentDescription: item.fields.Description,
+                    incidentType: item.fields.IncidentType,
+                    roleAssignments: item.fields.RoleAssignment ? this.formatRoleAssignments(item.fields.RoleAssignment) : item.fields.RoleAssignment,
+                    roleAssignmentsObj: item.fields.RoleAssignment ? this.formatRoleAssignmentsForGrid(item.fields.RoleAssignment) : item.fields.RoleAssignment,
+                    roleLeads: item.fields.RoleLeads ? this.formatRoleAssignments(item.fields.RoleLeads) : item.fields.RoleLeads,
+                    roleLeadsObj: item.fields.RoleLeads ? this.formatRoleAssignmentsForGrid(item.fields.RoleLeads) : item.fields.RoleLeads,
+                    severity: item.fields.Severity ? item.fields.Severity : "",
+                    lastModifiedBy: item.lastModifiedBy.user.displayName,
+                    reasonForUpdate: item.fields.ReasonForUpdate,
+                    bridgeID: item.fields.BridgeID,
+                    cloudStorageLink: item.fields.CloudStorageLink
+                });
+            }
+        });
+        return formattedIncidentsData;
+    }
+
     //Get page height of version list in list view.
     public getPageHeight(idx: number | undefined, itemHeight: number, numberOfItemsOnPage: number): number {
-        const value = idx !== undefined ? idx : 0;
+        const value = idx ?? 0;
         let height = 0;
         for (let i = value; i < value + numberOfItemsOnPage; ++i) {
             height += itemHeight;
@@ -572,117 +578,208 @@ export default class CommonService {
 
 
     //Create planner for incident tasks based on group id
-    public async createPlannerPlan(group_id: string, incident_id: string, graph: Client, graphContextURL: string, tenantID: any): Promise<any> {
-        return new Promise(async (resolve, reject) => {
-            try {
+    public async createPlannerPlan(group_id: string, incident_id: string, graph: Client,
+        graphContextURL: string, tenantID: any, generalChannelId?: string, fromTaskModule?: boolean) {
+        try {
+            const planTitle = "Incident - " + incident_id + ": Tasks";
+            const plannerObj = { "owner": group_id, "title": planTitle };
 
-                const planTitle = "Incident - " + incident_id + ": Tasks"
-                const plannerObj = {
-                    "owner": group_id,
-                    "title": planTitle
-                };
+            let plannerResponse = await this.sendGraphPostRequest(graphConfig.plannerGraphEndpoint, graph, plannerObj);
+            let planId = plannerResponse.id;
+            console.log(constants.infoLogPrefix + "Planner plan created");
 
-                let plannerResponse = await this.sendGraphPostRequest(graphConfig.plannerGraphEndpoint, graph, plannerObj);
-                let planId = plannerResponse.id;
-                console.log(constants.infoLogPrefix + "Planner plan created");
+            //Create default bucket("To do") for the plan
+            const bucketObj = { "name": constants.plannerBucketTitle, "planId": planId, "orderHint": " !" };
 
-                //Create default bucket("To do") for the plan
-                const bucketObj = {
-                    "name": constants.plannerBucketTitle,
-                    "planId": planId,
-                    "orderHint": " !"
-                };
+            await this.sendGraphPostRequest(graphConfig.bucketsGraphEndpoint, graph, bucketObj);
 
-                await this.sendGraphPostRequest(graphConfig.bucketsGraphEndpoint, graph, bucketObj);
-
-                //get general channel id
-                const generalChannelId = await this.getChannelId(graph, group_id, constants.General);
-
-                const graphTabEndPoint = graphConfig.teamsGraphEndpoint + "/" + group_id + graphConfig.channelsGraphEndpoint + "/" + generalChannelId + graphConfig.tabsGraphEndpoint;
-                const tasksAppEndPoint = graphContextURL + graphConfig.tasksbyPlannerAppGraphEndPoint;
-
-                let tasksTabObj = {};
-                if (graphContextURL === constants.commercialGraphContextURL) {
-                    //for commercial tenant
-                    tasksTabObj = {
-                        "displayName": planTitle,
-                        "teamsApp@odata.bind": tasksAppEndPoint,
-                        "configuration": {
-                            "entityId": "tt.c_" + generalChannelId + "_p_" + planId,
-                            "contentUrl": "https://tasks.office.com/{tid}/Home/PlannerFrame?page=7&auth_pvr=OrgId&auth_upn={userPrincipalName}&groupId={groupId}&planId=" + planId + "&channelId={channelId}&entityId={entityId}&tid={tid}&userObjectId={userObjectId}&subEntityId={subEntityId}&sessionId={sessionId}&theme={theme}&mkt={locale}&ringId={ringId}&PlannerRouteHint={tid}",
-                            "removeUrl": "https://tasks.office.com/{tid}/Home/PlannerFrame?page=13&auth_pvr=OrgId&auth_upn={userPrincipalName}&groupId={groupId}&planId=" + planId + "&channelId={channelId}&entityId={entityId}&tid={tid}&userObjectId={userObjectId}&subEntityId={subEntityId}&sessionId={sessionId}&theme={theme}&mkt={locale}&ringId={ringId}&PlannerRouteHint={tid}",
-                            "websiteUrl": "https://tasks.office.com/" + tenantID + "/Home/PlanViews/" + planId + "?Type=PlanLink&Channel=TeamsTab"
-                        }
-                    }
-                } else {
-                    //for GCCH tenant
-                    tasksTabObj = {
-                        "displayName": planTitle,
-                        "teamsApp@odata.bind": tasksAppEndPoint,
-                        "configuration": {
-                            "entityId": planId,
-                            "contentUrl": "https://tasks.office365.us/{tid}/Home/PlannerFrame?page=7&planId=" + planId + "&auth_pvr=Orgid&auth_upn={userPrincipalName}&groupId={groupId}&entityId={entityId}&tid={tid}&userObjectId={userObjectId}&channelId={channelId}&sessionId={sessionId}&theme={theme}&mkt={locale}&ringId={ringId}&PlannerRouteHint={tid}",
-                            "removeUrl": "https://tasks.office365.us/{tid}/Home/PlannerFrame?page=13&planId=" + planId + "&auth_pvr=Orgid&auth_upn={userPrincipalName}&groupId={groupId}&entityId={entityId}&tid={tid}&userObjectId={userObjectId}&channelId={channelId}&sessionId={sessionId}&theme={theme}&mkt={locale}&ringId={ringId}&PlannerRouteHint={tid}",
-                            "websiteUrl": "https://tasks.office365.us/" + tenantID + "/Home/PlanViews/" + planId,
-                        }
-                    }
-                }
-                //adding tasks by planner and todo app to general channel
-                await this.sendGraphPostRequest(graphTabEndPoint, graph, tasksTabObj);
-                console.log(constants.infoLogPrefix + "Tasks app is added to General Channel");
-
-                resolve(planId);
-
-            } catch (ex) {
-                console.error(
-                    constants.errorLogPrefix + "CommonServices_CreatePlannerPlan \n",
-                    JSON.stringify(ex)
-                );
-                reject(ex);
+            let general_channel_id = generalChannelId;
+            if (fromTaskModule) {
+                //Get General channel id
+                general_channel_id = await this.getChannelId(graph, group_id, constants.General);
             }
-        });
+
+            const graphTabEndPoint = graphConfig.teamsGraphEndpoint + "/" + group_id + graphConfig.channelsGraphEndpoint + "/" + general_channel_id + graphConfig.tabsGraphEndpoint;
+            const tasksAppEndPoint = graphContextURL + graphConfig.tasksbyPlannerAppGraphEndPoint;
+
+            let tasksTabObj = {};
+            if (graphContextURL === constants.commercialGraphContextURL) {
+                //for commercial tenant
+                tasksTabObj = {
+                    "displayName": planTitle,
+                    "teamsApp@odata.bind": tasksAppEndPoint,
+                    "configuration": {
+                        "entityId": "tt.c_" + generalChannelId + "_p_" + planId,
+                        "contentUrl": "https://tasks.office.com/{tid}/Home/PlannerFrame?page=7&auth_pvr=OrgId&auth_upn={userPrincipalName}&groupId={groupId}&planId=" + planId + "&channelId={channelId}&entityId={entityId}&tid={tid}&userObjectId={userObjectId}&subEntityId={subEntityId}&sessionId={sessionId}&theme={theme}&mkt={locale}&ringId={ringId}&PlannerRouteHint={tid}",
+                        "removeUrl": "https://tasks.office.com/{tid}/Home/PlannerFrame?page=13&auth_pvr=OrgId&auth_upn={userPrincipalName}&groupId={groupId}&planId=" + planId + "&channelId={channelId}&entityId={entityId}&tid={tid}&userObjectId={userObjectId}&subEntityId={subEntityId}&sessionId={sessionId}&theme={theme}&mkt={locale}&ringId={ringId}&PlannerRouteHint={tid}",
+                        "websiteUrl": "https://tasks.office.com/" + tenantID + "/Home/PlanViews/" + planId + "?Type=PlanLink&Channel=TeamsTab"
+                    }
+                };
+            }
+            else {
+                //for GCCH tenant
+                tasksTabObj = {
+                    "displayName": planTitle,
+                    "teamsApp@odata.bind": tasksAppEndPoint,
+                    "configuration": {
+                        "entityId": planId,
+                        "contentUrl": "https://tasks.office365.us/{tid}/Home/PlannerFrame?page=7&planId=" + planId + "&auth_pvr=Orgid&auth_upn={userPrincipalName}&groupId={groupId}&entityId={entityId}&tid={tid}&userObjectId={userObjectId}&channelId={channelId}&sessionId={sessionId}&theme={theme}&mkt={locale}&ringId={ringId}&PlannerRouteHint={tid}",
+                        "removeUrl": "https://tasks.office365.us/{tid}/Home/PlannerFrame?page=13&planId=" + planId + "&auth_pvr=Orgid&auth_upn={userPrincipalName}&groupId={groupId}&entityId={entityId}&tid={tid}&userObjectId={userObjectId}&channelId={channelId}&sessionId={sessionId}&theme={theme}&mkt={locale}&ringId={ringId}&PlannerRouteHint={tid}",
+                        "websiteUrl": "https://tasks.office365.us/" + tenantID + "/Home/PlanViews/" + planId,
+                    }
+                };
+            }
+            //adding tasks by planner and to do app to general channel
+            await this.sendGraphPostRequest(graphTabEndPoint, graph, tasksTabObj);
+            console.log(constants.infoLogPrefix + "Tasks app is added to General Channel");
+
+            return planId;
+        }
+        catch (error) {
+            console.error(constants.errorLogPrefix + "CommonServices_CreatePlannerPlan \n", JSON.stringify(error));
+
+            return null;
+        }
+    }
+
+    //Create Active Dashboard Tab in Incident Team General Channel
+    public async createActiveDashboardTab(graph: Client, group_id: string, generalChannelId: string,
+        graphContextURL: string, appSettings: any) {
+        try {
+            //Get TEOC app id from Teams app catalog
+            const teocAppId = await this.getGraphData(graphContextURL + graphConfig.appCatalogsTEOCAppEndpoint, graph);
+            const teocAppDataBindUrl = `${graphContextURL}${graphConfig.teamsAppsEndpoint}/${teocAppId.value[0].id}`;
+
+            //Install TEOC App to Incident Team
+            const installAppEndpoint = `${graphContextURL}${graphConfig.teamsGraphEndpoint}/${group_id}${graphConfig.installedAppsEndpoint}`;
+            const installAppBody = { "teamsApp@odata.bind": teocAppDataBindUrl };
+            await this.sendGraphPostRequest(installAppEndpoint, graph, installAppBody);
+
+            //Add TEOC App to General Channel - Active Dashboard Tab
+            const graphTabEndPoint = graphConfig.teamsGraphEndpoint + "/" + group_id
+                + graphConfig.channelsGraphEndpoint + "/" + generalChannelId + graphConfig.tabsGraphEndpoint;
+            const teocObj = {
+                "displayName": constants.activeDashboardTabTitle,
+                "teamsApp@odata.bind": teocAppDataBindUrl,
+                "configuration": {
+                    "entityId": appSettings.entityId,
+                    "contentUrl": appSettings.contentUrl,
+                    "removeUrl": appSettings.removeUrl,
+                    "websiteUrl": appSettings.websiteUrl
+                }
+            };
+            await this.sendGraphPostRequest(graphTabEndPoint, graph, teocObj);
+
+            console.log(constants.infoLogPrefix + `TEOC App added to Active Dashboard Tab in Incident Team General channel`);
+        }
+        catch (error) {
+            console.error(
+                constants.errorLogPrefix + "CommonServices_createAndUpdateActiveDashboardTab \n",
+                JSON.stringify(error)
+            );
+        }
+
     }
 
     //Get Channel ID of a particular team channel
     public async getChannelId(graph: any, teamGroupId: any, channelName: string) {
-        return new Promise<any>(async (resolve, reject) => {
-            try {
-                //get channel id related to current site teams group
-                const endPoint = graphConfig.teamsGraphEndpoint + "/" + teamGroupId +
-                    graphConfig.channelsGraphEndpoint +
-                    "?$filter=startsWith(displayName, '" + channelName + "')&$select=id";
-                const response = await this.getGraphData(endPoint, graph);
-                const channelId = response.value[0].id;
-                resolve(channelId);
-            } catch (error) {
-                console.error(
-                    constants.errorLogPrefix + "CommonService_getChannelId \n",
-                    JSON.stringify(error)
-                );
-                reject("Failed " + error);
-            }
-        });
+        try {
+            //get channel id related to current site teams group
+            const endPoint = graphConfig.teamsGraphEndpoint + "/" + teamGroupId +
+                graphConfig.channelsGraphEndpoint +
+                "?$filter=startsWith(displayName, '" + channelName + "')&$select=id";
+            const response = await this.getGraphData(endPoint, graph);
+            const channelId = response.value[0].id;
+            return channelId;
+        } catch (error) {
+            console.error(
+                constants.errorLogPrefix + "CommonService_getChannelId \n",
+                JSON.stringify(error)
+            );
+            return "Failed " + error;
+        }
     }
 
     //Get URL of a tab in channel of a Team
     public async getTabURL(graph: any, teamGroupId: any, channelID: string, tabName: string) {
-        return new Promise<any>(async (resolve, reject) => {
-            try {
-                //get URL for the tab
-                const tabsGraphEndPoint = graphConfig.teamsGraphEndpoint + "/" + teamGroupId + graphConfig.channelsGraphEndpoint + "/" + channelID + graphConfig.tabsGraphEndpoint +
-                    "?$filter=startsWith(displayName, '" + tabName + "')&$select=webUrl";
+        try {
+            //get URL for the tab
+            const tabsGraphEndPoint = graphConfig.teamsGraphEndpoint + "/" + teamGroupId + graphConfig.channelsGraphEndpoint + "/" + channelID + graphConfig.tabsGraphEndpoint +
+                "?$filter=startsWith(displayName, '" + tabName + "')&$select=webUrl";
 
-                const tabResults = await this.getGraphData(tabsGraphEndPoint, graph)
-                resolve(tabResults.value[0].webUrl);
-            } catch (error) {
-                console.error(
-                    constants.errorLogPrefix + "CommonService_getTabURL \n",
-                    JSON.stringify(error)
-                );
-                reject("Failed");
-            }
-        });
+            const tabResults = await this.getGraphData(tabsGraphEndPoint, graph)
+            return tabResults.value[0].webUrl;
+        } catch (error) {
+            console.error(
+                constants.errorLogPrefix + "CommonService_getTabURL \n",
+                JSON.stringify(error)
+            );
+            throw error;
+        }
+    }
+
+    //method to format location column
+    private formatGeoLocation = (item: any) => {
+        let formattedData: ILocation = {
+            EntityType: "",
+            Address: {
+                City: "",
+                CountryOrRegion: "",
+                PostalCode: "",
+                State: "",
+                Street: ""
+            },
+            Coordinates: {
+                Latitude: "",
+                Longitude: ""
+            },
+            DisplayName: "",
+            LocationUri: "",
+            UniqueId: ""
+        };
+
+        if (this.isJson(item.fields.Location)) {
+            let i = JSON.parse(item.fields.Location);
+            formattedData.Address = i.Address;
+            formattedData.Coordinates = i.Coordinates;
+            formattedData.DisplayName = i.DisplayName;
+            formattedData.LocationUri = i.LocationUri
+            formattedData.EntityType = i.EntityType;
+            return formattedData;
+        }
+        else {
+            formattedData = {
+                EntityType: "Custom",
+                Address: {
+                    City: "",
+                    CountryOrRegion: "",
+                    PostalCode: "",
+                    State: "",
+                    Street: ""
+                },
+                Coordinates: {
+                    Latitude: '0',
+                    Longitude: '0'
+                },
+                DisplayName: item.fields.Location,
+                LocationUri: "",
+                UniqueId: ""
+            };
+            return formattedData;
+        }
+    }
+
+    //method to verify if string is JSON or not
+    private isJson = (str: any) => {
+        try {
+            JSON.parse(str);
+        } catch (e) {
+            return false;
+        }
+        return true;
     }
 
 }
+
+
 

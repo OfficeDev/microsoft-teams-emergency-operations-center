@@ -21,13 +21,24 @@ div[class~="admin-settings"] {
 
         label {
             margin: 5px auto;
-            @include fontstyles(400, #33344A, 14px, 24px, center);
+            @include fontstyles(400, var(--colorNeutralForeground1) !important, 14px, 24px, center);
 
             span[class="back-label"] {
                 font-size: 12px;
                 position: relative;
                 bottom: 1px;
                 margin-left: 1px;
+
+                &:hover {
+                    color: var(--colorBrandForegroundLinkHover);
+                }
+            }
+
+            span[class="back-label"]:focus-visible {
+                outline: 2px solid var(--colorBrandForeground2Pressed);
+                border-radius: 3px;
+                outline-offset: 1px;
+
             }
 
             span[class="go-back"] {
@@ -48,7 +59,7 @@ div[class~="admin-settings"] {
 
     div[class~="admin-settings-wrapper"] {
         background: #E4E9F5 0% 0% no-repeat padding-box;
-        padding-bottom: 6rem;
+        min-height: 25rem;
         opacity: 1;
 
         div[class="admin-settings-heading"] {
@@ -87,75 +98,189 @@ div[class~="admin-settings"] {
             }
         }
 
-        div[class="role-settings-wrapper"] {
-            min-height: 30.5vh;
+        div[class="config-settings-wrapper"] {
 
-            div[class~="role-settings-message-bar"] {
+            div[class~="config-settings-message-bar"] {
                 margin-bottom: 10px;
+                background: rgb(223, 246, 221);
+                border: none;
 
                 div[class~="ms-MessageBar-text"] {
                     @include fontstyles(normal, rgb(50, 49, 48), 14px, 21px, left);
                 }
+
+                i[class~="ms-Button-icon"] {
+                    color: rgb(50, 49, 48);
+                }
             }
 
-            div[class="role-settings-toggle-btn-wrapper"] {
+            div[class~="ms-MessageBar--error"] {
+                background: rgb(253, 231, 233);
+            }
+
+            div[class~="settings-sub-wrapper"] {
                 display: flex;
-                align-items: center;
+                flex-direction: column;
+                align-items: flex-start;
+                row-gap: 10px;
 
-                div[class~="role-settings-toggle-btn"] {
-                    justify-content: flex-end;
-                    flex-direction: row-reverse;
-                    margin-bottom: 10px;
+                div[class~="config-settings-app-title-wrapper"] {
+                    display: flex;
+                    align-items: center;
+                    flex-direction: row;
+                    column-gap: 15px;
 
-                    label {
-                        margin-left: 0px;
-                        width: 145px;
-                    }
+                    div[class~="app-title-label"] {
+                        justify-content: flex-end;
+                        flex-direction: row-reverse;
+                        margin-bottom: 0px;
 
-                    div[class~="toggle-btn-label"] {
-                        @include fontstyles(normal, #000000, 18px, 22px, left)
-                    }
+                        label {
+                            margin-left: 0px;
+                            min-width: 230px;
+                            @include fontstyles(normal, #000000, 18px, 22px, left)
+                        }
 
-                    span[class~="toggle-info-icon"] {
-                        margin-left: 10px;
-                        position: relative;
-                        top: 4px;
+                        span[class~="info-icon"] {
+                            margin-left: 10px;
+                            position: relative;
+                            top: 4px;
 
-                        i {
-                            color: #000000;
+                            i {
+                                color: #000000;
+                            }
                         }
                     }
 
-                    div[class~="ms-Toggle-innerContainer"] {
-                        margin: 3px 0 0 15px;
-                    }
-                }
+                    div[class~="app-title-input-wrapper"] {
+                        display: flex;
+                        flex-direction: column;
 
-                a[class="assign-roles-link"] {
-                    text-decoration: none;
-
-                    button[class~="assign-roles-btn"] {
-                        margin: 0 0 6px 15px;
-                        cursor: pointer;
-                        @include fontstyles(600, #6264A7, 0.875rem, 1.4286, left);
-
-
-                        i {
-                            font-size: 14px;
-                            font-weight: 700;
-                            transform: rotate(45deg);
-                            padding-top: 3px;
-                        }
-
-                        &:hover {
-                            color: #444578;
+                        span[class~="app-title-input-box"] {
+                            width: 365px;
                         }
                     }
                 }
+
+                div[class~="config-settings-toggle-btn-wrapper"] {
+                    display: flex;
+                    align-items: center;
+                    flex-direction: row;
+                    column-gap: 25px;
+
+                    div[class~="config-settings-toggle-btn"] {
+                        justify-content: flex-end;
+                        flex-direction: row-reverse;
+                        margin-bottom: 0px;
+
+                        label {
+                            margin-left: 0px;
+                            min-width: 230px;
+                        }
+
+                        div[class~="toggle-btn-label"] {
+                            @include fontstyles(normal, #000000, 18px, 22px, left)
+                        }
+
+                        span[class~="toggle-info-icon"] {
+                            margin-left: 10px;
+                            position: relative;
+                            top: 4px;
+
+                            i {
+                                color: #000000;
+                            }
+                        }
+
+                        div[class~="ms-Toggle-innerContainer"] {
+                            margin: 3px 0 0 15px;
+                        }
+                    }
+
+                    a[class="assign-roles-link"] {
+                        text-decoration: none;
+
+                        button[class~="assign-roles-btn"] {
+                            padding-left: 0px;
+                            cursor: pointer;
+                            @include fontstyles(600, #6264A7, 0.875rem, 1.4286, left);
+
+
+                            i {
+                                font-size: 14px;
+                                font-weight: 700;
+                                transform: rotate(45deg);
+                                padding-top: 3px;
+                            }
+
+                            &:hover {
+                                color: #444578;
+                            }
+                        }
+                    }
+
+                    div[class~="api-key-input-wrapper"] {
+                        display: flex;
+                        flex-direction: column;
+
+                        span[class~="api-key-input-box"] {
+                            width: 300px;
+                        }
+                    }
+                }
+
+                div[class~="field-with-error"] {
+                    align-items: flex-start;
+
+                    div[class~="api-key-input-wrapper"] {
+                        span[class~="api-key-error-msg"] {
+                            padding-left: 15px;
+                            color: #ce0000;
+                        }
+                    }
+                    div[class~="app-title-input-wrapper"] {
+                        span[class~="app-title-error-msg"] {
+                            padding-left: 15px;
+                            color: #ce0000;
+                        }
+                    }
+                }
+
+                @media screen and (max-width:767px) {
+                    div[class~="map-viewer-setting"],
+                    div[class~="config-settings-app-title-wrapper"] {
+                        flex-direction: column;
+                        align-items: flex-start;
+                        row-gap: 10px;
+                    }
+
+                    div[class~="config-settings-app-title-wrapper"] {
+                        div[class~="app-title-input-wrapper"] {
+                            span[class~="app-title-input-box"] {
+                                width: 300px;
+                            }
+                        }
+                    }
+                }
+
+                @media screen and (max-width:395pt) {
+                    div[class~="config-settings-toggle-btn-wrapper"] {
+                        flex-direction: column;
+                        align-items: flex-start;
+                        row-gap: 10px;
+                    }
+                }
+            }
+
+            div[class~="config-settings-spinner"] {
+                margin-top: 15px;
             }
         }
 
         div[class="team-name-config-wrapper"] {
+            min-height: 30rem;
+            max-height: 45rem;
+
             div[class="loader-bg"] {
                 position: fixed;
                 width: 100%;
@@ -183,6 +308,11 @@ div[class~="admin-settings"] {
             }
 
             div[class="team-name-config-form-area"] {
+                label[class~="order-label"] {
+                    @include fontstyles(normal, var(--colorNeutralForeground1), 16px, 21px, left);
+                    margin-bottom: 0.25rem;
+                }
+
                 div[class~="team-name-config-order-dropdown"] {
                     margin-bottom: 25px;
 
@@ -192,14 +322,14 @@ div[class~="admin-settings"] {
                         height: 40px;
 
                         div[class~="ui-dropdown__selected-items"] {
-                            background-color: #FFFFFF;
-                            border: 1px solid #FFFFFF;
+                            background-color: var(--colorNeutralBackground1);
+                            border: 1px solid var(--colorNeutralForegroundStaticInverted);
                             border-radius: 0.1875rem;
                             width: 150px;
                             height: 40px;
 
                             button[class~="ui-button"] {
-                                color: rgb(37, 36, 35);
+                                color: var(--colorNeutralForeground1);
 
                                 span[class~="ui-button__content"] {
                                     position: relative;
@@ -208,9 +338,34 @@ div[class~="admin-settings"] {
                             }
                         }
 
+                        div[class~="ui-box"] {
+                            path[class~="ui-icon__outline"] {
+                                fill: var(--colorNeutralForeground1);
+                            }
+                        }
+
 
                         ul[class~="ui-list"] {
                             width: 100% !important;
+                            background-color: var(--colorNeutralBackground1);
+
+                            li[class~="ui-dropdown__item"] {
+                                color: var(--colorNeutralForeground1);
+                                background-color: var(--colorSubtleBackground);
+
+                                div[class~="ui-dropdown__item__header"] {
+                                    color: var(--colorNeutralForeground1);
+                                }
+
+                                &:hover {
+                                    background-color: var(--colorBrandBackgroundInvertedHover);
+
+                                    div[class~="ui-dropdown__item__header"] {
+                                        color: #000000;
+                                    }
+                                }
+
+                            }
                         }
                     }
                 }
@@ -219,11 +374,22 @@ div[class~="admin-settings"] {
                     input[type="text"] {
                         width: 180px;
                         height: 40px;
-                        background-color: #FFFFFF;
-                        @include fontstyles(normal, #000000, 16px, 21px, left);
+                        background-color: var(--colorNeutralBackground1);
+                        @include fontstyles(normal, var(--colorNeutralForeground1), 16px, 21px, left);
 
                         &::placeholder {
-                            @include fontstyles(normal, #979593, 14px, 21px, left);
+                            @include fontstyles(normal, var(--colorBrandForeground2Pressed), 14px, 21px, left);
+                            opacity: 0.7;
+                        }
+
+                        &:focus {
+                            border-bottom-color: var(--colorNeutralStrokeAccessibleSelected);
+                            border-bottom-left-radius: 2px;
+                            border-bottom-right-radius: 2px;
+                            border-bottom-width: 2px;
+                            border-top-color: var(--colorSubtleBackground);
+                            border-left-color: var(--colorSubtleBackground);
+                            border-right-color: var(--colorSubtleBackground);
                         }
                     }
                 }
@@ -235,7 +401,7 @@ div[class~="admin-settings"] {
                 label[class="team-name-config-dropdown-label"],
                 div[class~="team-name-config-order-dropdown"]>label,
                 div[class~="team-name-config-input-field"]>label {
-                    @include fontstyles(normal, #000000, 16px, 21px, left);
+                    @include fontstyles(normal, var(--colorNeutralForeground1), 16px, 21px, left);
                 }
 
                 label[class="team-name-config-dropdown-label"] {
@@ -244,7 +410,7 @@ div[class~="admin-settings"] {
 
                 div[class='team-name-config-preview-heading'] {
                     margin-bottom: 20px;
-                    @include fontstyles(400, #33344A, 22px, 32px, left);
+                    @include fontstyles(400, var(--colorNeutralForeground1), 22px, 32px, left);
                 }
 
                 img[class="team-name-config-preview-img"] {
@@ -261,7 +427,7 @@ div[class~="admin-settings"] {
 
                     div[class="team-name-config-order-preview"] {
                         margin-bottom: 30px;
-                        @include fontstyles(normal, #33344A, 16px, 21px, left);
+                        @include fontstyles(normal, var(--colorNeutralForeground1), 16px, 21px, left);
                     }
                 }
             }
@@ -270,30 +436,148 @@ div[class~="admin-settings"] {
         div[class="admin-settings-btn-wrapper"] {
             display: flex;
             align-items: center;
-            margin-top: 20px;
+            padding-top: 50px;
+            padding-bottom: 20px;
 
             button {
                 height: 40px;
-
-                &:hover {
-                    border: 1px solid rgb(200, 198, 196);
-                }
             }
 
             button[class~="admin-settings-back-btn"] {
-                background: rgb(255, 255, 255);
-                border: 1px solid #FFFFFF;
                 margin-right: 30px;
+                background-color: #ffffff;
                 @include fontstyles(600, rgb(37, 36, 35), 0.875rem, 1.4286, left);
 
                 &:hover {
-                    background: rgb(237, 235, 233);
+                    background-color: var(--colorBrandBackgroundInvertedHover);
                 }
             }
 
             button[class~="admin-settings-save-btn"] {
-                border: 1px solid #6264A7;
-                @include fontstyles(600, rgb(255, 255, 255), 0.875rem, 1.4286, left);
+                border: 1px solid var(--colorBrandBackground);
+                background-color: var(--colorBrandBackground);
+                @include fontstyles(600, var(--colorNeutralForegroundOnBrand), 0.875rem, 1.4286, left);
+
+                &:hover {
+                    border-color: rgb(200, 198, 196);
+                    background: var(--colorBrandBackgroundHover);
+                }
+            }
+        }
+    }
+}
+
+div[class~="admin-settings-darkcontrast"] {
+    background-color: var(--colorNeutralBackground2);
+
+    div[class~="admin-settings-wrapper"] {
+        background: var(--colorNeutralBackground1);
+        padding-bottom: 6rem;
+
+        div[class="admin-settings-heading"] {
+            color: var(--colorNeutralForeground1);
+        }
+
+        div[class~="toggle-setting-type"] {
+            border-bottom-color: var(--colorNeutralForeground1);
+
+            div[class~="setting-type"] {
+                color: var(--colorNeutralForeground1);
+
+                &:hover {
+                    border-bottom-color: var(--colorNeutralForeground1);
+                }
+            }
+
+            div[class~="selected-setting"],
+            div[class~="selected-setting"]:hover {
+                color: var(--colorBrandForeground1);
+                border-bottom-color: var(--colorBrandForeground1);
+            }
+        }
+
+        div[class="config-settings-wrapper"] {
+
+            div[class~="config-settings-message-bar"] {
+                background: var(--colorNeutralBackground1);
+                border: 1px solid var(--colorNeutralForeground1);
+
+                div[class~="ms-MessageBar-text"] {
+                    color: var(--colorNeutralForeground1);
+                }
+
+                i[class~="ms-Button-icon"] {
+                    color: var(--colorNeutralForeground1);
+                }
+            }
+
+            div[class~="ms-MessageBar--error"] {
+                background: var(--colorNeutralBackground1);
+            }
+
+            div[class~="settings-sub-wrapper"] {
+                div[class~="config-settings-app-title-wrapper"] {
+                    div[class~="app-title-label"] {
+                        label {
+                            color: var(--colorNeutralForeground1);
+                        }
+
+                        span[class~="info-icon"] {
+                            i {
+                                color: var(--colorNeutralForeground1);
+                            }
+                        }
+                    }
+
+                    div[class~="app-title-input-wrapper"] {
+
+                        // span[class~="app-title-input-box"] {
+                        //     background-color: var(--colorNeutralBackground1);
+                        //     border: 1px solid var(--colorNeutralForeground1);
+                        //     color: var(--colorNeutralForeground1);
+                        // }
+                        span[class~="app-title-error-msg"] {
+                            color: var(--colorPaletteRedForeground1);
+                        }
+                    }
+                }
+
+                div[class~="config-settings-toggle-btn-wrapper"] {
+                    div[class~="config-settings-toggle-btn"] {
+                        div[class~="toggle-btn-label"] {
+                            color: var(--colorNeutralForeground1);
+                        }
+
+                        span[class~="toggle-info-icon"] {
+                            i {
+                                color: var(--colorNeutralForeground1);
+                            }
+                        }
+                    }
+
+                    a[class="assign-roles-link"] {
+                        button[class~="assign-roles-btn"] {
+                            color: var(--colorBrandForegroundLink);
+
+                            &:hover {
+                                color: var(--colorBrandForegroundLinkHover);
+                            }
+                        }
+                    }
+                }
+
+                div[class~="field-with-error"] {
+                    div[class~="api-key-input-wrapper"] {
+                        span[class~="api-key-error-msg"] {
+                            color: var(--colorPaletteRedForeground1);
+                        }
+                    }
+                    div[class~="app-title-input-wrapper"] {
+                        span[class~="app-title-error-msg"] {
+                            color: var(--colorPaletteRedForeground1);
+                        }
+                    }
+                }
             }
         }
     }

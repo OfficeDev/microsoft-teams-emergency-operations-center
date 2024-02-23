@@ -4,19 +4,19 @@
       <rect id="Rectangle_27023" data-name="Rectangle 27023" width="24" height="24" transform="translate(1807 429)" fill="#fff" stroke="#707070" stroke-width="1" opacity="0.59"/>
     </clipPath>
     <clipPath id="clip-path-2">
-      <rect id="Rectangle_27022" data-name="Rectangle 27022" width="19.15" height="19.911" fill="none"/>
+      <rect id="Rectangle_27022" data-name="Rectangle 27022" width="19.15" height="19.911" fill="#4a4947"/>
     </clipPath>
   </defs>
-  <g id="Mask_Group_76" data-name="Mask Group 76" transform="translate(-1807 -429)" clip-path="url(#clip-path)">
+  <g id="Active_Bridge" data-name="Active Bridge" transform="translate(-1807 -429)" clip-path="url(#clip-path)">
     <g id="Group_18965" data-name="Group 18965" transform="translate(1809.425 430.089)">
       <g id="Group_18964" data-name="Group 18964" clip-path="url(#clip-path-2)">
-        <path id="Path_48954" data-name="Path 48954" d="M63.415,78.449H51.475l1.6-9.575a2.517,2.517,0,0,1,2.491-2.11h3.767a2.517,2.517,0,0,1,2.491,2.11ZM53.143,77.036h8.6l-1.322-7.93a1.109,1.109,0,0,0-1.1-.93H55.562a1.109,1.109,0,0,0-1.1.93Z" transform="translate(-48.012 -62.273)" fill="#979593"/>
-        <path id="Path_48955" data-name="Path 48955" d="M2.718,123.321H.706a.706.706,0,1,1,0-1.413H2.718a.706.706,0,1,1,0,1.413" transform="translate(0 -113.708)" fill="#979593"/>
-        <path id="Path_48956" data-name="Path 48956" d="M236.5,123.321h-2.011a.706.706,0,1,1,0-1.413H236.5a.706.706,0,1,1,0,1.413" transform="translate(-218.061 -113.708)" fill="#979593"/>
-        <path id="Path_48957" data-name="Path 48957" d="M130.429,3.424h0a.706.706,0,0,1-.706-.706V.706a.706.706,0,1,1,1.413,0V2.718a.706.706,0,0,1-.706.706" transform="translate(-120.997)" fill="#979593"/>
-        <path id="Path_48958" data-name="Path 48958" d="M211.162,33.368h0a.706.706,0,0,1,0-1l1.422-1.422a.706.706,0,1,1,1,1l-1.422,1.422a.706.706,0,0,1-1,0" transform="translate(-196.765 -28.672)" fill="#979593"/>
-        <path id="Path_48959" data-name="Path 48959" d="M28.976,33.367l-1.422-1.422a.706.706,0,1,1,1-1l1.422,1.422a.706.706,0,1,1-1,1" transform="translate(-25.507 -28.671)" fill="#979593"/>
-        <path id="Path_48960" data-name="Path 48960" d="M23.95,225H8.963a1.41,1.41,0,0,1-1.347-1.823l.591-1.925.036-.064a2.542,2.542,0,0,1,2.222-1.308H22.449a2.541,2.541,0,0,1,2.221,1.307l.036.065.591,1.925A1.41,1.41,0,0,1,23.95,225m-14.5-1.413H23.462a.358.358,0,0,0,.342-.463l-.4-1.308a1.13,1.13,0,0,0-.954-.525H10.464a1.13,1.13,0,0,0-.954.525l-.4,1.308a.358.358,0,0,0,.342.463" transform="translate(-7.044 -205.09)" fill="#979593"/>
+        <path id="Path_48954" data-name="Path 48954" d="M63.415,78.449H51.475l1.6-9.575a2.517,2.517,0,0,1,2.491-2.11h3.767a2.517,2.517,0,0,1,2.491,2.11ZM53.143,77.036h8.6l-1.322-7.93a1.109,1.109,0,0,0-1.1-.93H55.562a1.109,1.109,0,0,0-1.1.93Z" transform="translate(-48.012 -62.273)" fill="#4a4947"/>
+        <path id="Path_48955" data-name="Path 48955" d="M2.718,123.321H.706a.706.706,0,1,1,0-1.413H2.718a.706.706,0,1,1,0,1.413" transform="translate(0 -113.708)" fill="#4a4947"/>
+        <path id="Path_48956" data-name="Path 48956" d="M236.5,123.321h-2.011a.706.706,0,1,1,0-1.413H236.5a.706.706,0,1,1,0,1.413" transform="translate(-218.061 -113.708)" fill="#4a4947"/>
+        <path id="Path_48957" data-name="Path 48957" d="M130.429,3.424h0a.706.706,0,0,1-.706-.706V.706a.706.706,0,1,1,1.413,0V2.718a.706.706,0,0,1-.706.706" transform="translate(-120.997)" fill="#4a4947"/>
+        <path id="Path_48958" data-name="Path 48958" d="M211.162,33.368h0a.706.706,0,0,1,0-1l1.422-1.422a.706.706,0,1,1,1,1l-1.422,1.422a.706.706,0,0,1-1,0" transform="translate(-196.765 -28.672)" fill="#4a4947"/>
+        <path id="Path_48959" data-name="Path 48959" d="M28.976,33.367l-1.422-1.422a.706.706,0,1,1,1-1l1.422,1.422a.706.706,0,1,1-1,1" transform="translate(-25.507 -28.671)" fill="#4a4947"/>
+        <path id="Path_48960" data-name="Path 48960" d="M23.95,225H8.963a1.41,1.41,0,0,1-1.347-1.823l.591-1.925.036-.064a2.542,2.542,0,0,1,2.222-1.308H22.449a2.541,2.541,0,0,1,2.221,1.307l.036.065.591,1.925A1.41,1.41,0,0,1,23.95,225m-14.5-1.413H23.462a.358.358,0,0,0,.342-.463l-.4-1.308a1.13,1.13,0,0,0-.954-.525H10.464a1.13,1.13,0,0,0-.954.525l-.4,1.308a.358.358,0,0,0,.342.463" transform="translate(-7.044 -205.09)" fill="#4a4947"/>
       </g>
     </g>
   </g>

@@ -53,6 +53,7 @@ try {
         }
     }
     catch {
+	    Write-Host "`nError Message: " $_.Exception.Message
         Write-Host "Site creation failed. Site name cannot contain symbols other than underscore, dashes, single quotes, and periods (_,-,',.), and can't start or end with a period."
         return;
 

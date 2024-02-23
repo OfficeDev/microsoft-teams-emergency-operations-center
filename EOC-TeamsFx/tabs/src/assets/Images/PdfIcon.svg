@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_26997" data-name="Rectangle 26997" width="32" height="32" transform="translate(1591 233)" fill="#fff" opacity="0.46"/>
+    </clipPath>
+  </defs>
+  <g id="download_PDF" data-name="download PDF" transform="translate(-1591 -233)" clip-path="url(#clip-path)">
+    <path id="Size_20_Theme_Regular_14_" data-name="Size=20, Theme=Regular (14)" d="M7.857,2A2.743,2.743,0,0,0,5.114,4.743v7.141a7.515,7.515,0,0,1,1.371-.253V4.743A1.371,1.371,0,0,1,7.857,3.371h5.485v4.8A2.057,2.057,0,0,0,15.4,10.228h4.8V21.2a1.371,1.371,0,0,1-1.371,1.371H13.891a7.552,7.552,0,0,1-.9,1.371h5.838A2.743,2.743,0,0,0,21.57,21.2V9.425a2.057,2.057,0,0,0-.6-1.455L15.6,2.6A2.057,2.057,0,0,0,14.145,2ZM19.915,8.857H15.4a.686.686,0,0,1-.686-.686V3.655ZM7.171,25.313A6.171,6.171,0,1,0,1,19.142,6.171,6.171,0,0,0,7.171,25.313ZM3.943,19.626a.686.686,0,0,1,.97-.97l1.572,1.572V16.4a.686.686,0,1,1,1.371,0v3.83l1.572-1.572a.686.686,0,0,1,.97.97L7.656,22.369a.683.683,0,0,1-.481.2H7.167a.683.683,0,0,1-.478-.2l0,0Z" transform="translate(1594.715 235.5)" fill="#212121"/>
+  </g>
+</svg>

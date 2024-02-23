@@ -1,13 +1,22 @@
-import { Callout, Link, Text } from '@fluentui/react';
-import { Flex, FlexItem, Tooltip } from '@fluentui/react-northstar';
-import { Component } from 'react';
+import {
+    Link,
+    Popover, PopoverSurface,
+    PopoverTrigger,
+    Text
+} from "@fluentui/react-components";
+import { Info24Regular, PersonFeedback24Regular, QuestionCircle24Regular } from "@fluentui/react-icons";
+import { Flex, FlexItem, Tooltip } from "@fluentui/react-northstar";
+import { Component } from "react";
 import * as constants from "../common/Constants";
+
 
 interface IHeaderProps {
     clickcallback: () => void; //will redirects to home
     context?: any;
     localeStrings: any;
+    appTitle: string,
     currentUserName: string;
+    currentThemeName: string;
 }
 
 interface HeaderState {
@@ -50,133 +59,135 @@ export default class EocHeader extends Component<IHeaderProps, HeaderState> {
     }
 
     render() {
-        const buttonId = 'callout-button';
-        const labelId = 'callout-label';
-        const descriptionId = 'callout-description';
+        const isDarkOrContrastTheme =
+            this.props.currentThemeName === constants.darkMode || this.props.currentThemeName === constants.contrastMode;
         return (
-            <>
-                <div className='eoc-header'>
-                    <Flex gap="gap.small" space='between'>
+            <div>
+                <div className={`eoc-header${isDarkOrContrastTheme ? " eoc-header-darkcontrast" : ""}`}>
+                    <Flex gap="gap.small" space='between' >
                         <Flex gap="gap.small" vAlign="center">
                             <img
                                 src={require("../assets/Images/AppLogo.svg").default}
                                 alt="Ms Logo"
                                 className="ms-logo"
-                                title={this.props.localeStrings.appTitle}
+                                title={this.props.appTitle}
                             />
-                            <span className="header-text" title={this.props.localeStrings.appTitle}>{this.props.localeStrings.appTitle}</span>
+                            <main aria-label={this.props.appTitle}>
+                                <span className="header-text" title={this.props.appTitle}>{this.props.appTitle}</span>
+                            </main>
                         </Flex>
                         <Flex gap={this.state.isDesktop ? "gap.large" : "gap.medium"} vAlign="center">
                             <FlexItem>
-                                <Tooltip
-                                    trigger={<img
-                                        src={require("../assets/Images/InfoIcon.svg").default}
-                                        alt="Info"
-                                        id={buttonId}
-                                        className="header-icon"
-                                        onClick={this.toggleIsCalloutVisible}
-                                    />}
-                                    content={this.props.localeStrings.moreInfo}
-                                    pointing={false}
-                                />
+                                <Popover
+                                    withArrow={true}
+                                    open={this.state.isCalloutVisible}
+                                    inline={true}
+                                    onOpenChange={this.toggleIsCalloutVisible}
+                                    positioning="below-start"
+                                    size='medium'
+                                    closeOnScroll={true}
+                                >
+                                    <PopoverTrigger disableButtonEnhancement={true}>
+                                        <div
+                                            onClick={this.toggleIsCalloutVisible}
+                                            onKeyUp={(event) => {
+                                                if (event.key === constants.enterKey)
+                                                    this.toggleIsCalloutVisible();
+                                            }}
+                                            tabIndex={0}
+                                            role="button"
+                                        >
+                                            <Tooltip
+                                                content={this.props.localeStrings.moreInfo}
+                                                pointing={false}
+                                            />
+                                            <Info24Regular title={this.props.localeStrings.moreInfo} className="header-icon" />
+                                        </div>
+                                    </PopoverTrigger>
+                                    <PopoverSurface
+                                        as="div"
+                                        className="info-callout"
+                                    >
+                                        <h2><Text block as="h2"
+                                            className="info-title">
+                                            {this.props.localeStrings.aboutApp}
+                                        </Text></h2>
+                                        <Text block className="info-titlebody">
+                                            {this.props.localeStrings.appDescription}
+                                        </Text>
+                                        <h2><Text block as="h2" className="info-title">
+                                            {this.props.localeStrings.headerAdditionalResource}
+                                        </Text></h2>
+                                        <Text block as="span" className="info-titlebody">
+                                            {this.props.localeStrings.bodyAdditionalResource}
+                                        </Text>
+                                        <Link href={constants.msPublicSectorUrl} target="_blank" inline className="info-link" onKeyDown={(event) => {
+                                            if (event.shiftKey && event.key === constants.tabKey)
+                                                this.toggleIsCalloutVisible()
+                                        }}>
+                                            {this.props.localeStrings.msPublicSector}
+                                        </Link>
+                                        <Link href={constants.drivingAdoptionUrl} target="_blank" inline className="info-link">
+                                            {this.props.localeStrings.drivingAdoption}
+                                        </Link>
+                                        <Text block as="span" className="info-title">
+                                            ----
+                                        </Text>
+                                        <Text block as="span" className="info-titlecontent">
+                                            {this.props.localeStrings.currentVersion} : {constants.AppVersion}
+                                        </Text>
+
+                                        <Text block as="span" className="info-titlecontent">
+                                            {this.props.localeStrings.latestVersion} : <Link href={constants.githubEocUrl} target="_blank" inline rel="noreferrer">{this.props.localeStrings.githubLabel}</Link>
+                                        </Text>
+                                        <Text block as="span" className="info-title">
+                                            ----
+                                        </Text>
+                                        <Text block as="span" className="info-titlecontent">
+                                            {this.props.localeStrings.eocPage}
+                                        </Text>
+                                        <Text block as="span" className="info-titlecontent">
+                                            {this.props.localeStrings.overview} <Link href={constants.m365EocUrl} target="_blank" inline rel="noreferrer">{this.props.localeStrings.msAdoptionHubLink}</Link>
+                                        </Text>
+
+                                        <Text block as="span" className="info-titlecontent">
+                                            {this.props.localeStrings.solutionLink} <Link href={constants.m365EocAppUrl} target="_blank" inline rel="noreferrer" onKeyDown={(event) => {
+                                                if (!event.shiftKey)
+                                                    this.toggleIsCalloutVisible()
+                                            }}>{this.props.localeStrings.githubLabel}</Link>
+                                        </Text>
+                                    </PopoverSurface>
+                                </Popover>
                             </FlexItem>
                             <FlexItem>
                                 <a
                                     href={constants.helpUrl}
                                     target="_blank" rel="noreferrer"
+                                    tabIndex={0}
                                 >
                                     <Tooltip
-                                        trigger={<img
-                                            src={require("../assets/Images/HelpIcon.svg").default}
-                                            alt="Help"
-                                            className="header-icon"
-                                        />}
                                         content={this.props.localeStrings.support}
                                         pointing={false}
                                     />
+                                    <QuestionCircle24Regular title={this.props.localeStrings.support} className="header-icon" />
                                 </a>
                             </FlexItem>
                             <FlexItem>
-                                <a href={constants.feedbackUrl} target="_blank" rel="noreferrer">
+                                <a href={constants.feedbackUrl} target="_blank" tabIndex={0} rel="noreferrer">
                                     <Tooltip
-                                        trigger={<img
-                                            src={require("../assets/Images/FeedbackIcon.svg").default}
-                                            alt="Feedback"
-                                            className='feedback-icon'
-                                        />}
                                         content={{ content: this.props.localeStrings.feedback }}
                                         pointing={false}
                                     />
+                                    <PersonFeedback24Regular title={this.props.localeStrings.feedback} className="header-icon" />
                                 </a>
                             </FlexItem>
                         </Flex>
                     </Flex>
-                </div>
-                <div className="sub-header">
+                </div >
+                <div className={`sub-header${isDarkOrContrastTheme ? " sub-header-" + this.props.currentThemeName : ""}`}>
                     <div className='container' id="sub-heading">{this.props.localeStrings.welcome} {this.props.currentUserName}!</div>
                 </div>
-                {this.state.isCalloutVisible && (
-                    <Callout
-                        className="info-callout"
-                        ariaLabelledBy={labelId}
-                        ariaDescribedBy={descriptionId}
-                        gapSpace={0}
-                        target={`#${buttonId}`}
-                        onDismiss={this.toggleIsCalloutVisible}
-                        setInitialFocus
-                    >
-                        <Text
-                            block variant="xLarge" className="info-title">
-                            {this.props.localeStrings.aboutApp}
-                        </Text>
-                        <Text block variant="small" className="info-titlebody">
-                            {this.props.localeStrings.appDescription}
-                        </Text>
-                        <Text block variant="xLarge" className="info-title">
-                            {this.props.localeStrings.headerAdditionalResource}
-                        </Text>
-                        <Text block variant="small" className="info-titlebody">
-                            {this.props.localeStrings.bodyAdditionalResource}
-                        </Text>
-                        <Text block variant="xLarge" className="info-title">
-                            {this.props.localeStrings.msPublicSector}
-                        </Text>
-                        <Link href={constants.msPublicSectorUrl} target="_blank" className="info-link">
-                            {constants.msPublicSectorUrl}
-                        </Link>
-                        <Text block variant="xLarge" className="info-title">
-                            {this.props.localeStrings.drivingAdoption}
-                        </Text>
-                        <Link href={constants.drivingAdoptionUrl} target="_blank" className="info-link">
-                            {constants.drivingAdoptionUrl}
-                        </Link>
-                        <Text block variant="small">
-                            {this.props.localeStrings.currentVersion} : {constants.AppVersion}
-                        </Text>
-                        <Text block variant="small">
-                            {this.props.localeStrings.latestVersion} : <Link href={constants.githubEocUrl} target="_blank" rel="noreferrer">{this.props.localeStrings.githubLabel}</Link>
-                        </Text>
-                        <Text block variant="xLarge" className="info-title">
-                            ----
-                        </Text>
-                        <Text block variant="small">
-                            {this.props.localeStrings.eocPage}
-                        </Text>
-                        <Text block variant="small">
-                            {this.props.localeStrings.overview} <Link href={constants.m365EocUrl} target="_blank" rel="noreferrer">{this.props.localeStrings.msAdoptionHubLink}</Link>
-                        </Text>
-                        <Link href={constants.m365EocUrl} target="_blank" className="info-link">
-                            {constants.m365EocUrl}
-                        </Link>
-                        <Text block variant="small">
-                            {this.props.localeStrings.solutionLink} <Link href={constants.m365EocAppUrl} target="_blank" rel="noreferrer">{this.props.localeStrings.githubLabel}</Link>
-                        </Text>
-                        <Link href={constants.m365EocAppUrl} target="_blank" className="info-link">
-                            {constants.m365EocAppUrl}
-                        </Link>
-                    </Callout>
-                )}
-            </>
+            </div>
         )
     }
 }

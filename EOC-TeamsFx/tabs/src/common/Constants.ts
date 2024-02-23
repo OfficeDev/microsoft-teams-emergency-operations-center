@@ -1,6 +1,6 @@
 export const defaultGraphBaseURL = "https://graph.microsoft.com/"
 export const commercialGraphContextURL = "https://graph.microsoft.com/v1.0/"
-export const AppVersion = "2.0 ";
+export const AppVersion = "3.0.0 ";
 export const EOCAppName = "MIFTEOC";
 export const all = "All";
 export const planning = "Planning";
@@ -57,7 +57,8 @@ export const componentNames = {
     MembersComponent: "Members",
     BridgeComponent: "Bridge",
     AdminSettingsComponent: "AdminSettings",
-    RoleSettingsComponent: "RoleSettings"
+    ConfigSettingsComponent: "ConfigSettings",
+    MapViewer:"MapViewer"
 }
 
 export const severity = ["Low", "Medium", "High", "Critical"]
@@ -96,6 +97,50 @@ export const roleLeadsObj = "roleLeadsObj";
 
 //Active Dashboard
 export const plannerBucketTitle = "To do";
+export const activeDashboardTabTitle = "Active Dashboard";
 
-//Admin Settigs
+//Admin Settings
 export const adminRole = "Admin";
+
+//Teams theme mode
+export const defaultMode = "default";
+export const darkMode = "dark";
+export const contrastMode = "contrast";
+
+//Teams channel types
+export const standardChannel = "standard";
+export const privateChannel = "private";
+
+//accessibility
+export const enterKey = "Enter";
+export const tabKey = "Tab";
+export const escapeKey = "Escape";
+export const addRoleMessage = "Selected users are added to the role successfully";
+export const sizePerPageLabel = "Size per page ";
+export const sortAscAriaSort = "ascending";
+export const sortDescAriaSort = "descending";
+export const requiredAriaLabel = " required";
+export const sortableAriaLabel = " sortable";
+export const startDateAriaLabel = "Start Date";
+export const startTimeAriaLabel = "Start Time";
+export const selectedAriaLabel = " Selected";
+
+//Config Settings
+export const appTitleKey = "AppTitle";
+export const enableRoles = "EnableRoles";
+export const bingMapsKey = "BingMapsKey";
+export const teamNameConfig = "TeamNameConfig";
+
+//location picker
+export const defaultOutlookBaseURL = "https://outlook.office365.com/.default";
+export const outlookAPIFindLocations = "https://outlook.office365.com/SchedulingB2/api/v1.0/me/findmeetinglocations";
+
+//location picker for GCCH
+export const defaultOutlookBaseURLGCCH = "https://outlook.office365.us/.default";
+export const outlookAPIFindLocationsGCCH = "https://outlook.office365.us/SchedulingB2/api/v1.0/me/findmeetinglocations";
+
+//Exception Codes
+export const authorizationRequestDenied = "Authorization_RequestDenied";
+
+//Exception Messages
+export const groupCreationAccessDeniedErrorMessage = "Tenant admin has not enabled Unified Group creation.";
