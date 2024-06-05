@@ -81,7 +81,6 @@
 
         button[class~="ui-dialog__headerAction"] {
             color: #000000;
-
             &:hover {
                 background-color: #e0e0e0;
             }
@@ -162,6 +161,21 @@
             background-color: #5b5fc7;
             color: #ffffff;
         }
+
+        button[class~="roles-popup-btn-close"]:focus-visible {
+        border: 0px 0px 0px 0px;
+        box-shadow: none;
+        outline: 2px solid black;
+        border-radius: 3px;
+        outline-offset: 2px;
+      }
+
+      button[class~="roles-popup-btn-close"]:focus {
+        box-shadow: none;
+          outline: 2px solid black;
+        border-radius: 3px;
+        outline-offset: 2px;
+      }
 
         .roles-popup-btn-close-icon {
             svg {
@@ -301,6 +315,12 @@ div[class="incident-history"] {
                 span[id="path-back-icon"] {
                     position: relative;
                     bottom: 2px;
+                    img, svg {
+                        width: 16px;
+                    }
+                    svg {
+                        fill: currentColor;
+                    }
                 }
             }
 

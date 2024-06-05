@@ -1,6 +1,8 @@
 import { Icon, IPivotItemProps, Pivot, PivotItem } from '@fluentui/react';
+import { Popover, PopoverSurface, PopoverTrigger, SelectTabData, SelectTabEvent, Tab, TabList } from "@fluentui/react-components";
 import { Button, Flex, FormInput, Loader, SearchIcon } from "@fluentui/react-northstar";
 import { ApplicationInsights } from '@microsoft/applicationinsights-web';
+import { Person } from '@microsoft/mgt-react';
 import { Client } from "@microsoft/microsoft-graph-client";
 import * as microsoftTeams from "@microsoft/teams-js";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -13,8 +15,6 @@ import * as constants from '../common/Constants';
 import * as graphConfig from '../common/graphConfig';
 import siteConfig from '../config/siteConfig.json';
 import '../scss/Dashboard.module.scss';
-import { Person } from '@microsoft/mgt-react';
-import { Popover, PopoverSurface, PopoverTrigger, SelectTabData, SelectTabEvent, Tab, TabList } from "@fluentui/react-components";
 import { MapViewer } from './MapViewer';
 
 export interface IDashboardProps {
@@ -511,7 +511,7 @@ class Dashboard extends React.PureComponent<IDashboardProps, IDashboardState> {
 
     // create deep link to open the associated Team
     onDeepLinkClick = (rowData: any) => {
-        microsoftTeams.executeDeepLink(rowData.teamWebURL);
+        microsoftTeams.app.openLink(rowData.teamWebURL);
     }
 
     //Incident Settings Area
@@ -764,7 +764,7 @@ class Dashboard extends React.PureComponent<IDashboardProps, IDashboardState> {
                 sortCaret: this.customSortCaret,
                 formatter: this.incidentIdFormatter,
                 headerFormatter: this.headerFormatter,
-                headerAttrs: { 'aria-sort': this.state.incidentIdAriaSort, 'role': 'columnheader', 'scope': 'col' }               
+                headerAttrs: { 'aria-sort': this.state.incidentIdAriaSort, 'role': 'columnheader', 'scope': 'col' }
             }, {
                 dataField: 'incidentName',
                 text: this.props.localeStrings.incidentName,
@@ -777,7 +777,7 @@ class Dashboard extends React.PureComponent<IDashboardProps, IDashboardState> {
                 dataField: 'severity',
                 text: this.props.localeStrings.fieldSeverity,
                 formatter: this.severityFormatter,
-                headerAttrs: { 'aria-sort': this.state.severityAriaSort, 'role': 'columnheader', 'scope': 'col' },               
+                headerAttrs: { 'aria-sort': this.state.severityAriaSort, 'role': 'columnheader', 'scope': 'col' },
                 sort: true,
                 sortValue: (cell: any) => constants.severity.indexOf(cell),
                 sortCaret: this.customSortCaret,
@@ -786,7 +786,7 @@ class Dashboard extends React.PureComponent<IDashboardProps, IDashboardState> {
                 dataField: 'incidentCommanderObj',
                 text: this.props.localeStrings.incidentCommander,
                 formatter: this.incidentCommanderFormatter,
-                headerAttrs: { 'aria-sort': this.state.incidentCommanderObjAriaSort, 'role': 'columnheader', 'scope': 'col' },               
+                headerAttrs: { 'aria-sort': this.state.incidentCommanderObjAriaSort, 'role': 'columnheader', 'scope': 'col' },
                 sort: true,
                 sortCaret: this.customSortCaret,
                 headerFormatter: this.headerFormatter
@@ -794,22 +794,22 @@ class Dashboard extends React.PureComponent<IDashboardProps, IDashboardState> {
                 dataField: 'status',
                 text: this.props.localeStrings.status,
                 formatter: this.statusFormatter,
-                headerAttrs: { 'role': 'columnheader', 'scope': 'col', "aria-label": this.props.localeStrings.status },                
+                headerAttrs: { 'role': 'columnheader', 'scope': 'col', "aria-label": this.props.localeStrings.status },
                 headerFormatter: this.headerFormatter
             }, {
                 dataField: 'location',
                 text: this.props.localeStrings.location,
                 sort: true,
-                sortFunc: (a: any, b: any, order: any) => {a = JSON.parse(a).DisplayName; b = JSON.parse(b).DisplayName; return order === 'asc' ? a.localeCompare(b) : b.localeCompare(a)},
+                sortFunc: (a: any, b: any, order: any) => { a = JSON.parse(a).DisplayName; b = JSON.parse(b).DisplayName; return order === 'asc' ? a.localeCompare(b) : b.localeCompare(a) },
                 sortCaret: this.customSortCaret,
                 headerFormatter: this.headerFormatter,
                 formatter: this.locationFormatter,
-                headerAttrs: { 'aria-sort': this.state.locationAriaSort, 'role': 'columnheader', 'scope': 'col' }                
+                headerAttrs: { 'aria-sort': this.state.locationAriaSort, 'role': 'columnheader', 'scope': 'col' }
             }, {
                 dataField: 'startDate',
                 text: this.props.localeStrings.startDate,
                 formatter: this.startDateTimeFormatter,
-                headerAttrs: { 'aria-sort': this.state.startDateAriaSort, 'role': 'columnheader', 'scope': 'col' },                
+                headerAttrs: { 'aria-sort': this.state.startDateAriaSort, 'role': 'columnheader', 'scope': 'col' },
                 sort: true,
                 sortValue: (cell: any) => new Date(cell),
                 sortCaret: this.customSortCaret,
@@ -818,7 +818,7 @@ class Dashboard extends React.PureComponent<IDashboardProps, IDashboardState> {
                 dataField: 'action',
                 text: this.props.localeStrings.action,
                 formatter: this.actionFormatter,
-                headerAttrs: { 'role': 'columnheader', 'scope': 'col', "aria-label": this.props.localeStrings.action },            
+                headerAttrs: { 'role': 'columnheader', 'scope': 'col', "aria-label": this.props.localeStrings.action },
                 classes: `edit-icon-${this.props.currentThemeName}`,
                 headerFormatter: this.headerFormatter
             }

@@ -17,7 +17,7 @@
       }
     },
     "ClientSecret": {
-      "type": "string",
+      "type": "securestring",
       "minLength": 1,
       "metadata": {
         "description": "The client secret of the Azure AD app."
@@ -345,7 +345,7 @@
               }
             },
             "ClientSecret": {
-              "type": "string",
+              "type": "securestring",
               "minLength": 1,
               "metadata": {
                 "description": "The base name to use for the resources that will be provisioned."
@@ -475,6 +475,10 @@
             {
               "name": "WEBSITE_NODE_DEFAULT_VERSION",
               "value": "16.13.0"
+            },
+            {
+              "name": "GENERATE_SOURCEMAP",
+              "value": "false"
             },
             {
               "name": "REACT_APP_SHAREPOINT_SITE_NAME",

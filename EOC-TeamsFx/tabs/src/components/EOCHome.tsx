@@ -3,10 +3,12 @@ import { FluentProvider, teamsDarkTheme, teamsHighContrastTheme, teamsLightTheme
 import { Button, Dialog, Loader } from "@fluentui/react-northstar";
 import loadable from "@loadable/component";
 import { ApplicationInsights } from "@microsoft/applicationinsights-web";
-import { Graph, Providers, ProviderState, SimpleProvider } from "@microsoft/mgt-element";
+import { Graph, Providers, ProviderState } from "@microsoft/mgt-element";
+import { SimpleProvider } from "@microsoft/mgt-react";
+import { TeamsFxProvider } from "@microsoft/mgt-teamsfx-provider";
 import { Client } from "@microsoft/microsoft-graph-client";
 import * as microsoftTeams from "@microsoft/teams-js";
-import { MsGraphAuthProvider, TeamsUserCredential } from "@microsoft/teamsfx";
+import { TeamsUserCredential } from "@microsoft/teamsfx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 import LocalizedStrings from "react-localization";
@@ -17,6 +19,7 @@ import siteConfig from "../config/siteConfig.json";
 import { localizedStrings } from "../locale/LocaleStrings";
 import "../scss/EOCHome.module.scss";
 import EocHeader from "./EocHeader";
+
 const Dashboard = loadable(() => import("./Dashboard"));
 const ActiveBridge = loadable(() => import("./ActiveBridge"));
 const AdminSettings = loadable(() => import("./AdminSettings"));
@@ -33,7 +36,7 @@ let siteName = process.env.REACT_APP_SHAREPOINT_SITE_NAME?.toString().replace(/\
 
 //Get graph base URL from ARMS template(environment variable)
 let graphBaseURL = process.env.REACT_APP_GRAPH_BASE_URL?.toString().replace(/\s+/g, '');
-graphBaseURL = graphBaseURL || constants.defaultGraphBaseURL
+graphBaseURL = graphBaseURL || constants.defaultGraphBaseURL;
 
 interface IEOCHomeState {
     showLoginPage: boolean;
@@ -81,12 +84,14 @@ interface IEOCHomeState {
 }
 
 interface IEOCHomeProps {
+    teamsUserCredential: any;
 }
 
 let localeStrings = new LocalizedStrings(localizedStrings);
 
-export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
-    private credential = new TeamsUserCredential();
+
+export default class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState> {
+    private credential: TeamsUserCredential = this.props?.teamsUserCredential;
     private scope = graphConfig.scope;
     private dataService = new CommonService();
     private successMessagebarRef: React.RefObject<HTMLDivElement>;
@@ -99,9 +104,7 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
             scope: graphConfig.scope
         };
 
-        // create graph client without asking for login based on previous sessions
-        const credential = new TeamsUserCredential();
-        const graph = this.createMicrosoftGraphClient(credential, scope);
+        const graph = this.createMicrosoftGraphClient(this.credential, scope);
         console.log(constants.infoLogPrefix + "graph ", graph);
 
         this.successMessagebarRef = React.createRef();
@@ -157,92 +160,94 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
     }
 
     async componentDidMount() {
-        await this.initGraphToolkit(new TeamsUserCredential(), graphConfig.scope);
-        await this.checkIsConsentNeeded();
+        this.credential = this.credential || this.props?.teamsUserCredential;
+        if (this.credential) {
+            await this.initGraphToolkit(this.credential, graphConfig.scope);
+            await this.checkIsConsentNeeded();
 
-        try {
-            /*Identify the context of the app, whether its being opened as Personal app or from Teams tab.
-             If opened from Teams tab retrieve Incident ID from the current Teams Name*/
-            microsoftTeams.getContext(ctx => {
-                microsoftTeams.getMruTabInstances((tabInfo: any) => {
-                    if (ctx.channelId && ctx.channelName && tabInfo.teamTabs[0].tabName === constants.activeDashboardTabTitle) {
+            try {
+                /*Identify the context of the app, whether its being opened as Personal app or from Teams tab.
+                 If opened from Teams tab retrieve Incident ID from the current Teams Name*/
+                microsoftTeams.app.getContext().then(ctx => {
+                    microsoftTeams.pages.tabs.getMruTabInstances().then((tabInfo: any) => {
+                        if (ctx.channel?.id && ctx.channel?.displayName && tabInfo.teamTabs[0].tabName === constants.activeDashboardTabTitle) {
+                            this.setState({
+                                activeDashboardIncidentId: ctx.sharePointSite?.teamSitePath?.split("_")[1] as any,
+                                fromActiveDashboardTab: true
+                            });
+                        }
+                    });
+                });
+
+                // get current user's language from Teams App settings
+                microsoftTeams.app.getContext().then(ctx => {
+                    if (ctx?.app?.locale !== "") {
                         this.setState({
-                            activeDashboardIncidentId: ctx.teamSitePath?.split("_")[1] as any,
-                            fromActiveDashboardTab: true
+                            locale: ctx.app.locale,
+                            userPrincipalName: ctx.user?.userPrincipalName,
+                            tenantID: ctx.user?.tenant?.id
+                        });
+                    } else {
+                        this.setState({
+                            locale: constants.defaultLocale,
+                            userPrincipalName: ctx.user?.userPrincipalName,
+                            tenantID: ctx.user?.tenant?.id
                         });
                     }
+
+                    //get current theme from the teams context
+                    const theme = ctx.app.theme ?? constants.defaultMode;
+                    this.updateTheme(theme);
                 });
-            });
 
-            // get current user's language from Teams App settings
-            microsoftTeams.getContext(ctx => {
-                if (ctx && ctx.locale && ctx.locale !== "") {
-                    this.setState({
-                        locale: ctx.locale,
-                        userPrincipalName: ctx.userPrincipalName,
-                        tenantID: ctx.tid
-                    })
-                }
-                else {
-                    this.setState({
-                        locale: constants.defaultLocale,
-                        userPrincipalName: ctx.userPrincipalName,
-                        tenantID: ctx.tid
-                    })
-                }
+                //Get the app settings from the teams context. This is required to create the 'ActiveDashboard' tab
+                microsoftTeams.pages.getConfig().then((settings) => {
+                    console.log(constants.infoLogPrefix + "settings ", settings);
+                    this.setState({ appSettings: settings });
+                });
 
-                //get current theme from the teams context
-                const theme = ctx.theme ?? constants.defaultMode;
-                this.updateTheme(theme);
-            });
+                //binds the current theme to the inbuilt teams hook which is called whenever the theme changes 
+                microsoftTeams.app.registerOnThemeChangeHandler((theme: string) => {
+                    this.updateTheme(theme);
+                });
 
-            //Get the app settings from the teams context. This is required to create the 'ActiveDashboard' tab
-            microsoftTeams.settings.getSettings((settings) => {
-                console.log(constants.infoLogPrefix + "settings ", settings);
-                this.setState({ appSettings: settings });
-            });
+                //Initialize App Insights
+                appInsights = new ApplicationInsights({
+                    config: {
+                        instrumentationKey: process.env.REACT_APP_APPINSIGHTS_INSTRUMENTATIONKEY ? process.env.REACT_APP_APPINSIGHTS_INSTRUMENTATIONKEY : ''
+                    }
+                });
 
-            //binds the current theme to the inbuilt teams hook which is called whenever the theme changes 
-            microsoftTeams.registerOnThemeChangeHandler((theme: string) => {
-                this.updateTheme(theme);
-            });
+                appInsights.loadAppInsights();
+            } catch (error) {
+                this.setState({
+                    locale: constants.defaultLocale
+                });
+                //log exception to AppInsights
+                this.dataService.trackException(appInsights, error, constants.componentNames.EOCHomeComponent, 'ComponentDidMount', this.state.userPrincipalName);
 
-            //Initialize App Insights
-            appInsights = new ApplicationInsights({
-                config: {
-                    instrumentationKey: process.env.REACT_APP_APPINSIGHTS_INSTRUMENTATIONKEY ? process.env.REACT_APP_APPINSIGHTS_INSTRUMENTATIONKEY : ''
-                }
-            });
+            }
 
-            appInsights.loadAppInsights();
-        } catch (error) {
-            this.setState({
-                locale: constants.defaultLocale
-            });
-            //log exception to AppInsights
-            this.dataService.trackException(appInsights, error, constants.componentNames.EOCHomeComponent, 'ComponentDidMount', this.state.userPrincipalName);
+            // call method to get the tenant details
+            if (!this.state.showLoginPage) {
+                await this.getTenantAndSiteDetails();
+                await this.getCurrentUserDetails();
 
-        }
-
-        // call method to get the tenant details
-        if (!this.state.showLoginPage) {
-            await this.getTenantAndSiteDetails();
-            await this.getCurrentUserDetails();
-
-            //method to get settings from config list
-            await this.getConfigSettings();
+                //method to get settings from config list
+                await this.getConfigSettings();
+            }
         }
     }
     //create MS Graph client
-    createMicrosoftGraphClient(credential: any, scopes: string | string[] | undefined) {
-
-        var authProvider = new MsGraphAuthProvider(credential, scopes);
-        var graphClient = Client.initWithMiddleware({
+    createMicrosoftGraphClient(credential: TeamsUserCredential,scopes: string[]) {
+        const authProvider = new TeamsFxProvider(credential, scopes);
+        const graphClient = Client.initWithMiddleware({
             authProvider: authProvider,
             baseUrl: graphBaseURL
         });
         return graphClient;
     }
+
     //method to perform actions based on state changes
     componentDidUpdate(_prevProps: Readonly<IEOCHomeProps>, prevState: Readonly<IEOCHomeState>): void {
         if (prevState.showSuccessMessageBar !== this.state.showSuccessMessageBar && this.state.showSuccessMessageBar) {
@@ -281,11 +286,10 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
 
 
     // Initialize the toolkit and get access token
-    async initGraphToolkit(credential: any, scopeVar: any) {
-
+    async initGraphToolkit(credential: TeamsUserCredential, scopeVar: string[]) {
         async function getAccessToken(scopeVar: any) {
             let tokenObj = await credential.getToken(scopeVar);
-            return tokenObj.token;
+            return tokenObj?.token || "";
         }
 
         async function login() {
@@ -327,12 +331,13 @@ export class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeState>  {
         const { scope } = {
             scope: graphConfig.scope
         };
-        const credential = new TeamsUserCredential();
+
+        const credential = this.credential;
         await credential.login(scope);
         const graph = this.createMicrosoftGraphClient(credential, scope); // create graph object
         console.log(constants.infoLogPrefix + "graph ", graph);
 
-        const profile = await this.dataService.getGraphData(graphConfig.meGraphEndpoint, this.state.graph); // get user profile to validate the API
+        const profile = await this.dataService.getGraphData(graphConfig.meGraphEndpoint, graph); // get user profile to validate the API
 
         // validate if the above API call is returning result
         if (!!profile) {

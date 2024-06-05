@@ -571,6 +571,12 @@
             }
         }
     }
+
+    .ui-icon svg {
+        width: 16px;
+        height: 16px;
+        fill: currentColor;
+    }
 }
 
 
@@ -620,6 +626,9 @@ div[class="incident-details"] {
                 span[id="path-back-icon"] {
                     position: relative;
                     bottom: 2px;
+                    img, svg {
+                        width: 16px;
+                    }
                 }
             }
 
@@ -717,7 +726,7 @@ div[class="incident-details"] {
             }
 
             label[class="message-label"]::after,
-            div[class^="ms-Checkbox"]>label[class^="ms-Checkbox-label"]::after,
+            label[class^="fui-Label"]::after,
             label[class="severity-label"]::after,
             label[class="lead-people-picker"]::after {
                 content: "";

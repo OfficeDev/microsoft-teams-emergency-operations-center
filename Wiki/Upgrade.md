@@ -1,6 +1,6 @@
-## Upgrade to v3.0  
+## Upgrade to v3.1  
 
-### 1. Modify the column type of "Location" 
+### 1. Modify the column type of "Location" ( **This step is applicable only if you upgrade the app from 2.0 or older ** )
 
   1. Navigate to the "Site Contents" page of the TEOC Sharepoint site.
 
@@ -45,8 +45,15 @@
 
  ![AppService](./Images/AddAppSetting.png)
   
+### 5. Add new application setting **GENERATE_SOURCEMAP** in the App Service
 
-### 5. Sync latest version
+  1. In Azure portal, navigate to TEOC resource group, open app service and click on Configuration.
+
+  2. Click on "New application setting" and add **GENERATE_SOURCEMAP** as the Name and **false** as the value and click on OK, then click on Save.
+  
+ ![AppService](./Images/AppSettingForGenerateSourceMap.png)
+
+### 6. Sync latest version
 
   1.  In Azure portal, navigate to TEOC resource group, open app service and click on deployment center.
 
@@ -60,7 +67,7 @@
 
 ![SyncLog](./Images/Update3.png)
 
-### 6 . Add additional Graph API Permissions to the TEOC Azure application.
+### 7. Add additional Graph API Permissions to the TEOC Azure application. ( **This step is applicable only if you upgrade the app from 2.0 or older ** )
 
 1. In Azure Portal, navigate to App registrations and open the TEOC Azure application.
 
@@ -91,7 +98,7 @@ If upgrading from 2.0
     ![API Permissions](./Images/Api_Permissions.png)
 
 
-### 7. Add Permissions for Office 365 Exchange Online 
+### 8. Add Permissions for Office 365 Exchange Online ( **This step is applicable only if you upgrade the app from 2.0 or older ** )
 
 In this section, you’ll be adding the Office 365 Exchange Online API permissions to the application.
 
@@ -111,7 +118,7 @@ In this section, you’ll be adding the Office 365 Exchange Online API permissio
 1. Reach out to your IT admin team to grant consent for the permissions provided. If you’re an admin, click on Grant the admin Consent for *******
 ![Exchange Online Grant Permission](./Images/ExchangeOnlinePermission2.png)
 
-### 8. Migrate Classic App Insights to Workspace based App Insights
+### 9. Migrate Classic App Insights to Workspace based App Insights ( **This step is applicable only if you upgrade the app from 2.0 or older ** )
 
 >Note: Classic Application Insights will get retired on 29th February 2024. This step is essential to upgrade the classic Application Insights to workspace-based Application Insights
 
@@ -167,7 +174,7 @@ In this section, you’ll be adding the Office 365 Exchange Online API permissio
     ![App Insights Migration Success](./Images/AppInsightsMigrationSuccess.png)
 
 
-### 9. Update version
+### 10. Update version
 
 1.  Refer [6.Create the Teams app packages](https://github.com/OfficeDev/microsoft-teams-emergency-operations-center/wiki/Deployment-Guide#6-create-the-teams-app-packages) section of deployment guide to create a zip package for the latest version of the app.
 
@@ -181,7 +188,7 @@ In this section, you’ll be adding the Office 365 Exchange Online API permissio
 
     ![Update Package](./Images/UpgradePackage1.png)
 
-### 10. Launch the TEOC app in Teams.
+### 11. Launch the TEOC app in Teams.
 
 1. When the app is launched for the first time after the upgrade, it may show a login button to the users as below -
 

@@ -481,7 +481,21 @@ div[class~="dashboard-pivot-container"] {
                     }
 
                     tr[class~="table-header-darkcontrast"] {
-                        background: var(--colorNeutralBackgroundStatic)
+                        background: var(--colorNeutralBackgroundStatic);
+                        th:focus-visible {
+                            border-bottom: 1px solid #1aebff;
+                            box-shadow: none;
+                            outline: 2px solid #1aebff;
+                            border-radius: 3px;
+                            outline-offset: 2px;
+                        }
+                        th:focus{
+                            box-shadow: none;
+                            border-bottom: 1px solid #1aebff;
+                            outline: 2px solid #1aebff;
+                            border-radius: 3px;
+                            outline-offset: 2px;
+                        }
                     }
 
                 }
