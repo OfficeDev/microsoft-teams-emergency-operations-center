@@ -1,10 +1,9 @@
+import { ComboBox, FontIcon, IconButton, Persona, PersonaSize, Text } from "@fluentui/react";
 import * as React from 'react';
-import { TeamsUserCredential } from "@microsoft/teamsfx";
-import { ComboBox, Persona, IconButton, Text, PersonaSize, FontIcon } from "@fluentui/react";
-import styles from '../scss/LocationPicker.module.scss';
-import { ILocationPickerProps, ILocationPickerState, Mode, ILocationBoxOption, ILocationPickerItem } from './ILocationPicker';
-import * as constants from '../common/Constants';
 import CommonService from "../common/CommonService";
+import * as constants from '../common/Constants';
+import styles from '../scss/LocationPicker.module.scss';
+import { ILocationBoxOption, ILocationPickerItem, ILocationPickerProps, ILocationPickerState, Mode } from './ILocationPicker';
 
 export class LocationPicker extends React.Component<ILocationPickerProps, ILocationPickerState> {
     private _token: any;
@@ -252,16 +251,26 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
 
     //method to get bearer token for location picker API
     private async getOutlookToken(): Promise<void> {
-        const credential = new TeamsUserCredential();
-        const token = await credential.getToken(this.props.graphBaseUrl !== constants.defaultGraphBaseURL ? constants.defaultOutlookBaseURLGCCH : constants.defaultOutlookBaseURL);
-        this._token = token?.token;
+        try {
+            const credential = this.props.teamsUserCredential;
+            const token = await credential.getToken(this.props.graphBaseUrl !== constants.defaultGraphBaseURL ? constants.defaultOutlookBaseURLGCCH : constants.defaultOutlookBaseURL);
+            this._token = token?.token;
+        } catch (error) {
+            console.error(
+                constants.errorLogPrefix + "LocationPicker_getOutlookToken \n",
+                JSON.stringify(error)
+            );
+            // Log Exception
+            this.dataService.trackException(this.props.appInsights, error, constants.componentNames.IncidentDetailsComponent, 'TeamNameConfiguration_GetConfiguration', this.props.userPrincipalName);
+            throw error;
+        }
     }
 
     ///method to get locations using outlook API
     private async getLocations(searchText: any): Promise<void> {
         try {
             let locationAPIUrl = this.props.graphBaseUrl !== constants.defaultGraphBaseURL ? constants.outlookAPIFindLocationsGCCH : constants.outlookAPIFindLocations;
-            fetch(locationAPIUrl, {
+            const locationAPIResponse = await fetch(locationAPIUrl, {
                 method: 'post',
                 headers: new Headers({
                     "Content-type": "application/json",
@@ -273,16 +282,15 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
                         "Query": searchText
                     }
                 })
-            }).then(res => res.json()).then(data => {
-                console.log(data);
-                const optionsForCustomRender: ILocationBoxOption[] = [];
-                data.MeetingLocations.forEach((v: any, i: any) => {
-                    const loc: ILocationPickerItem = v["MeetingLocation"];
-                    optionsForCustomRender.push({ text: v.MeetingLocation["DisplayName"], key: i, locationItem: loc });
-                });
-                optionsForCustomRender.push({ text: 'Use this location', key: 7, locationItem: { DisplayName: searchText, EntityType: "Custom" } });
-                this.setState({ options: optionsForCustomRender });
             });
+            const data = await locationAPIResponse.json() as { MeetingLocations: [{ MeetingLocation: ILocationPickerItem }] };
+            const optionsForCustomRender: ILocationBoxOption[] = [];
+            data.MeetingLocations.forEach((v, i) => {
+                const loc: ILocationPickerItem = v["MeetingLocation"];
+                optionsForCustomRender.push({ text: v.MeetingLocation["DisplayName"], key: i, locationItem: loc });
+            });
+            optionsForCustomRender.push({ text: 'Use this location', key: 7, locationItem: { DisplayName: searchText, EntityType: "Custom" } });
+            this.setState({ options: optionsForCustomRender });
         }
         catch (error) {
             console.error(

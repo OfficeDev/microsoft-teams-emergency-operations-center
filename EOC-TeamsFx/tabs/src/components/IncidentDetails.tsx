@@ -1,39 +1,44 @@
+import { ComboBox, DatePicker, IComboBox, TimePicker } from "@fluentui/react";
+import { Checkbox as Fluent9CheckBox, Combobox as Fluent9Combobox, Option } from "@fluentui/react-components";
+import { ChevronDown16Regular, ChevronRight16Regular, CloudLink24Regular, Delete24Regular, Dismiss24Regular, PeopleCheckmark24Regular, PeopleEdit24Regular, Save24Regular } from "@fluentui/react-icons";
+import { AddIcon } from '@fluentui/react-icons-northstar';
 import {
     Button, ChevronStartIcon, Flex,
     FormDropdown, FormInput, FormTextArea, Loader
 } from "@fluentui/react-northstar";
+import { Checkbox } from '@fluentui/react/lib/Checkbox';
+import { Icon } from "@fluentui/react/lib/Icon";
+import { Toggle } from '@fluentui/react/lib/Toggle';
+import { TooltipHost } from "@fluentui/react/lib/Tooltip";
+import { ApplicationInsights } from '@microsoft/applicationinsights-web';
 import { LocalizationHelper, PeoplePicker, PersonType, UserType } from '@microsoft/mgt-react';
 import { Client } from "@microsoft/microsoft-graph-client";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import moment from "moment";
 import * as React from "react";
 import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import Container from 'react-bootstrap/Container';
+import Row from "react-bootstrap/Row";
+import { renderToStaticMarkup } from 'react-dom/server';
+import ReactSlider from 'react-slider';
 import { v4 as uuidv4 } from "uuid";
 import CommonService, { IListItem } from "../common/CommonService";
 import * as constants from '../common/Constants';
 import * as graphConfig from '../common/graphConfig';
 import siteConfig from '../config/siteConfig.json';
 import '../scss/IncidentDetails.module.scss';
+import { TeamsFxContext } from "./Context";
 import {
     ChannelCreationResult, ChannelCreationStatus,
-    IncidentEntity, IInputValidationStates, ITeamChannel, RoleAssignments,
-    UserDetails, IInputRegexValidationStates, IAdditionalTeamChannels, IGuestUsers, IIncidentStatus
+    IAdditionalTeamChannels, IGuestUsers, IIncidentStatus,
+    IInputRegexValidationStates,
+    IInputValidationStates, ITeamChannel,
+    IncidentEntity,
+    RoleAssignments,
+    UserDetails
 } from "./ICreateIncident";
-import { TooltipHost } from "@fluentui/react/lib/Tooltip";
-import { Icon } from "@fluentui/react/lib/Icon";
-import { ApplicationInsights } from '@microsoft/applicationinsights-web';
-import ReactSlider from 'react-slider';
-import { Checkbox } from '@fluentui/react/lib/Checkbox';
-import { Toggle } from '@fluentui/react/lib/Toggle';
-import { AddIcon } from '@fluentui/react-icons-northstar';
-import { renderToStaticMarkup } from 'react-dom/server';
-import { DatePicker, IComboBox, TimePicker, ComboBox } from "@fluentui/react";
-import { PeopleEdit24Regular, Delete24Regular, Dismiss24Regular, Save24Regular, PeopleCheckmark24Regular, CloudLink24Regular, ChevronDown16Regular, ChevronRight16Regular } from "@fluentui/react-icons";
-import { Checkbox as Fluent9CheckBox, Combobox as Fluent9Combobox, Option } from "@fluentui/react-components"
-import { LocationPicker } from "./LocationPicker";
 import { ILocationPickerItem } from "./ILocationPicker";
+import { LocationPicker } from "./LocationPicker";
 
 const calloutProps = { gapSpace: 0 };
 
@@ -2934,18 +2939,23 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
             this.graphEndpoint = graphConfig.teamsGraphEndpoint + "/" + this.state.teamGroupId + graphConfig.addMembersGraphEndpoint;
 
             const usersToAdd: any = [];
+            const uniqueUserArray: any = [];
+
             if (isOwner) {
                 userIds.forEach((user: any) => {
-                    usersToAdd.push({
-                        "@odata.type": "microsoft.graph.aadUserConversationMember",
-                        "roles": ["owner"],
-                        "user@odata.bind": this.state.graphContextURL + graphConfig.usersGraphEndpoint + "('" + user.userId + "')"
-                    });
+                    if (uniqueUserArray.indexOf(user.userId) === -1) {
+                        uniqueUserArray.push(user.userId);
+                        usersToAdd.push({
+                            "@odata.type": "microsoft.graph.aadUserConversationMember",
+                            "roles": ["owner"],
+                            "user@odata.bind": this.state.graphContextURL + graphConfig.usersGraphEndpoint + "('" + user.userId + "')"
+                        });
+                    }
                 });
             }
             else {
                 // logic to identify uniqe users 
-                const uniqueUserArray: any = [];
+                
                 userIds.forEach((user: any) => {
                     if (uniqueUserArray.indexOf(user.userId) === -1) {
                         uniqueUserArray.push(user.userId);
@@ -4352,15 +4362,20 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
                                                 <Col xs={12} sm={12} md={6} lg={6} xl={6}>
                                                     <div className="incident-grid-item">
                                                         <label className="FormInput-label">{this.props.localeStrings.fieldLocation}</label>
-                                                        <LocationPicker
-                                                            onChange={this.onLocationChange}
-                                                            defaultValue={this.state.selectedLocation}
-                                                            className="incident-location-picker"
-                                                            placeholder={this.props.localeStrings.phLocation}
-                                                            appInsights={this.props.appInsights}
-                                                            userPrincipalName={this.props.userPrincipalName}
-                                                            graphBaseUrl={this.props.graphBaseUrl}
-                                                        />
+                                                        <TeamsFxContext.Consumer>
+                                                            {(value) =>
+                                                                <LocationPicker
+                                                                    onChange={this.onLocationChange}
+                                                                    defaultValue={this.state.selectedLocation}
+                                                                    className="incident-location-picker"
+                                                                    placeholder={this.props.localeStrings.phLocation}
+                                                                    appInsights={this.props.appInsights}
+                                                                    userPrincipalName={this.props.userPrincipalName}
+                                                                    graphBaseUrl={this.props.graphBaseUrl}
+                                                                    teamsUserCredential={value.teamsUserCredential!}
+                                                                />
+                                                            }
+                                                        </TeamsFxContext.Consumer>
                                                         {this.state.inputValidation.incidentLocationHasError && (
                                                             <label aria-live="polite" role="alert" className="message-label">{this.props.localeStrings.locationRequired}</label>
                                                         )}
@@ -4431,7 +4446,7 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
                                                             props.className = `example-mark ${constants.severity[props.key]}`;
                                                             props.tabIndex = 0
                                                         }
-                                                        return <span aria-label={props.key === this.state.selectedSeverity ? this.props.localeStrings.fieldSeverity + constants.severity[props.key] +  constants.selectedAriaLabel : this.props.localeStrings.fieldSeverity + constants.severity[props.key]} {...props} />;
+                                                        return <span aria-label={props.key === this.state.selectedSeverity ? this.props.localeStrings.fieldSeverity + constants.severity[props.key] + constants.selectedAriaLabel : this.props.localeStrings.fieldSeverity + constants.severity[props.key]} {...props} />;
                                                     }}
                                                 />
                                             </div>
@@ -4547,14 +4562,12 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
                                                         )}
                                                     </div>
                                                     <div className="incident-grid-item">
-                                                        <Checkbox
-                                                            className="role-checkbox"
+                                                        <Fluent9CheckBox
                                                             label={this.props.localeStrings.roleCheckboxTooltip}
-                                                            ariaLabel={this.props.localeStrings.roleCheckboxTooltip}
+                                                            aria-label={this.props.localeStrings.roleCheckboxTooltip}
+                                                            onChange={(_, data) => this.setState({ saveDefaultRoleCheck: data.checked})}
+                                                            className="role-checkbox"
                                                             checked={this.state.saveDefaultRoleCheck}
-                                                            onChange={(_ev, isChecked) => this.setState({
-                                                                saveDefaultRoleCheck: isChecked
-                                                            })}
                                                         />
                                                     </div>
                                                     <div className="incident-grid-item">
@@ -4672,11 +4685,11 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
                                                                 <Col as="td" md={3} sm={3} xs={3}>{item.userNamesString}</Col>
                                                                 <Col as="td" md={3} sm={3} xs={3}>{item.leadNameString}</Col>
                                                                 <Col as="td" md={1} sm={1} xs={1} className="col-center role-body-checkbox">
-                                                                    <Checkbox
+                                                                     <Fluent9CheckBox
+                                                                        title={this.props.localeStrings.incidentTypeDefaultRoleCheckboxLabel}
+                                                                        aria-label={this.props.localeStrings.roleCheckboxTooltip}
+                                                                        onChange={(ev, isChecked) => this.onChecked(ev, Boolean(isChecked.checked), index)}
                                                                         defaultChecked={item.saveDefault}
-                                                                        ariaLabel={this.props.localeStrings.roleCheckboxTooltip}
-                                                                        onChange={(ev, isChecked) => this.onChecked(ev, isChecked, index)}
-                                                                        title={this.props.localeStrings.selectRoleLabel}
                                                                     />
                                                                 </Col>
                                                                 <Col as="td" md={1} sm={1} xs={1} className="col-center role-body-icons">
@@ -4713,13 +4726,13 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
                                             </Container>
                                             {this.state.roleAssignments.length > 0 ?
                                                 <div className="role-assignment-table">
-                                                    <Checkbox
-                                                        className="role-checkbox"
-                                                        label={this.props.localeStrings.incidentTypeDefaultRoleCheckboxLabel}
-                                                        ariaLabel={this.props.localeStrings.incidentTypeDefaultRoleCheckboxLabel}
-                                                        checked={this.state.saveIncidentTypeDefaultRoleCheck}
-                                                        onChange={(_ev, isChecked) => this.setState({ saveIncidentTypeDefaultRoleCheck: isChecked })}
-                                                    />
+                                                    <Fluent9CheckBox
+                                                            label={this.props.localeStrings.incidentTypeDefaultRoleCheckboxLabel}
+                                                            aria-label={this.props.localeStrings.incidentTypeDefaultRoleCheckboxLabel}
+                                                            onChange={(_ev, isChecked) => this.setState({ saveIncidentTypeDefaultRoleCheck: isChecked.checked })}
+                                                            className="assets-save-default-checkbox"
+                                                            checked={this.state.saveIncidentTypeDefaultRoleCheck}
+                                                        />
                                                 </div>
                                                 : null}
                                         </Col>

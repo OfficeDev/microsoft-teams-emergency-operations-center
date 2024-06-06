@@ -45,6 +45,12 @@
         margin-top: 10px;
         margin-bottom: 10px;
     }
+
+    .ui-dialog .ui-icon svg {
+        width: 16px;
+        height: 16px;
+        fill: currentColor;
+    }
 }
 
 div[class~="active-bridge-wrapper"] {
@@ -78,6 +84,9 @@ div[class~="active-bridge-wrapper"] {
                 span[id="path-back-icon"] {
                     position: relative;
                     bottom: 2px;
+                    img, svg {
+                        width: 16px;
+                    }
                 }
             }
 

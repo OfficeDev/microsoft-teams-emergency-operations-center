@@ -3,6 +3,7 @@ This page contains the release information for Microsoft Teams Emergency Operati
 ## Version history
 | Version | Release Date |
 |----|----|
+| 3.1 | Jun 6, 2024 |
 | 3.0 | Feb 23, 2024 |
 | 2.0 | May 02, 2023 |
 | 1.0 | Oct 11, 2022 |
@@ -10,6 +11,14 @@ This page contains the release information for Microsoft Teams Emergency Operati
 | 0.5 | Mar 31, 2022 |
 
 ## Release notes
+
+### v3.1 (Jun 6, 2024)
+
+Below are the changes released with this version:
+
+- Upgraded Teams JS to version 2.21.0
+- Accessibility improvements
+- Bug fix: Update incident fails when same user is assigned as a team member and lead for 'Secondary Incident Commander' role. 
 
 ### v3.0 (Feb 19, 2024)
 

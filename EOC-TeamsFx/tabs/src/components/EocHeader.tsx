@@ -23,7 +23,6 @@ interface HeaderState {
     isCalloutVisible: boolean;
     isDesktop: boolean;
 }
-
 export default class EocHeader extends Component<IHeaderProps, HeaderState> {
     constructor(props: any) {
         super(props);
@@ -73,7 +72,9 @@ export default class EocHeader extends Component<IHeaderProps, HeaderState> {
                                 title={this.props.appTitle}
                             />
                             <main aria-label={this.props.appTitle}>
-                                <span className="header-text" title={this.props.appTitle}>{this.props.appTitle}</span>
+                                <h1 className="header-text" title={this.props.appTitle}>
+                                    {this.props.appTitle}
+                                </h1>
                             </main>
                         </Flex>
                         <Flex gap={this.state.isDesktop ? "gap.large" : "gap.medium"} vAlign="center">
@@ -100,8 +101,9 @@ export default class EocHeader extends Component<IHeaderProps, HeaderState> {
                                             <Tooltip
                                                 content={this.props.localeStrings.moreInfo}
                                                 pointing={false}
+                                                trigger={<Info24Regular title={this.props.localeStrings.moreInfo} className="header-icon" />}
                                             />
-                                            <Info24Regular title={this.props.localeStrings.moreInfo} className="header-icon" />
+                                            
                                         </div>
                                     </PopoverTrigger>
                                     <PopoverSurface
@@ -168,8 +170,8 @@ export default class EocHeader extends Component<IHeaderProps, HeaderState> {
                                     <Tooltip
                                         content={this.props.localeStrings.support}
                                         pointing={false}
+                                        trigger={<QuestionCircle24Regular title={this.props.localeStrings.support} className="header-icon" />}
                                     />
-                                    <QuestionCircle24Regular title={this.props.localeStrings.support} className="header-icon" />
                                 </a>
                             </FlexItem>
                             <FlexItem>
@@ -177,15 +179,17 @@ export default class EocHeader extends Component<IHeaderProps, HeaderState> {
                                     <Tooltip
                                         content={{ content: this.props.localeStrings.feedback }}
                                         pointing={false}
+                                        trigger={<PersonFeedback24Regular title={this.props.localeStrings.feedback} className="header-icon" />}
                                     />
-                                    <PersonFeedback24Regular title={this.props.localeStrings.feedback} className="header-icon" />
                                 </a>
                             </FlexItem>
                         </Flex>
                     </Flex>
                 </div >
                 <div className={`sub-header${isDarkOrContrastTheme ? " sub-header-" + this.props.currentThemeName : ""}`}>
-                    <div className='container' id="sub-heading">{this.props.localeStrings.welcome} {this.props.currentUserName}!</div>
+                    <h2 className='container' id="sub-heading">
+                        {this.props.localeStrings.welcome} {this.props.currentUserName}!
+                    </h2>
                 </div>
             </div>
         )

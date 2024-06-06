@@ -75,7 +75,7 @@ div[class~="eoc-header"] {
         height: 32px;
     }
 
-    span[class="header-text"] {
+    h1[class="header-text"] {
         text-align: left;
         font: normal normal bold 24px/32px Segoe UI;
         letter-spacing: 0px;
@@ -109,7 +109,7 @@ div[class~="sub-header"] {
     background-size: cover;
     background-position: center center;
 
-    div[id="sub-heading"] {
+    h2[id="sub-heading"] {
         text-align: left;
         font: normal normal 400 24px/32px Segoe UI;
         letter-spacing: 0px;
@@ -148,7 +148,7 @@ div[class="loginButton"] {
             height: 18pt;
         }
 
-        span[class="header-text"] {
+        h1[class="header-text"] {
             font: normal normal bold 0.836rem/1.1704rem Segoe UI;
         }
 

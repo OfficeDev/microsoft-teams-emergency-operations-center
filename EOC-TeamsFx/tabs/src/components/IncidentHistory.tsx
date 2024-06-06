@@ -676,18 +676,20 @@ export default class IncidentHistory extends React.PureComponent<IIncidentHistor
                                     />
                                     {(this.state.showRoles || this.state.showRoleLeads) ?
                                         <Dialog
-
                                             header={this.state.showRoles ? this.props.localeStrings.roles : this.props.localeStrings.roleLeadsLabel}
                                             headerAction={{
                                                 ref: this.closeIconRef,
                                                 icon: <CloseIcon onClick={() => this.hideRoles()}/>,
                                                 title: this.props.localeStrings.btnClose,
                                                 onKeyDown: (event: any) => {
-                                                    if( event.key === constants.enterKey)
+                                                    if (event.shiftKey || event.key === constants.tabKey) {
+                                                        this.closeIconRef.current?.focus();
+                                                    }
+                                                    if(event.key === constants.enterKey || event.keyCode  === 32)
                                                     {
                                                         this.hideRoles();
-                                                    }                                                    
-                                                }                                              
+                                                    }
+                                                }                                           
                                             }}
                                             content={
                                                 <div className="role-assignment-table">
@@ -724,7 +726,7 @@ export default class IncidentHistory extends React.PureComponent<IIncidentHistor
                                             open={this.state.showRoles || this.state.showRoleLeads}
                                             className={`view-roles-popup${this.props.currentThemeName === constants.darkMode ? " view-roles-popup-dark" : this.props.currentThemeName === constants.contrastMode ? " view-roles-popup-contrast" : ""}`}
                                         />
-                                        : null}
+                                         : null}
                                 </div>
                             }
                         </div>

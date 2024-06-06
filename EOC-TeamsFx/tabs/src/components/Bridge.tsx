@@ -365,7 +365,7 @@ export default class Bridge extends React.Component<BridgeProps, BridgeState> {
                                     text
                                     title={this.props.localeStrings.teamChatLabel}
                                     content={this.props.localeStrings.teamChatLabel}
-                                    onClick={() => microsoftTeams.executeDeepLink(teamWebURL)}
+                                    onClick={() => microsoftTeams.app.openLink(teamWebURL)}
                                     className="bridge-chat-link"
                                 />
                                 {this.state.newsTabLink !== "" &&
@@ -379,7 +379,7 @@ export default class Bridge extends React.Component<BridgeProps, BridgeState> {
                                         text
                                         content={this.props.localeStrings.newsLabel}
                                         title={this.props.localeStrings.newsLabel}
-                                        onClick={() => microsoftTeams.executeDeepLink(this.state.newsTabLink)}
+                                        onClick={() => microsoftTeams.app.openLink(this.state.newsTabLink)}
                                         className="bridge-news-link"
                                     />
                                 }
@@ -411,7 +411,7 @@ export default class Bridge extends React.Component<BridgeProps, BridgeState> {
                         }
                         <Button
                             title={this.props.localeStrings.joinBridgeButtonLabel}
-                            onClick={() => microsoftTeams.executeDeepLink(this.state.bridgeLink)}
+                            onClick={() => microsoftTeams.app.openLink(this.state.bridgeLink)}
                             disabled={this.state.bridgeID === undefined || this.state.bridgeID === "" ? true : false}
                             content={this.props.localeStrings.joinBridgeButtonLabel}
                             className="join-bridge-btn"

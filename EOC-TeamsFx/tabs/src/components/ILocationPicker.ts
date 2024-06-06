@@ -1,5 +1,6 @@
 import { IComboBoxOption } from "@fluentui/react";
 import { ApplicationInsights } from '@microsoft/applicationinsights-web';
+import { TeamsUserCredential } from "@microsoft/teamsfx";
 // interface for location picker
 export interface ILocationBoxOption extends IComboBoxOption {
     locationItem: any;
@@ -25,7 +26,7 @@ export interface ILocationPickerItem {
     UniqueId?: string;
     DisplayName: string;
     Address?: IAddress;
-    Coordinates?: any; 
+    Coordinates?: any;
 }
 
 export interface ILocationPickerProps {
@@ -39,6 +40,7 @@ export interface ILocationPickerProps {
     appInsights: ApplicationInsights;
     userPrincipalName: any;
     graphBaseUrl: any;
+    teamsUserCredential: TeamsUserCredential;
 }
 
 export interface ILocationPickerState {

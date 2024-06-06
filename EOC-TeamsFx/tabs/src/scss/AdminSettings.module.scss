@@ -47,6 +47,12 @@ div[class~="admin-settings"] {
                 span[class~="path-back-icon"] {
                     position: relative;
                     bottom: 2px;
+                    img, svg {
+                        width: 16px;
+                    }
+                    svg {
+                        fill: currentColor;
+                    }
                 }
             }
 
