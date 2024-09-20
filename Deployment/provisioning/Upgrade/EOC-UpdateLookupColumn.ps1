@@ -5,6 +5,9 @@ $SiteURL = $SiteURL.Trim();
 
 Write-Host $SiteURL
 
+$ClientID = Read-Host "Enter AzureAppId/ClientId";
+$ClientID = $ClientID.Trim();
+
 #Parameters
 $ParentListName = "TEOC-IncidentStatus"
 $ChildListName = "TEOC-IncidentTransaction"
@@ -12,7 +15,7 @@ $LookupColumnName = "Status"
  
 try {
     #Connect to SharePoint Online site
-    Connect-PnPOnline $SiteURL -Interactive
+    Connect-PnPOnline $SiteURL -Interactive -ClientId $ClientID
 
     #Get all items from TEOC-IncidentStatus list
     $items = Get-PnPListItem -List $ParentListName

@@ -31,6 +31,8 @@ export interface IAdminSettingsProps {
     bingMapsKeyConfigData: any;
     appTitle: string;
     appTitleData: any;
+    editIncidentAccessRole: string;
+    editIncidentAccessRoleData: any;
 }
 
 export interface IAdminSettingsState {
@@ -45,7 +47,7 @@ export default class AdminSettings extends React.Component<IAdminSettingsProps, 
         //States
         this.state = {
             teamNameConfigSettings: true,
-            roleSettings: false
+            roleSettings: false  
         }
 
     }
@@ -78,7 +80,7 @@ export default class AdminSettings extends React.Component<IAdminSettingsProps, 
                                 <div className="toggle-setting-type">
                                     <div
                                         className={`setting-type${this.state.teamNameConfigSettings ? " selected-setting" : ""}`}
-                                        onClick={() => this.setState({ teamNameConfigSettings: true, roleSettings: false })}
+                                        onClick={() => this.setState({ teamNameConfigSettings: true, roleSettings: false})}
                                         title={this.props.localeStrings.formTitleTeamNameConfig}
                                         tabIndex={0}
                                         aria-selected={this.state.teamNameConfigSettings}
@@ -88,14 +90,14 @@ export default class AdminSettings extends React.Component<IAdminSettingsProps, 
                                     </div>
                                     <div
                                         className={`setting-type${this.state.roleSettings ? " selected-setting" : ""}`}
-                                        onClick={() => this.setState({ teamNameConfigSettings: false, roleSettings: true })}
+                                        onClick={() => this.setState({ teamNameConfigSettings: false, roleSettings: true})}
                                         title={this.props.localeStrings.configSettingsLabel}
                                         tabIndex={0}
                                         aria-selected={this.state.roleSettings}
                                         onKeyDown={(evt: any) => { if (evt.key === constants.enterKey) this.setState({ teamNameConfigSettings: false, roleSettings: true }) }}
                                     >
                                         {this.props.localeStrings.configSettingsLabel}
-                                    </div>
+                                    </div>                                   
                                 </div>
                             </Col>
                         </Row>
@@ -132,8 +134,10 @@ export default class AdminSettings extends React.Component<IAdminSettingsProps, 
                                 userPrincipalName={this.props.userPrincipalName}
                                 isMapViewerEnabled={this.props.isMapViewerEnabled}
                                 bingMapsKeyConfigData={this.props.bingMapsKeyConfigData}
+                                editIncidentAccessRole={this.props.editIncidentAccessRole}
+                                editIncidentAccessRoleData={this.props.editIncidentAccessRoleData}
                             />
-                        }
+                        }                       
                     </div>
                 </div>
             </div>

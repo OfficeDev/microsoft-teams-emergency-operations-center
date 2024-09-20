@@ -1,21 +1,34 @@
 ﻿param([string]$AdminEmail,
-    [string]$TenantName)
+    [string]$TenantName,
+    [string]$SiteName,
+    [string]$ClientID)
 
 $FilePath = Read-Host "Enter site template XML schema file path";
 $FilePath = $FilePath.Trim();
 
 Write-Host $FilePath
 
-$TenantName = Read-Host "Enter tenant name: (contoso)";
+if (($TenantName -eq "") -or ($null -eq $TenantName)) {
+    $TenantName = Read-Host "Enter tenant name: (contoso)";
+}
 $TenantName = $TenantName.Trim();
 
-$AdminEmail = Read-Host "Enter tenant admin email";
+if (($AdminEmail -eq "") -or ($null -eq $AdminEmail)) {
+    $AdminEmail = Read-Host "Enter tenant admin email";
+}
 $AdminEmail = $AdminEmail.Trim();
 
-$SiteName = Read-Host "Enter site name. Allowed characters for site name are underscore, dashes, single quotes, and periods (_,-,',.), and can't start or end with a period.";
+if (($SiteName -eq "") -or ($null -eq $SiteName)) {
+    $SiteName = Read-Host "Enter site name. Allowed characters for site name are underscore, dashes, single quotes, and periods (_,-,',.), and can't start or end with a period.";
+}
 $SiteName = $SiteName.Trim();
 
 $SiteURL = $SiteName -replace " ", ""
+
+if (($ClientID -eq "") -or ($null -eq $ClientID)) {
+    $ClientID = Read-Host "Enter AzureAppId/ClientId";
+}
+$ClientID = $ClientID.Trim();
 
 # verify the PnP.PowerShell module we need is installed
 if (-not (Get-Module -ListAvailable -Name PnP.PowerShell )) {
@@ -29,7 +42,7 @@ else {
 $TenantURL = "https://$TenantName.sharepoint.com"
 $EOCSiteURL = "/sites/$SiteURL"
 
-Connect-PnPOnline -Url $TenantURL -Interactive
+Connect-PnPOnline -Url $TenantURL -Interactive -ClientId $ClientID
 
 try {
     Write-Host "Checking if site already exists at $EOCSiteURL"
@@ -59,7 +72,7 @@ try {
 
     }
     
-    Connect-PnPOnline -Url $TenantURL$EOCSiteURL -Interactive
+    Connect-PnPOnline -Url $TenantURL$EOCSiteURL -Interactive -ClientId $ClientID
 
     Write-Host "Creating lists in $SiteName site"
 

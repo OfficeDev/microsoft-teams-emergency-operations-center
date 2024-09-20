@@ -1,14 +1,16 @@
 - Deployment Guide
     - [Prerequisites](#prerequisites) 
-    - [Steps](#Deployment-Steps)
+    - [Steps](#deployment-steps)
         - [Provisioning TEOC Site](#1-provisioning-teoc-site)
         - [Register AD Application](#2-register-azure-ad-application)
         - [Deploy to Azure subscription](#3-deploy-to-your-azure-subscription)
         - [Set-up Authentication](#4-set-up-authentication)
         - [Add Permissions to your app](#5-add-permissions-to-microsoft-graph-azure-ad-app)
-        - [Create the Teams app packages](#6-create-the-teams-app-packages)
-        - [Install the app in Microsoft Teams](#7-install-the-app-in-microsoft-teams)
-        - [Deploy NotifyToTeams Extension in SharePoint](#8-deploy-notifytoteams-extension-in-sharepoint)
+        - [Add Permissions for Office 365 Exchange Online](#6-add-permissions-for-office-365-exchange-online)
+        - [Create the Teams app packages](#7-create-the-teams-app-packages)
+        - [Install the app in Microsoft Teams](#8-install-the-app-in-microsoft-teams)
+        - [Verify M365 group creation policy in Azure Portal](#9-verify-m365-group-creation-policy-in-azure-portal)
+        - [Deploy NotifyToTeams Extension in SharePoint](#10-deploy-notifytoteams-extension-in-sharepoint)
     - [Troubleshooting](#troubleshooting)
 - - -
 
@@ -23,12 +25,50 @@ To begin deployment for Microsoft Teams Emergency Operations Center (TEOC) appli
 
 * You need minimum of contributor access to the Azure subscription to perform the deployment.
 
+* To run the TEOC Provision PnP PowerShell script, you'll need PowerShell version 7.x or newer. This version is compatible with Windows, Linux, and Mac, and you can download it [installed through here](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.4).
+
+* For those who have previously installed PnP PowerShell, please ensure your version is 2.12.0 or newer. Here's the command to verify the version of PnP PowerShell you're currently using.
+    ```
+    get-Module -Name PnP.PowerShell -ListAvailable | select-Object -Property Name, Version, Path
+    ```
+
 - - -
 
 # Deployment Steps
 
 ## 1. Provisioning TEOC Site
 
+### Azure App Registration for PnP PowerShell
+
+* Open a new PowerShell console (7.x) as an administrator (right-click, Run As Administrator). Ensure unrestricted execution policy with the following:
+    ```
+    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
+    ```
+* Ensure the PnP.PowerShell module is loaded with the following:
+    ```
+    Import-Module -Name PnP.PowerShell
+    ```
+    If you have multiple versions of PnP.PowerShell installed, target a latest version with the -RequiredVersion flag.
+
+* Run the following script ONCE per tenant to create an Azure App Registration for PnP:
+
+    Login with user credentials that is assigned with Global Administrator role.
+If you have previously registered PnP.PowerShell, check the App Registration in the Azure portal and make sure it has delegated permissions for AllSites.FullControl and User.Read.All. Also make sure that you've granted consent as an Administrator.
+    >Note: Replace Your App name with the your app name and tenant with your tenant name.
+    ```
+    Register-PnPEntraIDAppForInteractiveLogin -ApplicationName "[Your App Name]" -Tenant [Tenant].onmicrosoft.com -Interactive
+    ```
+    Please check the [Register an Entra ID Application to use with PnP PowerShell](https://pnp.github.io/powershell/articles/registerapplication.html#automatically-create-an-app-registration-for-interactive-login) guide to setup Entra Id, if you face any issues in running the above command.
+
+* Provide consent on behalf of your organization
+
+    ![Provisioning Scripts](./Images/PnPEntraIdAppConsent.png)
+
+* Make a note of the **AzureAppId/ClientId** GUID returned from above step as it will be needed in the below step to provision the SharePoint site. This is the **ClientId** of the new PnP PowerShell Azure App Registration.
+
+    ![PnPEntraIdAppRegistrationCompletion](./Images/PnPEntraIdAppRegistrationCompletion.png)
+
+### Run the PnP Provisioning script
 To provision the SharePoint site and lists for the TEOC app, 
 
 * Clone the TEOC [repository](https://github.com/OfficeDev/microsoft-teams-emergency-operations-center.git) locally.
@@ -58,6 +98,7 @@ Below are the steps you need to perform to provision the TEOC site, 
     * Tenant Name – Name of the tenant where root TEOC site needs to be provisioned (Ex: Contoso)
     * Tenant Admin Email – Email of tenant admin account (Ex: `abc@contoso.com`) 
     * SharePoint Site Name - Name of the site that needs to be provisioned for TEOC application (Ex: Teams EOC Site)
+    * AzureAppId/Client Id - Enter the App Id which you registered for Interactive login.
     >Note: Make a note of the site name _without spaces_ (i.e. The internal name of the site, which is shown in the URL - Ex: **TeamsEOCSite**), this will be needed later while deploying the resources in Step #3.
 
     ![Provisioning Scripts](./Images/ProvisioningScript.png)
@@ -149,7 +190,8 @@ You need to first create a new Azure AD Application to secure API permissions. R
     1. **Client ID**: The application (client) ID of the app registered
     2. **Client Secret**: The client secret Value of the app registered
     3. **Tenant Id**: The tenant Id
-    4. **Share Point Site Name**: Name of the SharePoint site that was provisioned in step 1 (It should be the exact site name from the URL Ex: **TeamsEOCSite**)
+    4. **Share Point Site Name**: Name of the SharePoint site that was provisioned in step 1
+       > Note: Add just the site name and not the entire URL. For example, if the URL of your sharepoint site is 'https://example.sharepoint.com/sites/TEOCSite' add just "TEOCSite"
 
 1. Other fields have pre-populated default values, do not change it unless you want it to be customized depending on the need.
 

@@ -1,6 +1,6 @@
 export const defaultGraphBaseURL = "https://graph.microsoft.com/"
 export const commercialGraphContextURL = "https://graph.microsoft.com/v1.0/"
-export const AppVersion = "3.1.0 ";
+export const AppVersion = "3.2.0 ";
 export const EOCAppName = "MIFTEOC";
 export const all = "All";
 export const planning = "Planning";
@@ -29,6 +29,7 @@ export const infoLogPrefix = "EOC-Log: ";
 export const defaultLocale = "en-us";
 export const incidentCommanderRoleName = "Incident Commander";
 export const secondaryIncidentCommanderRole = "Secondary Incident Commander";
+export const newRole = "New Role (Specify a new role to be created and assign users to)";
 export const yes = "Yes";
 export const no = "No";
 
@@ -130,6 +131,9 @@ export const appTitleKey = "AppTitle";
 export const enableRoles = "EnableRoles";
 export const bingMapsKey = "BingMapsKey";
 export const teamNameConfig = "TeamNameConfig";
+export const editIncidentAccessRoleKey = "EditIncidentAccessRole";
+export const noneOption = "None";
+
 
 //location picker
 export const defaultOutlookBaseURL = "https://outlook.office365.com/.default";

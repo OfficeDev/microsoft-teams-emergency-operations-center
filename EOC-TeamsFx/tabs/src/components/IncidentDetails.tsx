@@ -60,6 +60,7 @@ export interface IIncidentDetailsProps {
     tenantID: any;
     currentThemeName: string;
     appSettings: any;
+    editIncidentAccessRole: string;
 }
 
 export interface IIncidentDetailsState {
@@ -230,7 +231,7 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
     private graphEndpoint = "";
 
     //get all master data and check for edit mode or new record
-    public async componentDidMount() {
+    public async componentDidMount() {  
         await this.getDropdownOptions();
         //Event listener for screen resizing
         window.addEventListener("resize", this.resize.bind(this));
@@ -954,8 +955,8 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
         const selectedUsersArr: any = [];
         let assignedUsersArray: any = [];
         if (incInfo) {
-            //Restrict External users to be added as secondary incident commander
-            if (this.state.incDetailsItem.selectedRole === constants.secondaryIncidentCommanderRole) {
+            //Restrict External users to be added as secondary incident commander or to "Edit Access Role"
+            if (this.state.incDetailsItem.selectedRole === constants.secondaryIncidentCommanderRole || this.state.incDetailsItem.selectedRole === this.props.editIncidentAccessRole) {
                 if (selectedValue.detail.length > 0) {
                     selectedValue.detail.forEach((user: any) => {
                         if (user?.userPrincipalName.match("#EXT#") === null) {
@@ -1009,8 +1010,8 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
         let assignedLeadArray: any = [];
         const selectedRoleLead: any = [];
         if (incInfo) {
-            //Restrict External users to be added as secondary incident commander
-            if (this.state.incDetailsItem.selectedRole === constants.secondaryIncidentCommanderRole) {
+            //Restrict External users to be added as secondary incident commander or "Edit Access Role"
+            if (this.state.incDetailsItem.selectedRole === constants.secondaryIncidentCommanderRole || this.state.incDetailsItem.selectedRole === this.props.editIncidentAccessRole) {
                 if (selectedValue.detail.length > 0) {
                     selectedValue.detail.forEach((user: any) => {
                         if (user?.userPrincipalName?.match("#EXT#") === null) {
@@ -1064,8 +1065,8 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
         const selectedRoleLead: any = [];
         let assignedLeadArray: any = [];
         if (incInfo) {
-            //Restrict External users to be added as secondary incident commander
-            if (this.state.roleAssignments[idx].role === constants.secondaryIncidentCommanderRole) {
+            //Restrict External users to be added as secondary incident commander or to "Edit Access Role"
+            if (this.state.roleAssignments[idx].role === constants.secondaryIncidentCommanderRole || this.state.roleAssignments[idx].role === this.props.editIncidentAccessRole) {
                 if (selectedValue.detail.length > 0) {
                     selectedValue.detail.forEach((user: any) => {
                         if (user?.userPrincipalName.match("#EXT#") === null) {
@@ -1117,8 +1118,8 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
         const selectedUsersArr: any = [];
         let assignedUsersArray: any = [];
         if (incInfo) {
-            //Restrict External users to be added as secondary incident commander
-            if (this.state.roleAssignments[idx].role === constants.secondaryIncidentCommanderRole) {
+            //Restrict External users to be added as secondary incident commander or "Edit Access Role"
+            if (this.state.roleAssignments[idx].role === constants.secondaryIncidentCommanderRole || this.state.roleAssignments[idx].role === this.props.editIncidentAccessRole) {
                 if (selectedValue.detail.length > 0) {
                     selectedValue.detail.forEach((user: any) => {
                         if (user?.userPrincipalName.match("#EXT#") === null) {
@@ -1863,9 +1864,9 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
                                 await this.removeUsersFromTeam(usersObj.removedMembershipIds, true);
                             }
 
-                            // check if there are secondary commanders to add
+                            // check if there are secondary commanders and "Edit Access Role" users to add
                             if (usersObj.newSecondaryIncidentCommanders.length > 0) {
-                                // add secondary incident commanders as owners
+                                // add secondary incident commanders and "Edit Access Role" users as owners
                                 await this.addUsersToTeam(usersObj.newSecondaryIncidentCommanders, true);
                             }
 
@@ -2588,8 +2589,8 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
             membersArr.push(this.state.graphContextURL + graphConfig.usersGraphEndpoint + "/" + incDetails.incidentCommander.userId);
 
             this.state.roleAssignments.forEach(roles => {
-                //adding users of secondary incident commander role as owners and members
-                if (roles.role === constants.secondaryIncidentCommanderRole) {
+                //adding users of secondary incident commander role and "Edit Access Role" as owners and members
+                if (roles.role === constants.secondaryIncidentCommanderRole || roles.role === this.props.editIncidentAccessRole ) {
                     roles.userDetailsObj.forEach(user => {
                         if (ownerArr.indexOf(this.state.graphContextURL + graphConfig.usersGraphEndpoint + "/" + user.userId) === -1) {
                             ownerArr.push(this.state.graphContextURL + graphConfig.usersGraphEndpoint + "/" + user.userId);
@@ -2738,11 +2739,11 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
             return user.roles.length > 0;
         });
 
-        //creating an array of existing secondary commanders and role users
+        //creating an array of existing secondary commanders, "Edit Access Role" users and role users
         const existingRoleUsers: any = [];
         const existingSecondaryCommanders: any = [];
         this.state.existingRolesMembers.forEach((role: any) => {
-            if (role.role === constants.secondaryIncidentCommanderRole) {
+            if (role.role === constants.secondaryIncidentCommanderRole || role.role === this.props.editIncidentAccessRole) {
                 role.userDetailsObj.forEach((user: any) => {
                     existingSecondaryCommanders.push(user.userId);
                 })
@@ -2764,11 +2765,11 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
             }
         });
 
-        //creating an array of new secondary commanders and role users
+        //creating an array of new secondary commanders,"Edit Access Role" users and role users
         const newRoleUsers: any = [];
         const newSecondaryCommanders: any = [];
         this.state.roleAssignments.forEach((role: any) => {
-            if (role.role === constants.secondaryIncidentCommanderRole) {
+            if (role.role === constants.secondaryIncidentCommanderRole || role.role === this.props.editIncidentAccessRole) {
                 role.userDetailsObj.forEach((user: any) => {
                     newSecondaryCommanders.push({ role: role.role, userId: user.userId });
                 })
@@ -2803,7 +2804,7 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
             }
         });
 
-        //checking if all new secondary commanders are part of Team Owners and adding it to array if the user is not a team owner
+        //checking if all new secondary commanders and "Edit Access Role" users are part of Team Owners and adding it to array if the user is not a team owner
         const secondaryCommanderUsers: any = [];
         newSecondaryCommanders.forEach((user: any) => {
             let isExisting = false;
@@ -2826,14 +2827,14 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
         //check if Inc commander has changed and remove the old Inc Commander from Owners
         if (this.state.existingIncCommander.userId !== this.state.incDetailsItem.incidentCommander.userId) {
 
-            //check if the old Inc commander is also a Secondary Incident commander, if yes dont remove it from Owners
+            //check if the old Inc commander is also a Secondary Incident commander or "Edit Access Role" user, if yes dont remove it from Owners
             const isIncCommanderASecCommander = newSecondaryCommanders.filter((user: any) => user.userId === this.state.existingIncCommander.userId);
             //remove from owners if the old Inc commander is not a Secondary Incident commander
             if (isIncCommanderASecCommander.length === 0)
                 removedUsers.push(this.state.existingIncCommander.userId);
         }
 
-        //check if any user is removed from secondary inc commander role and add it to array
+        //check if any user is removed from secondary inc commander role or "Edit Access Role" and add it to array
         existingSecondaryCommanders.forEach((user: string) => {
             let isFound = false;
             newSecondaryCommanders.forEach((newUser: any) => {
@@ -2955,7 +2956,7 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
             }
             else {
                 // logic to identify uniqe users 
-                
+
                 userIds.forEach((user: any) => {
                     if (uniqueUserArray.indexOf(user.userId) === -1) {
                         uniqueUserArray.push(user.userId);
@@ -3229,8 +3230,8 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
             });
         }
 
-        //Adding Secondary Incident Commanders as owner to the Private Channel
-        const secondaryIncidentCommanderObj = this.state.roleAssignments.find((role: any) => role.role === constants.secondaryIncidentCommanderRole);
+        //Adding Secondary Incident Commanders and "Edit Access Role" users as owners to the Private Channel
+        const secondaryIncidentCommanderObj = this.state.roleAssignments.find((role: any) => role.role === constants.secondaryIncidentCommanderRole || role.role === this.props.editIncidentAccessRole);
         if (secondaryIncidentCommanderObj) {
             secondaryIncidentCommanderObj?.userDetailsObj?.forEach((user: UserDetails) => {
                 if (uniqueUserArray.indexOf(user.userId) === -1) {
@@ -4241,6 +4242,14 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
                                                             ariaLabel={this.props.localeStrings.fieldIncidentStatus + constants.requiredAriaLabel}
                                                             id="incident-status-listbox"
                                                             onMenuOpen={this.onStatusMenuOpen}
+                                                            styles={{
+                                                                optionsContainer: {
+                                                                    "button span": {
+                                                                        maxHeight: "35px",
+                                                                        height: "auto"
+                                                                    }
+                                                                }
+                                                            }}
                                                         />
                                                         {this.state.inputValidation.incidentStatusHasError && (
                                                             <label aria-live="polite" role="alert" className="message-label">{this.props.localeStrings.statusRequired}</label>
@@ -4275,6 +4284,14 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
                                                                 ariaLabel={this.props.localeStrings.fieldIncidentType + constants.requiredAriaLabel}
                                                                 id="incident-type-listbox"
                                                                 onMenuOpen={this.onMenuOpen}
+                                                                styles={{
+                                                                    optionsContainer: {
+                                                                        "button span": {
+                                                                            maxHeight: "35px",
+                                                                            height: "auto"
+                                                                        }
+                                                                    }
+                                                                }}
                                                             />
                                                         }
                                                         {this.state.inputValidation.incidentTypeHasError && (
@@ -4350,6 +4367,13 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
                                                                         calloutProps={{ directionalHintFixed: true, doNotLayer: true }}
                                                                         ariaLabel={constants.startTimeAriaLabel + constants.requiredAriaLabel}
                                                                         className="incident-timepicker"
+                                                                        styles={{
+                                                                            optionsContainer: {
+                                                                                "button span": {
+                                                                                    height: "auto"
+                                                                                }
+                                                                            }
+                                                                        }}
                                                                     />
                                                                 </div>
                                                                 {this.state.inputValidation.incidentStartDateTimeHasError && (
@@ -4565,7 +4589,7 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
                                                         <Fluent9CheckBox
                                                             label={this.props.localeStrings.roleCheckboxTooltip}
                                                             aria-label={this.props.localeStrings.roleCheckboxTooltip}
-                                                            onChange={(_, data) => this.setState({ saveDefaultRoleCheck: data.checked})}
+                                                            onChange={(_, data) => this.setState({ saveDefaultRoleCheck: data.checked })}
                                                             className="role-checkbox"
                                                             checked={this.state.saveDefaultRoleCheck}
                                                         />
@@ -4685,7 +4709,7 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
                                                                 <Col as="td" md={3} sm={3} xs={3}>{item.userNamesString}</Col>
                                                                 <Col as="td" md={3} sm={3} xs={3}>{item.leadNameString}</Col>
                                                                 <Col as="td" md={1} sm={1} xs={1} className="col-center role-body-checkbox">
-                                                                     <Fluent9CheckBox
+                                                                    <Fluent9CheckBox
                                                                         title={this.props.localeStrings.incidentTypeDefaultRoleCheckboxLabel}
                                                                         aria-label={this.props.localeStrings.roleCheckboxTooltip}
                                                                         onChange={(ev, isChecked) => this.onChecked(ev, Boolean(isChecked.checked), index)}
@@ -4727,12 +4751,12 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
                                             {this.state.roleAssignments.length > 0 ?
                                                 <div className="role-assignment-table">
                                                     <Fluent9CheckBox
-                                                            label={this.props.localeStrings.incidentTypeDefaultRoleCheckboxLabel}
-                                                            aria-label={this.props.localeStrings.incidentTypeDefaultRoleCheckboxLabel}
-                                                            onChange={(_ev, isChecked) => this.setState({ saveIncidentTypeDefaultRoleCheck: isChecked.checked })}
-                                                            className="assets-save-default-checkbox"
-                                                            checked={this.state.saveIncidentTypeDefaultRoleCheck}
-                                                        />
+                                                        label={this.props.localeStrings.incidentTypeDefaultRoleCheckboxLabel}
+                                                        aria-label={this.props.localeStrings.incidentTypeDefaultRoleCheckboxLabel}
+                                                        onChange={(_ev, isChecked) => this.setState({ saveIncidentTypeDefaultRoleCheck: isChecked.checked })}
+                                                        className="assets-save-default-checkbox"
+                                                        checked={this.state.saveIncidentTypeDefaultRoleCheck}
+                                                    />
                                                 </div>
                                                 : null}
                                         </Col>

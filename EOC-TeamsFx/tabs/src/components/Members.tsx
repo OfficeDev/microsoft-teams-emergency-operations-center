@@ -313,6 +313,7 @@ export default class Members extends React.Component<MembersProps, MembersState>
                     view={3}
                     personCardInteraction={1}
                     avatarSize='large'
+                    className='member-person-card'
                 />
                 {item.lead && <span className='lead-label'>{this.props.localeStrings.leadLabel}</span>}
             </div>

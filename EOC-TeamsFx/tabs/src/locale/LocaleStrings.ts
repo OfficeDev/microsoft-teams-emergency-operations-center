@@ -221,7 +221,7 @@ const localizedStrings = {
                 addChannelBtnLabel: "Add Channel",
                 additionalChannelsFieldSaveDefaultTooltipContent: "Save default Additional Channels for selected incident type",
                 additionalChannelsFieldInfoIconTooltipContent: 'By default "General", "Announcements" and "Assessment" channels will be created. Use this option to create or modify other additional channels. Only existing incident team members can be added to a private channel.',
-                guestUsersNotAllowedAsSecIncCommanderErrorMsg: "Guest users are not allowed to be added as Secondary Incident Commander",
+                guestUsersNotAllowedAsSecIncCommanderErrorMsg: "Guest users are not allowed to be added as Secondary Incident Commander or to the role configured with Edit Access",
                 guestUsersNotAllowedAsIncCommanderErrorMsg: "Guest users are not allowed to be added as Incident Commander",
                 createIncidentLoaderMessage: "Saving Incident Details...",
                 createGroupLoaderMessage: "Creating M365 Group...",
@@ -262,7 +262,9 @@ const localizedStrings = {
                 mapViewer: "Map Viewer",
                 formatIncidentsDataFailedErrMsg: "while formatting incident data. Please try again.",
                 m365GroupCreationFailedMessage: "You do not have permission to create M365 groups which is required to create an incident. Please check with your tenant administrator.",
-                removedRoleSuccessMessage: "Role deleted successfully!"
+                removedRoleSuccessMessage: "Role deleted successfully!",              
+                editAccessRoleLabel: "Role with Edit Access",
+                editAccessRoleInfoIconText: "The users from the selected role will have have edit access to the incident"
         },
         "ar-sa": {
                 AppTitleErrorLabel: "عنوان التطبيق مطلوب.",
@@ -525,7 +527,9 @@ const localizedStrings = {
                 settingsSavedmessage: "تم حفظ إعدادات التكوين بنجاح",
                 mapViewer: "عارض الخريطة",
                 m365GroupCreationFailedMessage: "ليس لديك الإذن لإنشاء مجموعات M365 المطلوبة لإنشاء حدث. الرجاء التحقق مع مسؤول المستأجر.",
-                removedRoleSuccessMessage: "تم حذف الدور بنجاح!"
+                removedRoleSuccessMessage: "تم حذف الدور بنجاح!",
+                editAccessRoleLabel: "دور مع تحرير الوصول",
+                editAccessRoleInfoIconText: "سيتوفر لدى المستخدمين من الدور المحدد حق الوصول للتحرير إلى الحدث"        
         },
         "de-de": {
                 AppTitleErrorLabel: "Der App-Titel ist erforderlich.",
@@ -788,7 +792,9 @@ const localizedStrings = {
                 settingsSavedmessage: "Konfigurationseinstellungen erfolgreich gespeichert",
                 mapViewer: "Karten-Viewer",
                 m365GroupCreationFailedMessage: "Sie sind nicht berechtigt, M365-Gruppen zu erstellen, die zum Erstellen eines Incidents erforderlich sind. Wenden Sie sich an Ihren Mandantenadministrator.",
-                removedRoleSuccessMessage: "Die Rolle wurde erfolgreich gelöscht."
+                removedRoleSuccessMessage: "Die Rolle wurde erfolgreich gelöscht.",
+                editAccessRoleLabel: "Rolle mit Bearbeitungszugriff",
+                editAccessRoleInfoIconText: "Die Benutzer aus der ausgewählten Rolle haben Bearbeitungszugriff auf den Incident."
         },
         "es-es": {
                 AppTitleErrorLabel: "El título de la aplicación es obligatorio.",
@@ -1051,7 +1057,9 @@ const localizedStrings = {
                 settingsSavedmessage: "Las opciones de configuración se guardaron correctamente",
                 mapViewer: "Visor de asignaciones",
                 m365GroupCreationFailedMessage: "No tiene permiso para crear grupos de M365 necesarios para crear un incidente. Compruébelo con el administrador de inquilinos.",
-                removedRoleSuccessMessage: "Rol eliminado correctamente!"
+                removedRoleSuccessMessage: "Rol eliminado correctamente!",
+                editAccessRoleLabel: "Rol con acceso de edición",
+                editAccessRoleInfoIconText: "Los usuarios del rol seleccionado tendrán acceso de edición al incidente"
         },
         "fr-fr": {
                 AppTitleErrorLabel: "Le titre de l’application est obligatoire.",
@@ -1314,7 +1322,9 @@ const localizedStrings = {
                 settingsSavedmessage: "Les paramètres de configuration ont été enregistrés",
                 mapViewer: "Visionneuse de cartes",
                 m365GroupCreationFailedMessage: "Vous n’êtes pas autorisé à créer des groupes M365 nécessaires à la création d’un incident. Veuillez case activée avec l’administrateur de votre client.",
-                removedRoleSuccessMessage: "Le rôle a été supprimé !"
+                removedRoleSuccessMessage: "Le rôle a été supprimé !",
+                editAccessRoleLabel: "Rôle avec accès en modification",
+                editAccessRoleInfoIconText: "Les utilisateurs du rôle sélectionné disposeront d’un accès en modification à l’incident"
         },
         "he-il": {
                 AppTitleErrorLabel: "נדרשת כותרת אפליקציה.",
@@ -1577,7 +1587,9 @@ const localizedStrings = {
                 settingsSavedmessage: "הגדרות התצורה נשמרו בהצלחה",
                 mapViewer: "מציג המפות",
                 m365GroupCreationFailedMessage: "אין לך הרשאה ליצור קבוצות M365 הנדרשות ליצירת מקרה. בדוק עם מנהל הדיירים.",
-                removedRoleSuccessMessage: "התפקיד נמחק בהצלחה!"
+                removedRoleSuccessMessage: "התפקיד נמחק בהצלחה!",
+                editAccessRoleLabel: "תפקיד עם גישת עריכה",
+                editAccessRoleInfoIconText: "למשתמשים מהתפקיד שנבחר תהיה גישת עריכה למקרה"
         },
         "ja-jp": {
                 AppTitleErrorLabel: "アプリ タイトルが必須です。",
@@ -1840,7 +1852,9 @@ const localizedStrings = {
                 settingsSavedmessage: "構成設定が正常に保存されました",
                 mapViewer: "マップ ビューアー",
                 m365GroupCreationFailedMessage: "インシデントを作成するために必要な M365 グループを作成するためのアクセス許可がありません。テナント管理者にチェックしてください。",
-                removedRoleSuccessMessage: "ロールが正常に削除されました。"
+                removedRoleSuccessMessage: "ロールが正常に削除されました。",
+                editAccessRoleLabel: "編集アクセス権を持つロール",
+                editAccessRoleInfoIconText: "選択したロールのユーザーには、インシデントに対する編集アクセス権があります"
         },
         "ko-kr": {
                 AppTitleErrorLabel: "앱 이름은 필수입니다.",
@@ -2103,7 +2117,9 @@ const localizedStrings = {
                 settingsSavedmessage: "구성 설정이 저장됨",
                 mapViewer: "지도 뷰어",
                 m365GroupCreationFailedMessage: "인시던트를 만드는 데 필요한 M365 그룹을 만들 수 있는 권한이 없습니다. 테넌트 관리자에게 검사.",
-                removedRoleSuccessMessage: "역할이 삭제되었습니다!"
+                removedRoleSuccessMessage: "역할이 삭제되었습니다!",
+                editAccessRoleLabel: "편집 액세스 권한이 있는 역할",
+                editAccessRoleInfoIconText: "선택한 역할의 사용자는 인시던트에 대한 편집 액세스 권한을 갖게 됩니다."
         },
         "pt-br": {
                 AppTitleErrorLabel: "O Título do Aplicativo é obrigatório.",
@@ -2366,7 +2382,9 @@ const localizedStrings = {
                 settingsSavedmessage: "Definições de configuração salvas com sucesso",
                 mapViewer: "Visualizador de mapa",
                 m365GroupCreationFailedMessage: "Você não tem permissão para criar grupos do M365 necessários para criar um incidente. Entre em marcar com o administrador de locatários.",
-                removedRoleSuccessMessage: "Função excluída com sucesso!"
+                removedRoleSuccessMessage: "Função excluída com sucesso!",
+                editAccessRoleLabel: "Função com Acesso de Edição",
+                editAccessRoleInfoIconText: "Os usuários da função selecionada terão acesso de edição ao incidente"
         },
         "ru-ru": {
                 AppTitleErrorLabel: "Требуется название приложения.",
@@ -2629,7 +2647,9 @@ const localizedStrings = {
                 settingsSavedmessage: "Параметры конфигурации успешно сохранены",
                 mapViewer: "Map Viewer",
                 m365GroupCreationFailedMessage: "У вас нет разрешения на создание групп M365, необходимых для создания инцидента. Обратитесь проверка к администратору клиента.",
-                removedRoleSuccessMessage: "Роль успешно удалена"
+                removedRoleSuccessMessage: "Роль успешно удалена",
+                editAccessRoleLabel: "Роль с правом изменения",
+                editAccessRoleInfoIconText: "Пользователи из выбранной роли будут иметь доступ на изменение к инциденту"
         },
         "zh-cn": {
                 AppTitleErrorLabel: "应用标题是必填项。",
@@ -2892,7 +2912,9 @@ const localizedStrings = {
                 settingsSavedmessage: "已成功保存配置设置",
                 mapViewer: "地图查看器",
                 m365GroupCreationFailedMessage: "你没有创建创建事件所需的 M365 组的权限。请与租户管理员检查。",
-                removedRoleSuccessMessage: "已成功删除角色!"
+                removedRoleSuccessMessage: "已成功删除角色!",
+                editAccessRoleLabel: "具有编辑访问权限的角色",
+                editAccessRoleInfoIconText: "所选角色中的用户将具有对事件的编辑访问权限"
         },
         "zh-tw": {
                 AppTitleErrorLabel: "應用程式標題為必要項目。",
@@ -3155,7 +3177,9 @@ const localizedStrings = {
                 settingsSavedmessage: "組態設定成功儲存",
                 mapViewer: "地圖檢視者",
                 m365GroupCreationFailedMessage: "您無權建立建立事件所需的 M365 群組。請洽詢您的租用戶系統管理員。",
-                removedRoleSuccessMessage: "成功删除角色!"
+                removedRoleSuccessMessage: "成功删除角色!",
+                editAccessRoleLabel: "具有編輯存取權的角色",
+                editAccessRoleInfoIconText: "所選角色的使用者將具有事件的編輯存取權"
         }
 }
 export { localizedStrings };

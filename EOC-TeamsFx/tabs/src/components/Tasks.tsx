@@ -224,6 +224,7 @@ export default class PlannerTasks extends React.Component<PlannerTasksProps, Pla
                         initialId={this.state.planID}
                         targetId={this.state.planID}
                         data-source="TasksSource.planner"
+                        className='active-dashboard-task'
                     />
                 }
                 {(!this.state.planID && !this.props.showTasksLoader) &&

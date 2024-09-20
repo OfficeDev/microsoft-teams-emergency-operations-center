@@ -13,7 +13,14 @@
 
 div[class~="admin-settings"] {
     background-color: rgb(238, 238, 238);
-
+    span[class~="ui-icon"] {
+        img,svg {
+            width: 16px;
+        }
+        svg{
+            fill: currentColor;
+        }
+    }
     div[class~="admin-settings-path"] {
         width: 100%;
         height: auto;
@@ -86,8 +93,9 @@ div[class~="admin-settings"] {
                 position: relative;
                 top: 1px;
                 padding: 0px 3px 7px;
+               
                 @include fontstyles(600, #636363, 16px, 24px, left);
-
+              
                 &:nth-child(1) {
                     margin-right: 30px;
                 }
@@ -130,13 +138,13 @@ div[class~="admin-settings"] {
                 align-items: flex-start;
                 row-gap: 10px;
 
-                div[class~="config-settings-app-title-wrapper"] {
+                div[class~="config-settings-app-title-wrapper"], div[class~="config-settings-app-edit-role-wrapper"] {
                     display: flex;
                     align-items: center;
                     flex-direction: row;
                     column-gap: 15px;
 
-                    div[class~="app-title-label"] {
+                    div[class~="app-title-label"], div[class~="role-title-label"] {
                         justify-content: flex-end;
                         flex-direction: row-reverse;
                         margin-bottom: 0px;
@@ -155,15 +163,62 @@ div[class~="admin-settings"] {
                             i {
                                 color: #000000;
                             }
-                        }
+                        }                        
                     }
 
-                    div[class~="app-title-input-wrapper"] {
+                    div[class~="app-title-input-wrapper"], div[class~="app-role-input-wrapper"] {
                         display: flex;
                         flex-direction: column;
 
                         span[class~="app-title-input-box"] {
                             width: 365px;
+                        }
+                        div[class~="select-role-with-edit-dropdown"] {
+                            width: 365px;
+                            div[class~="ui-dropdown__container"] {
+                                background-color: var(--colorNeutralBackground1) !important;
+                                border: 1px solid var(--colorNeutralForegroundStaticInverted) !important;
+                    
+                                &::before {
+                                    outline: 2px solid var(--colorBrandForeground2Pressed);
+                                    border-radius: 3px;
+                                    outline-offset: 1px;
+                                }
+                            }
+                    
+                            button {
+                                height: 40px;
+                    
+                                span {
+                                    font: normal normal normal 16px/21px Segoe UI;
+                                    color: var(--colorNeutralForeground1);
+                                    opacity: 1;
+                                }
+                            }
+                    
+                            div[class~="ui-box"] {
+                                font: normal normal normal 16px/21px Segoe UI;
+                                opacity: 1;
+                                color: var(--colorNeutralForeground1);
+                    
+                            }
+                    
+                    
+                            ul[class~="ui-list"] {
+                                background-color: var(--colorNeutralBackground1);
+                    
+                                li[class~="ui-dropdown__item"] {
+                                    background-color: var(--colorNeutralBackground1);
+                    
+                                    &:hover {
+                                        background-color: var(--colorBrandBackgroundInvertedHover) !important;
+                    
+                                        div[class~="ui-box"] {
+                                            color: #000000;
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -254,15 +309,15 @@ div[class~="admin-settings"] {
 
                 @media screen and (max-width:767px) {
                     div[class~="map-viewer-setting"],
-                    div[class~="config-settings-app-title-wrapper"] {
+                    div[class~="config-settings-app-title-wrapper"],div[class~="config-settings-app-edit-role-wrapper"] {
                         flex-direction: column;
                         align-items: flex-start;
                         row-gap: 10px;
                     }
 
-                    div[class~="config-settings-app-title-wrapper"] {
-                        div[class~="app-title-input-wrapper"] {
-                            span[class~="app-title-input-box"] {
+                    div[class~="config-settings-app-title-wrapper"],div[class~="config-settings-app-edit-role-wrapper"] {
+                        div[class~="app-title-input-wrapper"], div[class~="app-role-input-wrapper"] {
+                            span[class~="app-title-input-box"],div[class~="select-role-with-edit-dropdown"] {
                                 width: 300px;
                             }
                         }
@@ -475,7 +530,14 @@ div[class~="admin-settings"] {
 
 div[class~="admin-settings-darkcontrast"] {
     background-color: var(--colorNeutralBackground2);
-
+    span[class~="ui-icon"] {
+        img,svg {
+            width: 16px;
+        }
+        svg{
+            fill: currentColor;
+        }
+    }
     div[class~="admin-settings-wrapper"] {
         background: var(--colorNeutralBackground1);
         padding-bottom: 6rem;
@@ -522,8 +584,8 @@ div[class~="admin-settings-darkcontrast"] {
             }
 
             div[class~="settings-sub-wrapper"] {
-                div[class~="config-settings-app-title-wrapper"] {
-                    div[class~="app-title-label"] {
+                div[class~="config-settings-app-title-wrapper"], div[class~="config-settings-app-edit-role-wrapper"] {
+                    div[class~="app-title-label"], div[class~="role-title-label"] {
                         label {
                             color: var(--colorNeutralForeground1);
                         }
@@ -531,6 +593,12 @@ div[class~="admin-settings-darkcontrast"] {
                         span[class~="info-icon"] {
                             i {
                                 color: var(--colorNeutralForeground1);
+                            }
+                        }
+                        div[class~="label-font"] {
+                            font-size: 16px !important;
+                            label {
+                                 color: var(--colorNeutralForeground1);
                             }
                         }
                     }

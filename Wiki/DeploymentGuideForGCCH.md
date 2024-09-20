@@ -1,14 +1,16 @@
 - Deployment Guide
     - [Prerequisites](#prerequisites) 
-    - [Steps](#Deployment-Steps)
+    - [Steps](#deployment-steps)
         - [Provisioning TEOC Site](#1-provisioning-teoc-site)
         - [Register AD Application](#2-register-azure-ad-application)
         - [Deploy to Azure subscription](#3-deploy-to-your-azure-subscription)
         - [Set-up Authentication](#4-set-up-authentication)
         - [Add Permissions to your app](#5-add-permissions-to-microsoft-graph-azure-ad-app)
-        - [Create the Teams app packages](#6-create-the-teams-app-packages)
-        - [Install the app in Microsoft Teams](#7-install-the-app-in-microsoft-teams)
-        - [Deploy NotifyToTeams Extension in SharePoint](#8-deploy-notifytoteams-extension-in-sharepoint)
+        - [Add Permissions for Office 365 Exchange Online](#6-add-permissions-for-office-365-exchange-online)
+        - [Create the Teams app packages](#7-create-the-teams-app-packages)
+        - [Install the app in Microsoft Teams](#8-install-the-app-in-microsoft-teams)
+        - [Verify M365 group creation policy in Azure Portal](#9-verify-m365-group-creation-policy-in-azure-portal)
+        - [Deploy NotifyToTeams Extension in SharePoint](#10-deploy-notifytoteams-extension-in-sharepoint)
     - [Troubleshooting](#troubleshooting)
 - - -
 
@@ -23,6 +25,12 @@ To begin deployment for Microsoft Teams Emergency Operations Center (TEOC) appli
 
 * You need minimum of contributor access to the Azure subscription to perform the deployment.
 
+* To run the TEOC Provision PnP PowerShell script, you'll need PowerShell version 7.x or newer. This version is compatible with Windows, Linux, and Mac, and you can download it [installed through here](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell?view=powershell-7.4).
+
+* For those who have previously installed PnP PowerShell, please ensure your version is 2.12.0 or newer. Here's the command to verify the version of PnP PowerShell you're currently using.
+    ```
+    get-Module -Name PnP.PowerShell -ListAvailable | select-Object -Property Name, Version, Path
+    ```
 - - -
 
 # Deployment Steps
@@ -31,7 +39,7 @@ To begin deployment for Microsoft Teams Emergency Operations Center (TEOC) appli
 
 ### Azure App Registration for PnP PowerShell
 
-* Open a new PowerShell console (v5.1 or Core 7.x) as an administrator (right-click, Run As Administrator). Ensure unrestricted execution policy with the following:
+* Open a new PowerShell console (v7.x) as an administrator (right-click, Run As Administrator). Ensure unrestricted execution policy with the following:
     ```
     Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
     ```
@@ -168,7 +176,8 @@ You need to first create a new Azure AD Application to secure API permissions. R
     1. **Client ID**: The application (client) ID of the app registered
     2. **Client Secret**: The client secret Value of the app registered
     3. **Tenant Id**: The tenant Id
-    4. **Share Point Site Name**: Name of the SharePoint site that was provisioned in step 1 (It should be the exact site name from the URL Ex: **TEOCSite**)
+    4. **Share Point Site Name**: Name of the SharePoint site that was provisioned in step 1 
+       > Note: Add just the site name and not the entire URL. For example, if the URL of your sharepoint site is 'https://example.sharepoint.com/sites/TEOCSite' add just "TEOCSite"
 
 1. Other fields have pre-populated default values, do not change it unless you want it to be customized depending on the need.
 

@@ -13,6 +13,7 @@ import "../scss/ActiveBridge.module.scss";
 import Bridge from './Bridge';
 import Members from './Members';
 import Tasks from './Tasks';
+import * as constants from '../common/Constants';
 
 export interface ActiveBridgeProps {
     onBackClick(showMessageBar: string): void;
@@ -30,6 +31,7 @@ export interface ActiveBridgeProps {
     graphContextURL: string;
     tenantID: any;
     fromActiveDashboardTab: boolean;
+    currentThemeName: string;
 }
 
 export interface ActiveBridgeState {
@@ -67,6 +69,7 @@ export default class ActiveBridge extends React.Component<ActiveBridgeProps, Act
         });
     }
     render() {
+        const isDarkOrContrastTheme = this.props.currentThemeName === constants.darkMode || this.props.currentThemeName === constants.contrastMode;
         return (
             <div
                 className={`active-bridge-wrapper${(this.state.showBridgeLoader || this.state.showTasksLoader) ? " disable-active-bridge" : ""}`}>
@@ -82,7 +85,7 @@ export default class ActiveBridge extends React.Component<ActiveBridgeProps, Act
                         </label>
                     </div>
                 }
-                <div className="active-bridge-area">
+                <div className={`active-bridge-area${isDarkOrContrastTheme ? " active-bridge-area-darkcontrast" : ""}`}>
                     <div className="container">
                         <div className='active-bridge-heading'>
                             {this.props.localeStrings.activeDashboard} - {this.props.incidentData.incidentId}

@@ -3,7 +3,7 @@
   <pnp:Preferences Generator="PnP.Framework, Version=1.8.3.0, Culture=neutral, PublicKeyToken=0d501f89f11b748c" />
   <pnp:Templates ID="CONTAINER-TEMPLATE-8315D078DB6D4FF9A32C5E2397D54645">
     <pnp:ProvisioningTemplate ID="TEMPLATE-8315D078DB6D4FF9A32C5E2397D54645" Version="1" BaseSiteTemplate="STS#3" Scope="RootSite">
-      <pnp:Lists>    
+      <pnp:Lists>     
       <pnp:ListInstance Title="TEOC-Config" Description="Use this list to configure the format of the Teams name created for each incident" DocumentTemplate="" TemplateType="100" Url="Lists/TEOCConfig" EnableVersioning="true" MinorVersionLimit="0" MaxVersionLimit="50" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-de22-43b2-a848-c05709900100" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/Lists/TEOCConfig/DispForm.aspx" DefaultEditFormUrl="{site}/Lists/TEOCConfig/EditForm.aspx" DefaultNewFormUrl="{site}/Lists/TEOCConfig/NewForm.aspx" ImageUrl="/_layouts/15/images/itgen.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
              <pnp:ContentTypeBindings>
             <pnp:ContentTypeBinding ContentTypeID="0x01" Default="true" />

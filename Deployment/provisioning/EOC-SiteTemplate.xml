@@ -44,7 +44,7 @@
             <pnp:FieldRef ID="db8d9d6d-dc9a-4fbd-85f3-4a753bfdc58c" Name="_LikeCount" DisplayName="Like count" />
             <pnp:FieldRef ID="cb19284a-cde7-4570-a980-1dab8bd74470" Name="_ExtendedDescription" DisplayName="Description" />
           </pnp:FieldRefs>
-        </pnp:ListInstance>
+        </pnp:ListInstance>      
         <pnp:ListInstance Title="Form Templates" Description="This library contains administrator-approved form templates that were activated to this site collection." DocumentTemplate="" TemplateType="101" Url="FormServerTemplates" MinorVersionLimit="0" MaxVersionLimit="0" DraftVersionVisibility="0" TemplateFeatureID="00bfea71-e717-4e80-aa17-d0c71b360101" EnableAttachments="false" EnableFolderCreation="false" DefaultDisplayFormUrl="{site}/FormServerTemplates/Forms/DispForm.aspx" DefaultEditFormUrl="{site}/FormServerTemplates/Forms/EditForm.aspx" DefaultNewFormUrl="{site}/FormServerTemplates/Forms/Upload.aspx" ImageUrl="/_layouts/15/images/itdl.png?rev=47" IrmExpire="false" IrmReject="false" IsApplicationList="false" ValidationFormula="" ValidationMessage="">
           <pnp:ContentTypeBindings>
             <pnp:ContentTypeBinding ContentTypeID="0x010100F8EF98760CBA4A94994F13BA881038FA" Default="true" />
@@ -325,6 +325,9 @@
           </pnp:DataRow>
           <pnp:DataRow>
               <pnp:DataValue FieldName="Title">Logistics Coordinator</pnp:DataValue>              
+          </pnp:DataRow>
+          <pnp:DataRow>
+              <pnp:DataValue FieldName="Title">Planning Coordinator</pnp:DataValue>              
           </pnp:DataRow>
           <pnp:DataRow>
               <pnp:DataValue FieldName="Title">New Role (Specify a new role to be created and assign users to)</pnp:DataValue>              
