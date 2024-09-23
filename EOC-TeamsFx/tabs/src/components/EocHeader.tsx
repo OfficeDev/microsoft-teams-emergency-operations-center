@@ -21,7 +21,7 @@ interface IHeaderProps {
 
 interface HeaderState {
     isCalloutVisible: boolean;
-    isDesktop: boolean;
+    isDesktop: boolean;    
 }
 export default class EocHeader extends Component<IHeaderProps, HeaderState> {
     constructor(props: any) {
@@ -33,7 +33,6 @@ export default class EocHeader extends Component<IHeaderProps, HeaderState> {
         this.homeRedirect = this.homeRedirect.bind(this);
     }
     public async componentDidMount() {
-
         //Event listener for screen resizing
         window.addEventListener("resize", this.resize.bind(this));
         this.resize();
@@ -65,11 +64,11 @@ export default class EocHeader extends Component<IHeaderProps, HeaderState> {
                 <div className={`eoc-header${isDarkOrContrastTheme ? " eoc-header-darkcontrast" : ""}`}>
                     <Flex gap="gap.small" space='between' >
                         <Flex gap="gap.small" vAlign="center">
-                            <img
+                        <img
                                 src={require("../assets/Images/AppLogo.svg").default}
                                 alt="Ms Logo"
                                 className="ms-logo"
-                                title={this.props.appTitle}
+                                title= {this.props.appTitle}
                             />
                             <main aria-label={this.props.appTitle}>
                                 <h1 className="header-text" title={this.props.appTitle}>

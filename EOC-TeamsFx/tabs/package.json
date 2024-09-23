@@ -81,7 +81,8 @@
         "@react-pdf/image": "2.2.1",
         "botbuilder": "4.19.2",
         "botbuilder-dialogs": "4.19.2",
-        "@types/node": "^14.0.0"
+        "@types/node": "^14.0.0",
+        "body-parser": ">=1.20.3"
     },
     "devDependencies": {
         "@babel/plugin-proposal-private-property-in-object": "7.21.11",

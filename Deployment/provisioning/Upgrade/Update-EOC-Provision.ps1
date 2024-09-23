@@ -11,6 +11,9 @@ $TenantName = $TenantName.Trim();
 $SiteName = Read-Host "Enter your existing TEOC site name";
 $SiteName = $SiteName.Trim();
 
+$ClientID = Read-Host "Enter AzureAppId/ClientId";
+$ClientID = $ClientID.Trim();
+
 # verify the PnP.PowerShell module we need is installed
 if (-not (Get-Module -ListAvailable -Name PnP.PowerShell )) {
   Write-Warning "Could not find the PnP.PowerShell module, installing it"
@@ -23,7 +26,7 @@ else {
 $TenantURL = "https://$TenantName.sharepoint.com"
 $EOCSiteURL = "/sites/$SiteName"
 
-Connect-PnPOnline -Url $TenantURL -Interactive
+Connect-PnPOnline -Url $TenantURL -Interactive  -ClientId $ClientID
 
 try {
   Write-Host "Checking if site exists at $EOCSiteURL"
@@ -37,7 +40,7 @@ try {
     return;
   }
 
-  Connect-PnPOnline -Url $TenantURL$EOCSiteURL -Interactive
+  Connect-PnPOnline -Url $TenantURL$EOCSiteURL -Interactive -ClientId $ClientID
     
   Invoke-PnPSiteTemplate -Path $FilePath -ErrorAction Stop -WarningAction SilentlyContinue
           

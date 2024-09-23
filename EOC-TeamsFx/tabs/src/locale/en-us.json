@@ -515,5 +515,9 @@
    "m365GroupCreationFailedMessage": "You do not have permission to create M365 groups which is required to create an incident. Please check with your tenant administrator.",
    "_m365GroupCreationFailedMessage.comment": "This string is displayed as error message when group creation failed",
    "removedRoleSuccessMessage": "Role deleted successfully!",
-   "_removedRoleSuccessMessage.comment": "This string is displayed when role removed successfully"
+   "_removedRoleSuccessMessage.comment": "This string is displayed when role removed successfully",
+   "editAccessRoleLabel": "Role with Edit Access",
+   "_editAccessRoleLabel.comment": "This string is displayed as field label",
+   "editAccessRoleInfoIconText": "The users from the selected role will have have edit access to the incident",
+   "_editAccessRoleInfoIconText.comment": "This string is displayed as tooltip for info icon"
 }

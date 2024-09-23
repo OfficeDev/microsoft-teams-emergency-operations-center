@@ -1,6 +1,6 @@
 import { MessageBar } from "@fluentui/react";
 import { Input, Spinner } from "@fluentui/react-components";
-import { Button } from "@fluentui/react-northstar";
+import { Button, FormDropdown } from "@fluentui/react-northstar";
 import { Icon } from "@fluentui/react/lib/Icon";
 import { Label } from "@fluentui/react/lib/Label";
 import { Toggle } from "@fluentui/react/lib/Toggle";
@@ -33,6 +33,8 @@ export interface IConfigSettingsProps {
     bingMapsKeyConfigData: any;
     appTitle: string;
     appTitleData: any;
+    editIncidentAccessRole: string;
+    editIncidentAccessRoleData: any;
 };
 export interface IConfigSettingsState {
     enableRoles: boolean;
@@ -44,6 +46,8 @@ export interface IConfigSettingsState {
     bingMapsKeyError: boolean;
     appTitle: string;
     appTitleKeyError: boolean;
+    roleDropdownOptions: any;
+    selectedRole: string;
 }
 export interface IMessages {
     roles: IMessageData;
@@ -74,11 +78,18 @@ export default class ConfigSettings extends React.Component<IConfigSettingsProps
             bingMapsKey: this.props.bingMapsKeyConfigData?.value?.trim()?.length > 0 ? this.props.bingMapsKeyConfigData?.value : "",
             bingMapsKeyError: false,
             appTitle: this.props.appTitle,
-            appTitleKeyError: false
+            appTitleKeyError: false,
+            roleDropdownOptions: '',
+            selectedRole: this.props.editIncidentAccessRole
         }
 
         //bind methods
         this.updateSettings = this.updateSettings.bind(this);
+    }
+
+    //get roles for dropdown list on load
+    public async componentDidMount() {
+        await this.getRoleDropdownOptions();
     }
 
     //Create object for Common Services class
@@ -88,6 +99,9 @@ export default class ConfigSettings extends React.Component<IConfigSettingsProps
     private updateSettings = async () => {
         try {
             let noChanges: boolean = true;
+            // create graph endpoint for TEOC Config list
+            const configListNewGraphEndpoint = `${graphConfig.spSiteGraphEndpoint}${this.props.siteId}${graphConfig.listsGraphEndpoint}/${siteConfig.configurationList}/items`;
+
             //Reset Generic Message
             this.setState((prevState) => ({
                 messages: {
@@ -103,13 +117,13 @@ export default class ConfigSettings extends React.Component<IConfigSettingsProps
                     noChanges = false;
                     this.setState({ showLoader: true });
 
+                    //If AppTitle key is missing in config list add new item to the list
                     if (this.props.appTitleData.itemId === undefined) {
-                        // create graph endpoint for TEOC Config list to add app title
-                        const graphConfigListEndpoint = `${graphConfig.spSiteGraphEndpoint}${this.props.siteId}/lists/${siteConfig.configurationList}/items`;
+                        //create graph endpoint for TEOC Config list to add app title
                         const newItemAppTitleObj = { fields: { Value: this.state.appTitle.trim(), Title: constants.appTitleKey } };
                         const item = await this.commonService.addItemInList
                             <{ fields: { id: number; Title: string; Value: string } }>(
-                                graphConfigListEndpoint,
+                                configListNewGraphEndpoint,
                                 this.props.graph, newItemAppTitleObj
                             );
                         this.props.setState({
@@ -141,6 +155,53 @@ export default class ConfigSettings extends React.Component<IConfigSettingsProps
                     }));
                 }
             }
+
+            //Add/Update EditAccessRole value in Config List
+            if (this.state.selectedRole?.trim() !== this.props.editIncidentAccessRole?.trim() ||
+                this.props.editIncidentAccessRoleData.itemId === undefined) {
+                if (this.state.selectedRole != undefined && this.state.selectedRole?.trim() != "") {
+                    noChanges = false;
+                    this.setState({ showLoader: true });
+                    //If EditAccessRole key is missing in config list add new item to the list
+                    if (this.props.editIncidentAccessRoleData.itemId === undefined) {
+                        const newEditAccessRoleObj = { fields: { Value: this.state.selectedRole.trim(), Title: constants.editIncidentAccessRoleKey } };
+                        const objListItem = await this.commonService.addItemInList
+                            <{ fields: { id: number; Title: string; Value: string } }>(
+                                configListNewGraphEndpoint,
+                                this.props.graph, newEditAccessRoleObj
+                            );
+                        this.props.setState({
+                            editIncidentAccessRoleData: {
+                                itemId: objListItem?.fields?.id,
+                                title: objListItem?.fields?.Title,
+                                value: objListItem?.fields?.Value
+                            }
+                        });
+                    }
+                    //If EditAccessRole key is already in config list update the item
+                    else {
+                        //Update Edit Access Role in TEOC-config list
+                        const graphConfigListEndpoint = `${graphConfig.spSiteGraphEndpoint}${this.props.siteId}/lists/${siteConfig.configurationList}/items/${this.props.editIncidentAccessRoleData.itemId}/fields`;
+                        const updateEditAccessRoleObj = { Value: this.state.selectedRole.trim() };
+                        await this.commonService.updateItemInList(graphConfigListEndpoint,
+                            this.props.graph, updateEditAccessRoleObj);
+                    }
+                    //Update Edit Access Role in Home Component states
+                    this.props.setState({
+                        editIncidentAccessRole: this.state.selectedRole.trim(),
+                        configRoleData: { ...this.props.configRoleData, value: this.state.selectedRole.trim() }
+                    });
+
+                    //Update Config Settings States
+                    this.setState(prevState => ({
+                        messages: {
+                            ...prevState.messages,
+                            genericMessage: { messageType: 4, message: this.props.localeStrings.settingsSavedmessage }
+                        }
+                    }));
+                }
+            }
+
             if (this.props.isRolesEnabled !== this.state.enableRoles) {
                 noChanges = false;
                 this.setState({ showLoader: true });
@@ -210,11 +271,8 @@ export default class ConfigSettings extends React.Component<IConfigSettingsProps
                 noChanges = false;
                 this.setState({ showLoader: true });
 
-                // create graph endpoint for TEOC Config list
-                const configGraphEndpoint = `${graphConfig.spSiteGraphEndpoint}${this.props.siteId}${graphConfig.listsGraphEndpoint}/${siteConfig.configurationList}/items`;
-                // create Bing Map API Key list item object
                 const listItem = { fields: { Title: constants.bingMapsKey, Value: this.state.bingMapsKey } };
-                const configResponse = await this.commonService.sendGraphPostRequest(configGraphEndpoint, this.props.graph, listItem);
+                const configResponse = await this.commonService.sendGraphPostRequest(configListNewGraphEndpoint, this.props.graph, listItem);
                 this.props.setState({
                     isMapViewerEnabled: this.state.enableMapViewer,
                     bingMapsKeyConfigData: {
@@ -322,6 +380,42 @@ export default class ConfigSettings extends React.Component<IConfigSettingsProps
             this.commonService.trackException(this.props.appInsights, error,
                 constants.componentNames.ConfigSettingsComponent, 'updateSettings', this.props.userPrincipalName);
         }
+    }
+
+    //Get dropdown options for Incident Status, Incident Type and Roles dropdown
+    private getRoleDropdownOptions = async () => {
+        try {
+            const roleGraphEndpoint = `${graphConfig.spSiteGraphEndpoint}${this.props.siteId}${graphConfig.listsGraphEndpoint}/${siteConfig.roleAssignmentList}/items?$expand=fields&$Top=5000`;
+
+            let rolesList = await this.commonService.getDropdownOptions(roleGraphEndpoint, this.props.graph);
+            rolesList = rolesList.sort();
+
+            //Remove the Secondarycommander and 'new role' from the dropdown list
+            rolesList.splice(rolesList.indexOf(constants.secondaryIncidentCommanderRole), 1,);
+            rolesList.splice(rolesList.indexOf(constants.newRole), 1);
+            //Add 'None' to the dropdown. This is to allow users to remove any old mapping 
+            rolesList.splice(0, 0, constants.noneOption);
+
+            this.setState({
+                roleDropdownOptions: rolesList,
+                showLoader: false,
+            })
+
+        } catch (error) {
+            console.error(
+                constants.errorLogPrefix + "ConfigSettings_getRoleDropdownOptions \n",
+                JSON.stringify(error)
+            );
+            // Log Exception
+            this.commonService.trackException(this.props.appInsights, error, constants.componentNames.ConfigSettingsComponent, 'ConfigSettings_getRoleDropdownOptions', this.props.userPrincipalName);
+        }
+    }
+
+    // on change of dropdown set the state of selected role
+    private onRoleChange = (_event: any, selectedRole: any) => {
+        this.setState({
+            selectedRole: selectedRole.value
+        })
     }
 
     //Render Method
@@ -487,6 +581,40 @@ export default class ConfigSettings extends React.Component<IConfigSettingsProps
                                 }
                             </div>
                         }
+                    </div>
+
+                    <div className={`config-settings-app-edit-role-wrapper`}>
+                        <div className="role-title-label">
+                            <Label>
+                                {this.props.localeStrings.editAccessRoleLabel}
+                                <span className='info-icon'>
+                                    <TooltipHost
+                                        content={<span dangerouslySetInnerHTML={{ __html: this.props.localeStrings.editAccessRoleInfoIconText }} />}
+                                        calloutProps={{ gapSpace: 0 }}
+                                        id="role-title-tooltip"
+                                    >
+                                        <Icon iconName='info' tabIndex={0} aria-label="Info"
+                                            aria-describedby="role-title-tooltip"
+                                            role="button"
+                                        />
+                                    </TooltipHost>
+                                </span>
+                            </Label>
+                        </div>
+                        <div className='app-role-input-wrapper'>
+                            <FormDropdown
+                                aria-label={this.props.localeStrings.fieldAdditionalRoles + constants.requiredAriaLabel}
+                                placeholder={this.props.localeStrings.phRoles}
+                                items={this.state.roleDropdownOptions ? this.state.roleDropdownOptions : []}
+                                fluid={true}
+                                autoSize
+                                onChange={this.onRoleChange}
+                                value={this.state.selectedRole}
+                                id="addRole-dropdown"
+                                aria-labelledby="addRole-dropdown"
+                                className="select-role-with-edit-dropdown"
+                            />
+                        </div>
                     </div>
                 </div>
                 {this.state.showLoader &&

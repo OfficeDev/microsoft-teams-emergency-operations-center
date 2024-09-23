@@ -3,6 +3,7 @@ This page contains the release information for Microsoft Teams Emergency Operati
 ## Version history
 | Version | Release Date |
 |----|----|
+| 3.2 | Sep 23, 2024 |
 | 3.1 | Jun 6, 2024 |
 | 3.0 | Feb 23, 2024 |
 | 2.0 | May 02, 2023 |
@@ -11,6 +12,15 @@ This page contains the release information for Microsoft Teams Emergency Operati
 | 0.5 | Mar 31, 2022 |
 
 ## Release notes
+
+### v3.2 (Sep 23, 2024)
+
+Below are the changes released with this version:
+
+- New Feature: Ability to configure "Edit Access Role" under "Admin Settings -> Config Settings" which provides a selected role the ability to edit incidents apart from "Incident Commander" and "Secondary Incident Commander"
+- Bug fix: Gaps in the dropdown lists when creating an incident fixed 
+- Bug fix: Modified PowerShell script for SharePoint site provisioning to accommodate the changes made to PNP Management Shell registration in Microsoft 365 
+- Minor accessibility improvements
 
 ### v3.1 (Jun 6, 2024)
 

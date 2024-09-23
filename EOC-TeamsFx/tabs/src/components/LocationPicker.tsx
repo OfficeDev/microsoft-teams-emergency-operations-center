@@ -107,6 +107,13 @@ export class LocationPicker extends React.Component<ILocationPickerProps, ILocat
                     ariaLabel={"Location" + constants.requiredAriaLabel}
                     id="incident-location-listbox"
                     onMenuOpen={this.onLocationMenuOpen}
+                    styles={{
+                        optionsContainer: {
+                            "button span": {
+                                height: "auto"
+                            }
+                        }
+                    }}
                 />;
             case Mode.editView:
                 if (selectedItem.EntityType === "Custom") {

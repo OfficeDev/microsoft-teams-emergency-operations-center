@@ -1,4 +1,4 @@
-## Upgrade to v3.1  
+## Upgrade to v3.2  
 
 ### 1. Modify the column type of "Location" ( **This step is applicable only if you upgrade the app from 2.0 or older ** )
 
@@ -45,7 +45,7 @@
 
  ![AppService](./Images/AddAppSetting.png)
   
-### 5. Add new application setting **GENERATE_SOURCEMAP** in the App Service
+### 5. Add new application setting **GENERATE_SOURCEMAP** in the App Service ( **This step is applicable only if you upgrade the app from 3.0 or older ** )
 
   1. In Azure portal, navigate to TEOC resource group, open app service and click on Configuration.
 
