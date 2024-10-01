@@ -157,11 +157,10 @@ class Dashboard extends React.PureComponent<IDashboardProps, IDashboardState> {
             console.log(constants.infoLogPrefix + "All Incidents retrieved");
 
             // Redirect to current Incident Active Dashboard component
-            if (this.props.fromActiveDashboardTab) {
-                const activeIncident = allIncidents.find((e: any) => e.incidentId === parseInt(this.props.activeDashboardIncidentId));
+           const activeIncident = allIncidents.find((e: any) => e.incidentId === parseInt(this.props.activeDashboardIncidentId));
+            if (this.props.fromActiveDashboardTab && activeIncident !== undefined) {
                 this.props.onShowActiveBridge(activeIncident);
             }
-
             else {
                 // filter for Planning tab
                 const planningIncidents = allIncidents.filter((e: any) => e.incidentStatusObj.status === constants.planning);

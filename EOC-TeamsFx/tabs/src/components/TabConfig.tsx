@@ -10,8 +10,9 @@ import * as microsoftTeams from "@microsoft/teams-js";
 class TabConfig extends React.Component {
   render() {
     // Initialize the Microsoft Teams SDK
-    microsoftTeams.app.initialize();
 
+    microsoftTeams.app.initialize().then(() => {
+   
     /**
      * When the user clicks "Save", save the url for your configured tab.
      * This allows for the addition of query string parameters based on
@@ -35,13 +36,17 @@ class TabConfig extends React.Component {
      * dialog.
      */
     microsoftTeams.pages.config.setValidityState(true);
+    
+  }).catch((error) => {
+    console.error("TEOC_TabConfig_Error_Initializing Microsoft Teams SDK:", error);
+
+  });
 
     return (
       <div>
-        <h1>Tab Configuration</h1>
-        <div>
-          This is where you will add your tab configuration options the user can choose when the tab
-          is added to your team/group chat.
+        <h1> Microsoft Teams Emergency Operations Center</h1>
+        <div>       
+        App Template to help facilitate the creation of teams and assets for incident response for designated scenarios. In addition to quick team creation and asset deployment, TEOC also delivers a central dashboard to see and manage incidents from and take further action. Helping you to respond and act quicker powered by the solutions you already have.
         </div>
       </div>
     );
