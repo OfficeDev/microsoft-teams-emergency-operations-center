@@ -40,8 +40,8 @@ export interface IDashboardProps {
     activeDashboardIncidentId: string;
     fromActiveDashboardTab: boolean;
     isMapViewerEnabled: boolean;
-    bingMapsKeyConfigData: any;
-
+    azureMapsKeyConfigData: any;
+    graphBaseUrl: any;
 }
 
 export interface IDashboardState {
@@ -911,7 +911,7 @@ class Dashboard extends React.PureComponent<IDashboardProps, IDashboardState> {
                                                 noDataIndication={() => (<div id="noincident-all-tab" aria-live="polite" role="status">{this.props.localeStrings.noIncidentsFound}</div>)}
                                             />
                                             :
-                                            <MapViewer incidentData={this.state.filteredAllIncidents} bingMapKey={this.props.bingMapsKeyConfigData} showMessageBar={this.props.showMessageBar} userPrincipalName={this.props.userPrincipalName} localeStrings={this.props.localeStrings} appInsights={this.props.appInsights}></MapViewer>
+                                            <MapViewer graphBaseUrl={this.props.graphBaseUrl} incidentData={this.state.filteredAllIncidents} azureMapKey={this.props.azureMapsKeyConfigData} showMessageBar={this.props.showMessageBar} userPrincipalName={this.props.userPrincipalName} localeStrings={this.props.localeStrings} appInsights={this.props.appInsights}></MapViewer>
                                         }
                                     </PivotItem>
                                     <PivotItem
@@ -933,7 +933,7 @@ class Dashboard extends React.PureComponent<IDashboardProps, IDashboardState> {
                                                 noDataIndication={() => (<div id="noincident-planning-tab" aria-live="polite" role="status">{this.props.localeStrings.noIncidentsFound}</div>)}
                                             />
                                             :
-                                            <MapViewer incidentData={this.state.filteredPlanningIncidents} bingMapKey={this.props.bingMapsKeyConfigData} showMessageBar={this.props.showMessageBar} userPrincipalName={this.props.userPrincipalName} localeStrings={this.props.localeStrings} appInsights={this.props.appInsights}></MapViewer>
+                                            <MapViewer graphBaseUrl={this.props.graphBaseUrl} incidentData={this.state.filteredPlanningIncidents} azureMapKey={this.props.azureMapsKeyConfigData} showMessageBar={this.props.showMessageBar} userPrincipalName={this.props.userPrincipalName} localeStrings={this.props.localeStrings} appInsights={this.props.appInsights}></MapViewer>
                                         }
                                     </PivotItem>
                                     <PivotItem
@@ -955,7 +955,7 @@ class Dashboard extends React.PureComponent<IDashboardProps, IDashboardState> {
                                                 noDataIndication={() => (<div id="noincident-active-tab" aria-live="polite" role="status">{this.props.localeStrings.noIncidentsFound}</div>)}
                                             />
                                             :
-                                            <MapViewer incidentData={this.state.filteredActiveIncidents} bingMapKey={this.props.bingMapsKeyConfigData} showMessageBar={this.props.showMessageBar} userPrincipalName={this.props.userPrincipalName} localeStrings={this.props.localeStrings} appInsights={this.props.appInsights}></MapViewer>
+                                            <MapViewer graphBaseUrl={this.props.graphBaseUrl} incidentData={this.state.filteredActiveIncidents} azureMapKey={this.props.azureMapsKeyConfigData} showMessageBar={this.props.showMessageBar} userPrincipalName={this.props.userPrincipalName} localeStrings={this.props.localeStrings} appInsights={this.props.appInsights}></MapViewer>
                                         }
                                     </PivotItem>
                                     <PivotItem
@@ -978,7 +978,7 @@ class Dashboard extends React.PureComponent<IDashboardProps, IDashboardState> {
                                                 noDataIndication={() => (<div id="noincident-completed-tab" aria-live="polite" role="status">{this.props.localeStrings.noIncidentsFound}</div>)}
                                             />
                                             :
-                                            <MapViewer incidentData={this.state.filteredCompletedIncidents} bingMapKey={this.props.bingMapsKeyConfigData} showMessageBar={this.props.showMessageBar} userPrincipalName={this.props.userPrincipalName} localeStrings={this.props.localeStrings} appInsights={this.props.appInsights}></MapViewer>
+                                            <MapViewer graphBaseUrl={this.props.graphBaseUrl} incidentData={this.state.filteredCompletedIncidents} azureMapKey={this.props.azureMapsKeyConfigData} showMessageBar={this.props.showMessageBar} userPrincipalName={this.props.userPrincipalName} localeStrings={this.props.localeStrings} appInsights={this.props.appInsights}></MapViewer>
                                         }
                                     </PivotItem>
                                 </Pivot>

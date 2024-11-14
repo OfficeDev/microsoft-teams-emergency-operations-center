@@ -30,7 +30,7 @@ export interface IConfigSettingsProps {
     appInsights: ApplicationInsights;
     userPrincipalName: any;
     isMapViewerEnabled: boolean;
-    bingMapsKeyConfigData: any;
+    azureMapsKeyConfigData: any;
     appTitle: string;
     appTitleData: any;
     editIncidentAccessRole: string;
@@ -42,8 +42,8 @@ export interface IConfigSettingsState {
     showAssignRolesLink: boolean;
     showLoader: boolean;
     enableMapViewer: boolean;
-    bingMapsKey: string;
-    bingMapsKeyError: boolean;
+    azureMapsKey: string;
+    azureMapsKeyError: boolean;
     appTitle: string;
     appTitleKeyError: boolean;
     roleDropdownOptions: any;
@@ -75,8 +75,8 @@ export default class ConfigSettings extends React.Component<IConfigSettingsProps
             showAssignRolesLink: this.props.isRolesEnabled,
             showLoader: false,
             enableMapViewer: this.props.isMapViewerEnabled,
-            bingMapsKey: this.props.bingMapsKeyConfigData?.value?.trim()?.length > 0 ? this.props.bingMapsKeyConfigData?.value : "",
-            bingMapsKeyError: false,
+            azureMapsKey: this.props.azureMapsKeyConfigData?.value?.trim()?.length > 0 ? this.props.azureMapsKeyConfigData?.value : "",
+            azureMapsKeyError: false,
             appTitle: this.props.appTitle,
             appTitleKeyError: false,
             roleDropdownOptions: '',
@@ -265,20 +265,20 @@ export default class ConfigSettings extends React.Component<IConfigSettingsProps
                 }
             }
 
-            //Add Bing Map API Key record in TEOC-config list
-            if (this.state.enableMapViewer && this.props.bingMapsKeyConfigData?.title === undefined &&
-                this.state.bingMapsKey?.trim() !== "") {
+            //Add azure Map subscription Key record in TEOC-config list
+            if (this.state.enableMapViewer && this.props.azureMapsKeyConfigData?.title === undefined &&
+                this.state.azureMapsKey?.trim() !== "") {
                 noChanges = false;
                 this.setState({ showLoader: true });
 
-                const listItem = { fields: { Title: constants.bingMapsKey, Value: this.state.bingMapsKey } };
+                const listItem = { fields: { Title: constants.azureMapsKey, Value: this.state.azureMapsKey } };
                 const configResponse = await this.commonService.sendGraphPostRequest(configListNewGraphEndpoint, this.props.graph, listItem);
                 this.props.setState({
                     isMapViewerEnabled: this.state.enableMapViewer,
-                    bingMapsKeyConfigData: {
-                        ...this.props.bingMapsKeyConfigData,
+                    azureMapsKeyConfigData: {
+                        ...this.props.azureMapsKeyConfigData,
                         title: configResponse.fields.Title,
-                        value: this.state.bingMapsKey,
+                        value: this.state.azureMapsKey,
                         itemId: configResponse.fields.id
                     }
                 });
@@ -291,38 +291,38 @@ export default class ConfigSettings extends React.Component<IConfigSettingsProps
                             message: this.props.localeStrings.mapViewerKeyEnabledMessage
                         }
                     },
-                    bingMapsKey: prevState.bingMapsKey?.trim()
+                    azureMapsKey: prevState.azureMapsKey?.trim()
                 }));
             }
-            //Update Bing Map API Key in TEOC-config list
-            else if ((this.props.bingMapsKeyConfigData?.value &&
-                this.props.bingMapsKeyConfigData?.value?.trim() !== this.state.bingMapsKey?.trim()) ||
+            //Update azure Map subscription Key in TEOC-config list
+            else if ((this.props.azureMapsKeyConfigData?.value &&
+                this.props.azureMapsKeyConfigData?.value?.trim() !== this.state.azureMapsKey?.trim()) ||
                 this.props.isMapViewerEnabled !== this.state.enableMapViewer) {
                 noChanges = false;
-                //Validate Bing Map API Key
+                //Validate azure Map subscription Key
                 if (this.state.enableMapViewer &&
-                    (this.state.bingMapsKey?.trim() === "" || this.state.bingMapsKey?.trim() === undefined)) {
+                    (this.state.azureMapsKey?.trim() === "" || this.state.azureMapsKey?.trim() === undefined)) {
                     this.setState(prevState => ({
-                        bingMapsKeyError: true,
+                        azureMapsKeyError: true,
                         messages: {
                             ...prevState.messages,
                             mapViewer: { messageType: 1, message: this.props.localeStrings.mapViewerKeyRequiredMessage }
                         }
                     }));
                 }
-                //Update Bing Map API Key
+                //Update azure Map subscription Key
                 else {
                     this.setState({ showLoader: true });
-                    //Endpoint to update Bing Map API Key in TEOC-config list
-                    const graphConfigListEndpoint = `${graphConfig.spSiteGraphEndpoint}${this.props.siteId}/lists/${siteConfig.configurationList}/items/${this.props.bingMapsKeyConfigData?.itemId}/fields`;
-                    const updatedValue = this.state.enableMapViewer ? this.state.bingMapsKey?.trim() : "";
-                    let updatedBingAPIKeyObj = { Value: updatedValue }
-                    //Update Bing Map API Key in TEOC-config list API Call
-                    await this.commonService.updateItemInList(graphConfigListEndpoint, this.props.graph, updatedBingAPIKeyObj);
+                    //Endpoint to update azure Map API Key in TEOC-config list
+                    const graphConfigListEndpoint = `${graphConfig.spSiteGraphEndpoint}${this.props.siteId}/lists/${siteConfig.configurationList}/items/${this.props.azureMapsKeyConfigData?.itemId}/fields`;
+                    const updatedValue = this.state.enableMapViewer ? this.state.azureMapsKey?.trim() : "";
+                    let updatedazureAPIKeyObj = { Value: updatedValue }
+                    //Update azure Map subscription Key in TEOC-config list API Call
+                    await this.commonService.updateItemInList(graphConfigListEndpoint, this.props.graph, updatedazureAPIKeyObj);
 
                     let messageToDisplay: string;
-                    if (this.state.enableMapViewer && this.props.bingMapsKeyConfigData?.value?.trim() !== "" &&
-                        this.state.bingMapsKey?.trim() !== "") {
+                    if (this.state.enableMapViewer && this.props.azureMapsKeyConfigData?.value?.trim() !== "" &&
+                        this.state.azureMapsKey?.trim() !== "") {
                         messageToDisplay = this.props.localeStrings.mapViewerKeyUpdatedMessage;
                     }
                     else {
@@ -332,7 +332,7 @@ export default class ConfigSettings extends React.Component<IConfigSettingsProps
                     //Update Home Component states
                     this.props.setState({
                         isMapViewerEnabled: this.state.enableMapViewer,
-                        bingMapsKeyConfigData: { ...this.props.bingMapsKeyConfigData, value: updatedValue }
+                        azureMapsKeyConfigData: { ...this.props.azureMapsKeyConfigData, value: updatedValue }
                     });
 
                     //Update Config Settings States
@@ -344,7 +344,7 @@ export default class ConfigSettings extends React.Component<IConfigSettingsProps
                                 message: messageToDisplay
                             }
                         },
-                        bingMapsKey: updatedValue
+                        azureMapsKey: updatedValue
                     });
                 }
             }
@@ -461,7 +461,7 @@ export default class ConfigSettings extends React.Component<IConfigSettingsProps
                             </Label>
                         </div>
                         <div className='app-title-input-wrapper'>
-                            <Input
+                            <Input                               
                                 placeholder={this.props.localeStrings.AppTitlePlaceholderText}
                                 className="app-title-input-box"
                                 value={this.state.appTitle}
@@ -529,7 +529,7 @@ export default class ConfigSettings extends React.Component<IConfigSettingsProps
                             </a>
                         }
                     </div>
-                    <div className={`config-settings-toggle-btn-wrapper map-viewer-setting${this.state.bingMapsKeyError ? " field-with-error" : ""}`}>
+                    <div className={`config-settings-toggle-btn-wrapper map-viewer-setting${this.state.azureMapsKeyError ? " field-with-error" : ""}`}>
                         <Toggle
                             checked={this.state.enableMapViewer}
                             label={
@@ -561,13 +561,14 @@ export default class ConfigSettings extends React.Component<IConfigSettingsProps
                         {this.state.enableMapViewer &&
                             <div className='api-key-input-wrapper'>
                                 <Input
+                                    type="password"
                                     placeholder={this.props.localeStrings.mapViewerPlaceholder}
                                     className="api-key-input-box"
-                                    value={this.state.bingMapsKey}
+                                    value={this.state.azureMapsKey}
                                     onChange={(_ev, data: any) => {
                                         this.setState((prevState) => ({
-                                            bingMapsKey: data.value,
-                                            bingMapsKeyError: data?.value?.trim() === "",
+                                            azureMapsKey: data.value,
+                                            azureMapsKeyError: data?.value?.trim() === "",
                                             messages: {
                                                 ...prevState.messages,
                                                 mapViewer: { messageType: -1, message: "" }
@@ -575,7 +576,7 @@ export default class ConfigSettings extends React.Component<IConfigSettingsProps
                                         }))
                                     }}
                                 />
-                                {this.state.bingMapsKeyError &&
+                                {this.state.azureMapsKeyError &&
                                     <span className='api-key-error-msg' aria-live="polite" role="alert">
                                         {this.props.localeStrings.mapViewerKeyRequiredMessage}</span>
                                 }

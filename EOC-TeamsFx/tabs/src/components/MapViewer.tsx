@@ -1,16 +1,18 @@
 import { ApplicationInsights } from '@microsoft/applicationinsights-web';
-import BingMapsReact from "bingmaps-react";
 import React from "react";
 import CommonService, { IListItem } from '../common/CommonService';
 import * as constants from '../common/Constants';
+import * as atlas from 'azure-maps-control';
+import "azure-maps-control/dist/atlas.min.css";
 
 export interface IMapViewerProps {
     incidentData: IListItem;
-    bingMapKey: any;
+    azureMapKey: { value: string };
     showMessageBar(message: string, type: string): void;
     userPrincipalName: any;
     localeStrings: any;
     appInsights: ApplicationInsights;
+    graphBaseUrl: any;
 }
 export interface IMapViewerState {
     mapViewerData: any[];
@@ -24,61 +26,100 @@ export class MapViewer extends React.Component<IMapViewerProps, IMapViewerState>
         }
     }
 
-    componentWillMount(): void {
-        this.formatIncidentData(this.props.incidentData);
+    //On component Load get the incidents data and generate map
+    public async componentDidMount() {
+        this.initMap(this.props.incidentData);
     }
 
     private dataService = new CommonService();
 
-    // method to format incident data to show on map control 
-    private formatIncidentData = (data: any) => {
+    //Get incidents data, generate map and pin points as per the icnidents data
+    private initMap(incidentsData: any) {
         try {
-            //filter locations which dont have coordinates and will not be visible in bing map like custom locations
-            const filteredData = data.filter((e: any) => JSON.parse(e.location).EntityType !== "Custom");
-            const pushPinsWithInfoboxes: any = [];
-            filteredData.forEach((item: any) => {
-                if (item.location !== "" || JSON.parse(item.location).Coordinates.Latitude !== "0") {
-                    let pushPinColor: string;
-                    switch (item.incidentStatusObj.status) {
-                        case constants.planning:
-                            pushPinColor = 'gray';
-                            break;
-                        case constants.active:
-                            pushPinColor = 'orange';
-                            break;
-                        case constants.closed:
-                            pushPinColor = 'green';
-                            break;
-                        default:
-                            pushPinColor = 'gray';
-                            break;
-                    }
-                    let data = {
-                        center: {
-                            latitude: JSON.parse(item.location).Coordinates === undefined ? 0 : JSON.parse(item.location).Coordinates.Latitude,
-                            longitude: JSON.parse(item.location).Coordinates === undefined ? 0 : JSON.parse(item.location).Coordinates.Longitude
-                        },
-                        options: {
-                            color: pushPinColor,
-                            latitude: JSON.parse(item.location).Coordinates === undefined ? 0 : JSON.parse(item.location).Coordinates.Latitude,
-                            description: '<a href="' + item.teamWebURL + '" target="_blank">' + item.incidentId + ': ' + item.incidentName + '</a> <br> ' + this.props.localeStrings.status + ': ' + item.incidentStatusObj.status + '<br>' + this.props.localeStrings.location + ': ' + JSON.parse(item.location).DisplayName + '<br>' + item.incidentCommander,
-                        },
-                    }
-                    pushPinsWithInfoboxes.push(data);
+            //Get the Azure map key configured by the user in Config Settings screen
+            var azureMapKey = this.props.azureMapKey.value;
+            
+            //For GCCH Tenant
+            if (this.props.graphBaseUrl !== constants.defaultGraphBaseURL) {
+                atlas.setDomain('atlas.azure.us');
+            }
+
+            //Create azure map control with the Azure Maps subscription key
+            const incidentsMap = new atlas.Map('azureMapControl', {           
+                center: [0, 0],
+                zoom: 0,
+                language: 'en-US',
+                view: 'Auto',
+                authOptions: {
+                    authType: atlas.AuthenticationType.subscriptionKey,
+                    subscriptionKey: azureMapKey
                 }
             });
-            this.setState({
-                mapViewerData: pushPinsWithInfoboxes
+
+            //Exclude the list of incidents which have Custom location 
+            const filteredData = incidentsData.filter((e: any) => {
+                let location;
+                try {
+                    location = JSON.parse(e.location);
+                } catch (error) {
+                    console.error(constants.errorLogPrefix + "_Error parsing location:", error);
+                    return false;
+                }
+                return location && location.EntityType !== "Custom";
             });
+
+            //Generate pins for each incident and add it to the map with colors depending on the incident status
+            filteredData.forEach((item: any) => {
+                let pinColor: string;
+                switch (item.incidentStatusObj.status) {
+                    case constants.planning:
+                        pinColor = 'gray';
+                        break;
+                    case constants.active:
+                        pinColor = 'orange';
+                        break;
+                    case constants.closed:
+                        pinColor = 'green';
+                        break;
+                    default:
+                        pinColor = 'gray';
+                        break;
+                }
+
+                try {
+                    const coordinates = JSON.parse(item.location).Coordinates;
+                    //Create an HTML marker for the pins and add it to the map.
+                    var pinMarker = new atlas.HtmlMarker({
+                        color: pinColor,
+                        text: item.incidentId,
+                        position: [coordinates.Longitude, coordinates.Latitude],
+                        popup: new atlas.Popup({
+                            content: '<div style="padding:10px;color:grey"><a href="' + item.teamWebURL + '" target="_blank">' + item.incidentId + ': ' + item.incidentName + '</a> <br> ' + this.props.localeStrings.status + ': ' + item.incidentStatusObj.status + '<br>' + this.props.localeStrings.location + ': ' + JSON.parse(item.location).DisplayName + '<br>' + item.incidentCommander + "</div>",
+                            pixelOffset: [0, -30]
+                        })
+                    });
+
+                    //add the markers to thwe map
+                    incidentsMap.markers.add(pinMarker);
+
+                    //Add on mouse enter event to toggle the popup.
+                    incidentsMap.events.add('mouseenter', pinMarker, () => {
+                        pinMarker.togglePopup();
+                    });
+                }
+                catch (error) {
+                    console.error(constants.errorLogPrefix + "_Error parsing coordinates:", error);
+                }
+            });
+
         } catch (error) {
-            console.log(error);
             console.error(
-                constants.errorLogPrefix + "_MapViewer_FormatData \n",
+                constants.errorLogPrefix + "_MapViewer_initMap \n",
                 JSON.stringify(error)
             );
             this.props.showMessageBar(this.props.localeStrings.genericErrorMessage + ", " + this.props.localeStrings.formatIncidentsDataFailedErrMsg, constants.messageBarType.error);
-            // Log Exception
-            this.dataService.trackException(this.props.appInsights, error, constants.componentNames.MapViewer, 'FormatIncidentData', this.props.userPrincipalName);
+            // Log Exception in App insights
+            this.dataService.trackException(this.props.appInsights, error, constants.componentNames.MapViewer, 'InitMap', this.props.userPrincipalName);
         }
     }
 
@@ -86,17 +127,8 @@ export class MapViewer extends React.Component<IMapViewerProps, IMapViewerState>
     public render(): JSX.Element {
         return (
             <div className="map-viewer-component">
-                <BingMapsReact
-                    bingMapsKey={this.props.bingMapKey.value}
-                    mapOptions={{
-                        navigationBarMode: "square",
-                        color: 'dark'
-                    }}
-                    zoom={10}
-                    pushPinsWithInfoboxes={this.state.mapViewerData}
-                />
+                <div id="azureMapControl" style={{ "width": "100%", "height": "100%" }} ></div>
             </div>
         );
     }
-
 }

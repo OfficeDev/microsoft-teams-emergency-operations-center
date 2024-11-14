@@ -173,7 +173,7 @@ You need to first create a new Azure AD Application to secure API permissions. R
    > **Note:** Please ensure that you use lower case and numbers in the field you enter, otherwise the deployment may fail.
 
 1. Update the following fields in the template using the values copied from step 1 & 2 in previous section,
-    1. **Client ID**: The application (client) ID of the app registered
+    1. **Client ID**: The application (client) ID of the app registered mentioned in step 2
     2. **Client Secret**: The client secret Value of the app registered
     3. **Tenant Id**: The tenant Id
     4. **Share Point Site Name**: Name of the SharePoint site that was provisioned in step 1 
@@ -187,7 +187,7 @@ You need to first create a new Azure AD Application to secure API permissions. R
 
 ## 4. Set-up Authentication
 
-1. Go to **App Registrations** page [here](https://portal.azure.us/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredApps) and select the application (TEOC specific) which you created in step 1. Follow the below steps to set up the authentication for the application.
+1. Go to **App Registrations** page [here](https://portal.azure.us/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/RegisteredApps) and select the application (TEOC specific) which you created in step 2. Follow the below steps to set up the authentication for the application.
 
     > Note: For following steps you need to use **appDomain** convention for the app service URL.
      - appDomain is the App service URL without https:// or <<**baseResourceName**>>.azurewebsites.us
