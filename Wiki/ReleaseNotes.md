@@ -3,6 +3,7 @@ This page contains the release information for Microsoft Teams Emergency Operati
 ## Version history
 | Version | Release Date |
 |----|----|
+| 3.3 | Nov 15, 2024 |
 | 3.2 | Sep 23, 2024 |
 | 3.1 | Jun 6, 2024 |
 | 3.0 | Feb 23, 2024 |
@@ -12,6 +13,12 @@ This page contains the release information for Microsoft Teams Emergency Operati
 | 0.5 | Mar 31, 2022 |
 
 ## Release notes
+
+### v3.3 (Nov 15, 2024)
+
+Below are the changes released with this version:
+
+- New Feature: "Bings Maps" replaced with "Azure Maps" in "Map Viewer" component. Since Bing Maps is deprecated, even customers who already had Bing Maps configured in TEOC need to replace it with Azure Maps as per "Enable Map Viewer" section in the "Solution Overview" wiki.
 
 ### v3.2 (Sep 23, 2024)
 

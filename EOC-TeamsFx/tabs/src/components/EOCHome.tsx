@@ -78,7 +78,7 @@ interface IEOCHomeState {
     fromActiveDashboardTab: boolean;
     appSettings: any;
     isMapViewerEnabled: boolean;
-    bingMapsKeyConfigData: any;
+    azureMapsKeyConfigData: any;
     appTitle: string;
     appTitleData: any;
     editIncidentAccessRole: string;
@@ -151,7 +151,7 @@ export default class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeStat
             fromActiveDashboardTab: false,
             appSettings: {},
             isMapViewerEnabled: false,
-            bingMapsKeyConfigData: {},
+            azureMapsKeyConfigData: {},
             appTitle: siteConfig.appTitle,
             appTitleData: {},         
             editIncidentAccessRole: "",
@@ -420,11 +420,11 @@ export default class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeStat
 
             //graph endpoint to get data from TEOC-Config list
             let graphEndpoint = `${graphConfig.spSiteGraphEndpoint}${this.state.siteId}/lists/${siteConfig.configurationList}/items?$expand=fields&$Top=5000`;
-            const configDataRecords = [constants.enableRoles, constants.bingMapsKey, constants.appTitleKey,  constants.editIncidentAccessRoleKey];
+            const configDataRecords = [constants.enableRoles, constants.azureMapsKey, constants.appTitleKey,  constants.editIncidentAccessRoleKey];
             const configData = await this.dataService.getConfigData(graphEndpoint, this.state.graph, configDataRecords);
             await this.checkUserRoleIsAdmin();
             const appTitleItem = configData.filter((item: any) => item.title === constants.appTitleKey);
-            const bingMapItem = configData.filter((item: any) => item.title === constants.bingMapsKey);
+            const azureMapItem = configData.filter((item: any) => item.title === constants.azureMapsKey);
             const editIncidentAccessRole = configData.filter((item: any) => item.title === constants.editIncidentAccessRoleKey);
             
             if (appTitleItem.length > 0) {
@@ -433,10 +433,10 @@ export default class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeStat
                     appTitleData: appTitleItem[0]
                 });
             }
-            if (bingMapItem.length > 0) {
+            if (azureMapItem.length > 0) {
                 this.setState({
-                    isMapViewerEnabled: bingMapItem[0].value?.trim() !== "" && bingMapItem[0].value?.trim() !== undefined,
-                    bingMapsKeyConfigData: bingMapItem[0]
+                    isMapViewerEnabled: azureMapItem[0].value?.trim() !== "" && azureMapItem[0].value?.trim() !== undefined,
+                    azureMapsKeyConfigData: azureMapItem[0]
                 });
             }
             if (editIncidentAccessRole.length > 0) {
@@ -814,7 +814,7 @@ export default class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeStat
                                             siteName={siteName}
                                             currentThemeName={this.state.currentThemeName}
                                             isMapViewerEnabled={this.state.isMapViewerEnabled}
-                                            bingMapsKeyConfigData={this.state.bingMapsKeyConfigData}
+                                            azureMapsKeyConfigData={this.state.azureMapsKeyConfigData}
                                             editIncidentAccessRole={this.state.editIncidentAccessRole}
                                             editIncidentAccessRoleData={this.state.editIncidentAccessRoleData}
                                         />
@@ -887,7 +887,8 @@ export default class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeStat
                                                             activeDashboardIncidentId={this.state.activeDashboardIncidentId}
                                                             fromActiveDashboardTab={this.state.fromActiveDashboardTab}
                                                             isMapViewerEnabled={this.state.isMapViewerEnabled}
-                                                            bingMapsKeyConfigData={this.state.bingMapsKeyConfigData}
+                                                            azureMapsKeyConfigData={this.state.azureMapsKeyConfigData}
+                                                            graphBaseUrl={graphBaseURL}
                                                         />
                                                         :
                                                         <>

@@ -1,6 +1,6 @@
 export const defaultGraphBaseURL = "https://graph.microsoft.com/"
 export const commercialGraphContextURL = "https://graph.microsoft.com/v1.0/"
-export const AppVersion = "3.2.0 ";
+export const AppVersion = "3.3.0 ";
 export const EOCAppName = "MIFTEOC";
 export const all = "All";
 export const planning = "Planning";
@@ -129,7 +129,7 @@ export const selectedAriaLabel = " Selected";
 //Config Settings
 export const appTitleKey = "AppTitle";
 export const enableRoles = "EnableRoles";
-export const bingMapsKey = "BingMapsKey";
+export const azureMapsKey = "AzureMapsKey";
 export const teamNameConfig = "TeamNameConfig";
 export const editIncidentAccessRoleKey = "EditIncidentAccessRole";
 export const noneOption = "None";

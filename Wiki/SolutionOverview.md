@@ -52,17 +52,18 @@
 ### Enable Map Viewer
 Admins can follow the steps below to enable "Map Viewer" for Incidents in the dashboard.
 
-1. Generate a Bing Map Key from https://www.bingmapsportal.com/
+1. Create an Azure Maps account as per instructions from the [link.](https://learn.microsoft.com/en-us/azure/azure-maps/quick-demo-map-app#create-an-azure-maps-account)
+
+1. Get the subscription key for your account as per instructions from the [link.](https://learn.microsoft.com/en-us/azure/azure-maps/quick-demo-map-app#get-the-subscription-key-for-your-account)
 
 1. Navigate to Admin Settings -> Config Settings
 
-1. Toggle the "Enable Map Viewer" and provide the Bing Maps Key and click "Save".
+1. Toggle the "Enable Map Viewer" and provide the Azure Maps Subscription Key and click "Save".
  ![TEOC Enable Map Viewer](./Images/Enablemapviewer.png)
-1. Toggle the "Enable Map Viewer" and provide the Bing Maps Key and click "Save".
 
 1. To disable the map viewer turn off the toggle for "Enable Map Viewer".
 
-1. If an incorrect Bing Map key is entered "Map Viewer" is not shown in the dashboard.
+1. If an incorrect subscription key is entered "Map Viewer" will not work as expected.
 
 
 ### Dashboard Map Viewer
