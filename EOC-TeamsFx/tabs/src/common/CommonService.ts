@@ -247,8 +247,40 @@ export default class CommonService {
     }
 
     // generic method for a POST graph query
-    public async sendGraphPostRequest(graphEndpoint: any, graph: Client, requestObj: any): Promise<any> {
-        return await graph.api(graphEndpoint).post(requestObj);
+    /**
+     * Sends a POST request to the specified Microsoft Graph endpoint.
+     *
+     * @param graphEndpoint - The endpoint of the Microsoft Graph API to which the request is sent.
+     * @param graph - The Microsoft Graph client used to send the request.
+     * @param requestObj - The request object containing the data to be sent in the POST request.
+     * @param maxRetry - The maximum number of retry attempts in case of a failure (default is 1).
+     * @returns A promise that resolves to the response of the POST request.
+     * @throws Will throw an error if the request fails after the maximum number of retry attempts.
+     */
+    public async sendGraphPostRequest(graphEndpoint: any, graph: Client, requestObj: any, maxRetry: number = 1): Promise<any> {
+        let currentAttempt = 0;
+        while (currentAttempt < maxRetry) {
+            try {
+                return await graph.api(graphEndpoint).post(requestObj);
+            } catch (error: any) {                
+                console.error(constants.errorLogPrefix + "CommonServices_sendGraphPostRequest \n", JSON.stringify(error));
+                currentAttempt++;
+                if (currentAttempt === maxRetry) {
+                    throw error;
+                }
+                await this.timeOut(1000);
+            }
+        }
+    }
+
+    /**
+     * Pauses the execution for a specified amount of time.
+     * 
+     * @param ms - The number of milliseconds to pause.
+     * @returns A promise that resolves after the specified time has elapsed.
+     */
+    private async timeOut(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
 
     // generic method for a PUT graph query
@@ -630,7 +662,8 @@ export default class CommonService {
                 };
             }
             //adding tasks by planner and to do app to general channel
-            await this.sendGraphPostRequest(graphTabEndPoint, graph, tasksTabObj);
+            // Add max retry logic for tab creation to handle Teams Graph API limitations
+            await this.sendGraphPostRequest(graphTabEndPoint, graph, tasksTabObj, 3);
             console.log(constants.infoLogPrefix + "Tasks app is added to General Channel");
 
             return planId;
@@ -668,7 +701,8 @@ export default class CommonService {
                     "websiteUrl": appSettings.websiteUrl
                 }
             };
-            await this.sendGraphPostRequest(graphTabEndPoint, graph, teocObj);
+            // Add max retry logic for tab creation to handle Teams Graph API limitations
+            await this.sendGraphPostRequest(graphTabEndPoint, graph, teocObj, 3);
 
             console.log(constants.infoLogPrefix + `TEOC App added to Active Dashboard Tab in Incident Team General channel`);
         }
