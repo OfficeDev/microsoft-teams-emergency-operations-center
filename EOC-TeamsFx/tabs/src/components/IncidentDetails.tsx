@@ -231,7 +231,7 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
     private graphEndpoint = "";
 
     //get all master data and check for edit mode or new record
-    public async componentDidMount() {  
+    public async componentDidMount() {
         await this.getDropdownOptions();
         //Event listener for screen resizing
         window.addEventListener("resize", this.resize.bind(this));
@@ -574,26 +574,26 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
     }
 
     // Update Incident Commander object on change of incident commander
-    private handleIncCommanderChange = (selectedValue: any) => {
+    private readonly handleIncCommanderChange = (selectedValue: any) => {
         let incInfo = { ...this.state.incDetailsItem };
         if (incInfo) {
             let inputValidationObj = this.state.inputValidation;
             let incCommanderHasRegexError = this.state.incCommanderHasRegexError;
-            const selctedIncCommander = [];
+            const selectedIncCommander = [];
             //update selected incident commander object 
             if (selectedValue.detail.length > 0) {
                 inputValidationObj.incidentCommandarHasError = false;
                 // Restrict External users to be added as incident commander
                 if (selectedValue.detail[0].userPrincipalName.match("#EXT#") === null) {
                     incCommanderHasRegexError = false;
-                    selctedIncCommander.push({
-                        displayName: selectedValue.detail[0] ? selectedValue.detail[0].displayName.replace(",", "") : '',
+                    selectedIncCommander.push({
+                        displayName: selectedValue.detail[0] ? selectedValue.detail[0].displayName?.replaceAll(",", "") : '',
                         userPrincipalName: selectedValue.detail[0] ? selectedValue.detail[0].userPrincipalName : '',
                         id: selectedValue.detail[0] ? selectedValue.detail[0].id.includes("@") ? selectedValue.detail[0].id.split("@")[0] : selectedValue.detail[0].id : ''
                     });
                     // create user object for incident commander
                     incInfo.incidentCommander = {
-                        userName: selectedValue.detail[0] ? selectedValue.detail[0].displayName.replace(",", "") : '',
+                        userName: selectedValue.detail[0] ? selectedValue.detail[0].displayName?.replaceAll(",", "") : '',
                         userEmail: selectedValue.detail[0] ? selectedValue.detail[0].userPrincipalName : '',
                         userId: selectedValue.detail[0] ? selectedValue.detail[0].id.includes("@") ? selectedValue.detail[0].id.split("@")[0] : selectedValue.detail[0].id : ''
 
@@ -614,7 +614,7 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
             }
             this.setState({
                 incDetailsItem: incInfo,
-                selectedIncidentCommander: selctedIncCommander,
+                selectedIncidentCommander: selectedIncCommander,
                 inputValidation: inputValidationObj,
                 incCommanderHasRegexError: incCommanderHasRegexError
             });
@@ -622,7 +622,7 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
     };
 
     // on change handler for text input changes
-    private onTextInputChange = (event: any, key: string) => {
+    private readonly onTextInputChange = (event: any, key: string) => {
         let incInfo = { ...this.state.incDetailsItem };
         let inputValidationObj = this.state.inputValidation;
         if (incInfo) {
@@ -690,7 +690,7 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
     }
 
     // on incident type dropdown value change
-    private onIncidentTypeChange = async (event: any, selectedValue: any) => {
+    private readonly onIncidentTypeChange = async (_event: any, selectedValue: any) => {
         //reset roles dropdown values whenever the Incident type is changed
         await this.getDropdownOptions();
 
@@ -962,12 +962,12 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
                         if (user?.userPrincipalName.match("#EXT#") === null) {
                             secIncCommanderUserHasRegexError = false;
                             selectedUsersArr.push({
-                                displayName: user.displayName.replace(",", ""),
+                                displayName: (user.displayName as string)?.replaceAll(",", ""),
                                 userPrincipalName: user.userPrincipalName,
                                 id: user.id.includes("@") ? user.id.split("@")[0] : user.id
                             });
                             assignedUsersArray.push({
-                                "userName": user ? user.displayName.replace(",", "") : "",
+                                "userName": user ? (user.displayName as string)?.replaceAll(",", "") : "",
                                 "userEmail": user ? user.userPrincipalName : "",
                                 "userId": user ? user.id.includes("@") ? user.id.split("@")[0] : user.id : "",
                             });
@@ -982,12 +982,12 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
                 secIncCommanderUserHasRegexError = false;
                 incInfo["assignedUser"] = selectedValue.detail.map((user: any) => {
                     selectedUsersArr.push({
-                        displayName: user.displayName.replace(",", ""),
+                        displayName: (user.displayName as string)?.replaceAll(",", ""),
                         userPrincipalName: user.userPrincipalName,
                         id: user.id.includes("@") ? user.id.split("@")[0] : user.id
                     });
                     return {
-                        "userName": user ? user.displayName.replace(",", "") : "",
+                        "userName": user ? (user.displayName as string)?.replaceAll(",", "") : "",
                         "userEmail": user ? user.userPrincipalName : "",
                         "userId": user ? user.id.includes("@") ? user.id.split("@")[0] : user.id : "",
                     }
@@ -1017,12 +1017,12 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
                         if (user?.userPrincipalName?.match("#EXT#") === null) {
                             secIncCommanderLeadHasRegexError = false;
                             selectedRoleLead.push({
-                                displayName: user.displayName.replace(",", ""),
+                                displayName: (user.displayName as string)?.replaceAll(",", ""),
                                 userPrincipalName: user.userPrincipalName,
                                 id: user.id.includes("@") ? user.id.split("@")[0] : user.id
                             });
                             assignedLeadArray.push({
-                                "userName": user ? user.displayName.replace(",", "") : "",
+                                "userName": user ? (user.displayName as string)?.replaceAll(",", "") : "",
                                 "userEmail": user ? user.userPrincipalName : "",
                                 "userId": user ? user.id.includes("@") ? user.id.split("@")[0] : user.id : "",
                             });
@@ -1037,12 +1037,12 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
                 secIncCommanderLeadHasRegexError = false;
                 incInfo["assignedLead"] = selectedValue.detail.map((user: any) => {
                     selectedRoleLead.push({
-                        displayName: user.displayName.replace(",", ""),
+                        displayName: (user.displayName as string)?.replaceAll(",", ""),
                         userPrincipalName: user.userPrincipalName,
                         id: user.id.includes("@") ? user.id.split("@")[0] : user.id
                     });
                     return {
-                        "userName": user ? user.displayName.replace(",", "") : "",
+                        "userName": user ? (user.displayName as string)?.replaceAll(",", "") : "",
                         "userEmail": user ? user.userPrincipalName : "",
                         "userId": user ? user.id.includes("@") ? user.id.split("@")[0] : user.id : "",
                     }
@@ -1072,12 +1072,12 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
                         if (user?.userPrincipalName.match("#EXT#") === null) {
                             secIncCommanderLeadInEditModeHasRegexError = false;
                             selectedRoleLead.push({
-                                displayName: user.displayName.replace(",", ""),
+                                displayName: (user.displayName as string)?.replaceAll(",", ""),
                                 userPrincipalName: user.userPrincipalName,
                                 id: user.id.includes("@") ? user.id.split("@")[0] : user.id
                             });
                             assignedLeadArray.push({
-                                "userName": user ? user.displayName.replace(",", "") : "",
+                                "userName": user ? (user.displayName as string)?.replaceAll(",", "") : "",
                                 "userEmail": user ? user.userPrincipalName : "",
                                 "userId": user ? user.id.includes("@") ? user.id.split("@")[0] : user.id : "",
                             });
@@ -1092,12 +1092,12 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
                 secIncCommanderLeadInEditModeHasRegexError = false
                 incInfo["assignedLead"] = selectedValue.detail.map((user: any) => {
                     selectedRoleLead.push({
-                        displayName: user.displayName.replace(",", ""),
+                        displayName: (user.displayName as string)?.replaceAll(",", ""),
                         userPrincipalName: user.userPrincipalName,
                         id: user.id.includes("@") ? user.id.split("@")[0] : user.id
                     });
                     return {
-                        "userName": user ? user.displayName.replace(",", "") : "",
+                        "userName": user ? (user.displayName as string)?.replaceAll(",", "") : "",
                         "userEmail": user ? user.userPrincipalName : "",
                         "userId": user ? user.id.includes("@") ? user.id.split("@")[0] : user.id : "",
                     }
@@ -1125,12 +1125,12 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
                         if (user?.userPrincipalName.match("#EXT#") === null) {
                             secIncCommanderUserInEditModeHasRegexError = false;
                             selectedUsersArr.push({
-                                displayName: user.displayName.replace(",", ""),
+                                displayName: (user.displayName as string)?.replaceAll(",", ""),
                                 userPrincipalName: user.userPrincipalName,
                                 id: user.id.includes("@") ? user.id.split("@")[0] : user.id
                             });
                             assignedUsersArray.push({
-                                "userName": user ? user.displayName.replace(",", "") : "",
+                                "userName": user ? (user.displayName as string)?.replaceAll(",", "") : "",
                                 "userEmail": user ? user.userPrincipalName : "",
                                 "userId": user ? user.id.includes("@") ? user.id.split("@")[0] : user.id : "",
                             });
@@ -1145,12 +1145,12 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
                 secIncCommanderUserInEditModeHasRegexError = false;
                 incInfo["assignedUser"] = selectedValue.detail.map((user: any) => {
                     selectedUsersArr.push({
-                        displayName: user.displayName.replace(",", ""),
+                        displayName: (user.displayName as string)?.replaceAll(",", ""),
                         userPrincipalName: user.userPrincipalName,
                         id: user.id.includes("@") ? user.id.split("@")[0] : user.id
                     });
                     return {
-                        "userName": user ? user.displayName.replace(",", "") : "",
+                        "userName": user ? (user.displayName as string)?.replaceAll(",", "") : "",
                         "userEmail": user ? user.userPrincipalName : "",
                         "userId": user ? user.id.includes("@") ? user.id.split("@")[0] : user.id : "",
                     }
@@ -2590,7 +2590,7 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
 
             this.state.roleAssignments.forEach(roles => {
                 //adding users of secondary incident commander role and "Edit Access Role" as owners and members
-                if (roles.role === constants.secondaryIncidentCommanderRole || roles.role === this.props.editIncidentAccessRole ) {
+                if (roles.role === constants.secondaryIncidentCommanderRole || roles.role === this.props.editIncidentAccessRole) {
                     roles.userDetailsObj.forEach(user => {
                         if (ownerArr.indexOf(this.state.graphContextURL + graphConfig.usersGraphEndpoint + "/" + user.userId) === -1) {
                             ownerArr.push(this.state.graphContextURL + graphConfig.usersGraphEndpoint + "/" + user.userId);
@@ -3375,8 +3375,8 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
                         "websiteUrl": null
                     }
                 }
-
-                await this.dataService.sendGraphPostRequest(tabGraphEndpoint, this.props.graph, assessmentTabObj);
+                // Add max retry logic for tab creation to handle Teams Graph API limitations
+                await this.dataService.sendGraphPostRequest(tabGraphEndpoint, this.props.graph, assessmentTabObj, 3);
                 console.log(constants.infoLogPrefix + "Ground Assessments tab is added to the Assessment channel");
                 resolve({
                     status: true,
@@ -3424,7 +3424,8 @@ class IncidentDetails extends React.PureComponent<IIncidentDetailsProps, IIncide
                 const addTabGraphEndpoint = graphConfig.teamsGraphEndpoint + "/" + team_info.id + graphConfig.channelsGraphEndpoint + "/" + channelResult.id + graphConfig.tabsGraphEndpoint;
 
                 // calling a generic method which is send a post query to the graph endpoint
-                const tabResult = await this.dataService.sendGraphPostRequest(addTabGraphEndpoint, this.props.graph, addTabObj);
+                // Add max retry logic for tab creation to handle Teams Graph API limitations
+                const tabResult = await this.dataService.sendGraphPostRequest(addTabGraphEndpoint, this.props.graph, addTabObj, 3);
                 console.log(constants.infoLogPrefix + "News tab is added to the Announcements channel");
                 resolve(tabResult.webUrl);
             } catch (ex) {

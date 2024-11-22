@@ -1,4 +1,4 @@
-## Upgrade to v3.2  
+## Upgrade to v3.3  
 
 ### 1. Modify the column type of "Location" ( **This step is applicable only if you upgrade the app from 2.0 or older ** )
 
