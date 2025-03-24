@@ -79,8 +79,10 @@ try {
     Invoke-PnPSiteTemplate -Path $FilePath -ErrorAction Stop -WarningAction SilentlyContinue
           
     Write-Host "App Provision complete."
+    pause
 }
 catch {
     Write-Host "`nError Message: " $_.Exception.Message
     Write-Host "`nApp Provisioning failed."
+    pause
 }

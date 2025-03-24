@@ -49,4 +49,10 @@
 
 .persona {
   max-width: 400px;
+
+  :global {
+    .ms-Persona-primaryText {
+      color: var(--colorNeutralForeground1);
+    }
+  }
 }

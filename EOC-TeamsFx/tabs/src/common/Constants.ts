@@ -1,6 +1,6 @@
 export const defaultGraphBaseURL = "https://graph.microsoft.com/"
 export const commercialGraphContextURL = "https://graph.microsoft.com/v1.0/"
-export const AppVersion = "3.3.0 ";
+export const AppVersion = "3.4.0 ";
 export const EOCAppName = "MIFTEOC";
 export const all = "All";
 export const planning = "Planning";
@@ -32,6 +32,7 @@ export const secondaryIncidentCommanderRole = "Secondary Incident Commander";
 export const newRole = "New Role (Specify a new role to be created and assign users to)";
 export const yes = "Yes";
 export const no = "No";
+export const ownerLimitPerTeams = 100;
 
 //EOC Header 
 
@@ -51,7 +52,7 @@ export const componentNames = {
     EOCHomeComponent: 'EOCHome',
     DashboardComponent: 'Dashboard',
     IncidentDetailsComponent: 'IncidentDetails',
-    UpdateIncidentCompoent: 'UpdateIncident',
+    UpdateIncidentComponent: 'UpdateIncident',
     TeamNameConfiguration: 'TeamNameConfiguration',
     IncidentHistoryComponent: 'IncidentHistory',
     TasksComponent: "Tasks",
@@ -59,7 +60,8 @@ export const componentNames = {
     BridgeComponent: "Bridge",
     AdminSettingsComponent: "AdminSettings",
     ConfigSettingsComponent: "ConfigSettings",
-    MapViewer:"MapViewer"
+    MapViewer:"MapViewer",
+    RoleSettingsComponent: "RoleSettings"
 }
 
 export const severity = ["Low", "Medium", "High", "Critical"]
@@ -148,3 +150,4 @@ export const authorizationRequestDenied = "Authorization_RequestDenied";
 
 //Exception Messages
 export const groupCreationAccessDeniedErrorMessage = "Tenant admin has not enabled Unified Group creation.";
+export const ownerLimitReachedErrorMessage = "this team has the maximum number of owners.";
