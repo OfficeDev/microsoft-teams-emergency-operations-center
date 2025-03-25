@@ -1,4 +1,4 @@
-## Upgrade to v3.3  
+## Upgrade to v3.4  
 
 ### 1. Modify the column type of "Location" ( **This step is applicable only if you upgrade the app from 2.0 or older ** )
 
@@ -16,13 +16,14 @@
     
 ### 2. Run the upgrade PowerShell script ( **This step is applicable only if you upgrade the app from 1.0 or older ** )
   
-  1. Clone the [repository](https://github.com/OfficeDev/microsoft-teams-emergency-operations-center.git) locally. Open the `Deployment/provisioning/Upgrade` folder to get the latest provisioning files i.e `Update-EOC-Provision.ps1` and `Update-EOC-SiteTemplate-From-V1.0.xml` ( If you are upgrading the app from 1.0 version ) or `Update-EOC-SiteTemplate-From-V0.5.xml` ( If you are upgrading the app from 0.5 or 0.5.1 version )
+  1. Clone the [repository](https://github.com/OfficeDev/microsoft-teams-emergency-operations-center.git) locally. Open the `Deployment/provisioning/Upgrade` folder to get the latest provisioning files i.e `Update-EOC-Provision.ps1` and `Update-EOC-SiteTemplate-From-V1.0.xml` ( If you are upgrading the app from 1.0 version ) or `Update-EOC-SiteTemplate-From-V0.5.xml` ( If you are upgrading the app from 0.5 or 0.5.1 version ) or `Update-EOC-SiteTemplate-From-V2.0-Later` (If you are upgrading the app from 2.0 or later versions)
 
-  2. Run the PowerShell script (Update-EOC-Provision.ps1) as an Administrator, script will ask for below inputs:
+  2. Run the PowerShell script "Update-EOC-Provision.ps1"(commercial,GCC) or "Update-EOC-Provision-GCCH"(GCC-H) as an Administrator, script will ask for below inputs:
     
     * XML file path – enter fully qualified path of the XML file (Ex: C:\Scripts\Update-EOC-SiteTemplate-From-V1.0.xml) 
     * Tenant Name – Name of the tenant where the SharePoint site was already provisioned (Ex: Contoso)
     * SharePoint site name – Enter your existing TEOC site name (Ex: TEOCSite)
+    * AzureAppId/Client Id - Enter the App Id which you registered for Interactive login. Refer "Deployment Guide" for more details.
  
   ![Provisioning Scripts](./Images/UpgradeScript.png)
 
