@@ -28,7 +28,7 @@
 
 ## Incident Details Dashboard
 
-1. The Dashboard shows the list of all incidents. A user can sort the incidents by "Incident Id", "Incident/ Team Name" or "Location" by clicking on the headers.
+1. The Dashboard shows the list of all incidents that the current user is part of. A user can sort the incidents by "Incident Id", "Incident/ Team Name" or "Location" by clicking on the headers.
 1. There are 4 tabs on the dashboard which shows incidents based on status. First tab shows all incidents irrespective of status and remaining 3 are Planning, Active and Closed.
 1. Users can use the search box at the top to filter out the grid based on Incident Name, Incident Commander, and Location.
 1. Users can click on **Manage** button that navigates to SharePoint lists to manage Incident Types and Roles and Admin Settings screen to configure Team Name and Enable Role Settings.
@@ -91,8 +91,10 @@ Admins can follow the steps below to enable "Map Viewer" for Incidents in the da
 
     ![TEOC Role Assignment](./Images/RoleAssignment.png)
 
-1. From Select Role dropdown, user will be able to select roles which are present by default in the system and user will be able to add users and a lead who will be performing that role in the incident. 
+1. From Select Role dropdown, user will be able to select roles which are present by default in the system and user will be able to add users and a lead who will be performing that role in the incident. M365 groups can also be added to the roles under "Assigned Users".
     > **Note: Users who are added to the role 'Secondary Incident Commanders' will be added as owners to the Incident Teams**
+    
+    > **Note: It's not recommended to add M365 groups with more than 200 users due to few limitations**
 
 1. User can additionally check "Save default users for this role" checkbox, by doing so the assigned users and role lead will be auto populated for that specific role while creating new incidents thereafter. On click of Add button, that role will be added to the Role Assignment table.
 
@@ -109,6 +111,8 @@ Admins can follow the steps below to enable "Map Viewer" for Incidents in the da
 1. Assets section provides an option to add guest users, add cloud storage location and to create/modify the additional Team Channels.
 
      ![TEOC Assest Section](./Images/AssetsSection.png)
+
+     * "Create Default Tasks" is available only in  Create Incident form. On selecting this option the default planner tasks will be created under "Tasks" section in "Active DashBoard". Admins can configure the default tasks in the "TEOC-Tasks" list in the Sharepoint site.
 
      * "Add Guest Users" is available in both Create and Edit Incident form and user can add guest users while creating or editing an incident. User can add up to 10 guest users at a time by clicking on Add More button. Once the guest users are added, it will be available in the people picker selection for the next time when the incident is edited and user can select them for any roles except Secondary Incident Commander and Incident Commander.
 
@@ -183,6 +187,8 @@ If there are any changes to the Roles, _View_ link will be available on the Role
 1. On click of "Incident Types", user will be redirected to the SharePoint list to manage the incident types.
 
 1. On click of "Roles", user will be redirected to the SharePoint list to manage the roles.
+
+1. On click of "Tasks", user will be redirected to the SharePoint list to manage the default planner tasks.
 
 1. On click of "Admin Settings", user will be redirected to the Admin Settings page. 
    * In the "Team Name Configuration" tab, user can configure the format of the Team Name. Upon saving the configuration, the incidents created/edited thereafter will have the Team Name in that newly configured format.

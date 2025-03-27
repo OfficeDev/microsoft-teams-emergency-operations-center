@@ -9,6 +9,7 @@
     "incidentTypeDefaultRolesList": "TEOC-IncidentTypeDefaultRoles",
     "userRolesList": "TEOC-UserRoles",
     "appTitle": "Microsoft Teams Emergency Operations Center",
+    "defaulTasksList": "TEOC-Tasks",
     "lists": [
         {
             "listName": "TEOC-Assessments",

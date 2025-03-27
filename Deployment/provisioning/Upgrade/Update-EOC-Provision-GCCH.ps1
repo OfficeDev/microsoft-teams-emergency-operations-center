@@ -23,10 +23,11 @@ else {
   Write-Host "PnP.PowerShell module found"
 }
 
-$TenantURL = "https://$TenantName.sharepoint.com"
+$TenantURL = "https://$TenantName.sharepoint.us"
 $EOCSiteURL = "/sites/$SiteName"
+$Tenant = "$TenantName.onmicrosoft.us"
 
-Connect-PnPOnline -Url $TenantURL -Interactive  -ClientId $ClientID
+Connect-PnPOnline -Url $TenantURL -Interactive -AzureEnvironment USGovernmentHigh -ClientId $ClientID -Tenant $Tenant
 
 try {
   Write-Host "Checking if site exists at $EOCSiteURL"

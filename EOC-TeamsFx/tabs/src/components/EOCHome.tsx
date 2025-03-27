@@ -889,6 +889,7 @@ export default class EOCHome extends React.Component<IEOCHomeProps, IEOCHomeStat
                                                             isMapViewerEnabled={this.state.isMapViewerEnabled}
                                                             azureMapsKeyConfigData={this.state.azureMapsKeyConfigData}
                                                             graphBaseUrl={graphBaseURL}
+                                                            currentUserId={this.state.currentUserId}
                                                         />
                                                         :
                                                         <>

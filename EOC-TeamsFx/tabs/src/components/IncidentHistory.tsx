@@ -54,7 +54,7 @@ export interface IIncidentHistoryProps {
     currentThemeName: string;
 }
 
-export default class IncidentHistory extends React.PureComponent<IIncidentHistoryProps, IIncidentHistoryState>  {
+export default class IncidentHistory extends React.PureComponent<IIncidentHistoryProps, IIncidentHistoryState> {
     private listRef: React.RefObject<IList>;
     private detailsListRef: React.RefObject<HTMLDivElement>;
     private closeIconRef: React.RefObject<any>;
@@ -550,189 +550,188 @@ export default class IncidentHistory extends React.PureComponent<IIncidentHistor
         const isDarkOrContrastTheme = this.props.currentThemeName === constants.darkMode || this.props.currentThemeName === constants.contrastMode;
 
         return (
-            <>
-                <div className="incident-history">
-                    <div className=".col-xs-12 .col-sm-8 .col-md-4 container" id="incident-history-path">
-                        <label>
-                            <span
-                                onClick={() => this.props.onBackClick("")}
-                                onKeyDown={(event) => {
-                                    if (event.key === constants.enterKey)
-                                        this.props.onBackClick("")
-                                }}
-                                className="go-back">
-                                <ChevronStartIcon id="path-back-icon" />
-                                <span className="back-label" role="button" tabIndex={0} title={this.props.localeStrings.back}>{this.props.localeStrings.back}</span>
-                            </span> &nbsp;&nbsp;
-                            <span className="right-border">|</span>
-                            <span title={this.props.localeStrings.incidentHistory}>&nbsp;&nbsp;{this.props.localeStrings.incidentHistory}</span>
-                        </label>
-                    </div>
-                    <div className={`incident-history-area${isDarkOrContrastTheme ? " incident-history-area-darkcontrast" : ""}`}>
-                        <div className="container">
-                            <div className="heading-and-view-selection-area">
-                                <h1 aria-live="polite" role="alert"> <div className="incident-history-label">{this.props.localeStrings.incidentHistory} - {this.props.incidentId}</div></h1>
-                                <div className="view-selection-area">
-                                    <label htmlFor="list-view-select" className="flip-view" title={this.props.localeStrings.listView}>
-                                        <input
-                                            type="radio"
-                                            name="select view"
-                                            id="list-view-select"
-                                            onChange={() => this.setState({ isListView: !this.state.isListView })}
-                                            checked={this.state.isListView}
-                                        />
-                                        <img
-                                            src={require("../assets/Images/ListViewIcon.svg").default}
-                                            alt={this.props.localeStrings.listView}
-                                            className={`view-icons${isDarkOrContrastTheme ? " view-icons-darkcontrast" : ""}`}
-                                        />
+            <div className="incident-history">
+                <div className=".col-xs-12 .col-sm-8 .col-md-4 container" id="incident-history-path">
+                    <label>
+                        <span
+                            onClick={() => this.props.onBackClick("")}
+                            onKeyDown={(event) => {
+                                if (event.key === constants.enterKey)
+                                    this.props.onBackClick("")
+                            }}
+                            className="go-back">
+                            <ChevronStartIcon id="path-back-icon" />
+                            <span className="back-label" role="button" tabIndex={0} title={this.props.localeStrings.back}>{this.props.localeStrings.back}</span>
+                        </span> &nbsp;&nbsp;
+                        <span className="right-border">|</span>
+                        <span title={this.props.localeStrings.incidentHistory}>&nbsp;&nbsp;{this.props.localeStrings.incidentHistory}</span>
+                    </label>
+                </div>
+                <div className={`incident-history-area${isDarkOrContrastTheme ? " incident-history-area-darkcontrast" : ""}`}>
+                    <div className="container">
+                        <div className="heading-and-view-selection-area">
+                            <h1 aria-live="polite" role="alert"> <div className="incident-history-label">{this.props.localeStrings.incidentHistory} - {this.props.incidentId}</div></h1>
+                            <div className="view-selection-area">
+                                <label htmlFor="list-view-select" className="flip-view" title={this.props.localeStrings.listView}>
+                                    <input
+                                        type="radio"
+                                        name="select view"
+                                        id="list-view-select"
+                                        onChange={() => this.setState({ isListView: !this.state.isListView })}
+                                        checked={this.state.isListView}
+                                        aria-label={this.props.localeStrings.listView}
+                                    />
+                                    <img
+                                        src={require("../assets/Images/ListViewIcon.svg").default}
+                                        alt={this.props.localeStrings.listView}
+                                        className={`view-icons${isDarkOrContrastTheme ? " view-icons-darkcontrast" : ""}`}
+                                    />
 
-                                        <span>{this.props.localeStrings.listView}</span>
-                                    </label>
-                                    <label htmlFor="table-view-select" className="flip-view" title={this.props.localeStrings.tableView}>
-                                        <input
-                                            type="radio"
-                                            name="select view"
-                                            id="table-view-select"
-                                            onChange={() => {
-                                                this.setState({ isListView: !this.state.isListView });
-                                                this.state.gridData.length === 0 && this.formatGridData()
-                                            }}
-                                            checked={!this.state.isListView}
-                                        />
-                                        <img
-                                            src={require("../assets/Images/TableViewIcon.svg").default}
-                                            alt={this.props.localeStrings.tableView}
-                                            className={`view-icons${isDarkOrContrastTheme ? " view-icons-darkcontrast" : ""}`}
-                                        />
+                                    <span>{this.props.localeStrings.listView}</span>
+                                </label>
+                                <label htmlFor="table-view-select" className="flip-view" title={this.props.localeStrings.tableView}>
+                                    <input
+                                        type="radio"
+                                        name="select view"
+                                        id="table-view-select"
+                                        onChange={() => {
+                                            this.setState({ isListView: !this.state.isListView });
+                                            this.state.gridData.length === 0 && this.formatGridData()
+                                        }}
+                                        checked={!this.state.isListView}
+                                        aria-label={this.props.localeStrings.tableView}
+                                    />
+                                    <img
+                                        src={require("../assets/Images/TableViewIcon.svg").default}
+                                        alt={this.props.localeStrings.tableView}
+                                        className={`view-icons${isDarkOrContrastTheme ? " view-icons-darkcontrast" : ""}`}
+                                    />
 
-                                        <span>{this.props.localeStrings.tableView}</span>
-                                    </label>
-                                    <div id="incident-history-download-link">
-                                        <IncidentHistoryPDF localeStrings={this.props.localeStrings} incidentId={this.props.incidentId} versionHistoryPDFData={this.state.versionHistoryPDFData} currentThemeName={this.props.currentThemeName} incidentVersionData={this.state.incidentVersionData} />
-                                    </div>
+                                    <span>{this.props.localeStrings.tableView}</span>
+                                </label>
+                                <div id="incident-history-download-link">
+                                    <IncidentHistoryPDF localeStrings={this.props.localeStrings} incidentId={this.props.incidentId} versionHistoryPDFData={this.state.versionHistoryPDFData} currentThemeName={this.props.currentThemeName} incidentVersionData={this.state.incidentVersionData} />
                                 </div>
                             </div>
-                            {this.state.isListView ?
-                                <div className='activity-version-details-area'>
-                                    <div className='activity-log-area'>
-                                        <div className="activity-log-heading" title={this.props.localeStrings.activityLog}>{this.props.localeStrings.activityLog}</div>
-                                        <div className='activity-log-list-main-area' data-is-scrollable>
-                                            {this.state.incidentVersionData !== undefined &&
-                                                <List
-                                                    componentRef={this.listRef}
-                                                    items={this.state.incidentVersionData.slice(0, this.state.seeAllVersions ? this.state.incidentVersionData.length : constants.listViewItemInitialCount)}
-                                                    onRenderCell={this.onRenderCell}
-                                                    className="activity-log-list-main"
-                                                    getPageHeight={(idx) => this.dataService.getPageHeight(idx, this.itemHeight, this.numberOfItemsOnPage)}
-                                                    version={this.state.selectedItem}
-                                                />
-                                            }
-                                            {!this.state.seeAllVersions && this.state.incidentVersionData.length > constants.listViewItemInitialCount &&
-                                                <div
-                                                    onClick={() => this.setState({ seeAllVersions: true })}
-                                                    className="see-all-versions"
-                                                    title={this.props.localeStrings.seeAll}
-                                                >
-                                                    {this.props.localeStrings.seeAll}
-                                                </div>
-                                            }
-                                        </div>
-                                    </div>
-                                    <div className='version-details-area' ref={this.detailsListRef}>
-                                        {this.state.versionDetails.length > 0 ?
-                                            <DetailsList
-                                                items={this.state.versionDetails}
-                                                columns={listViewColumns}
-                                                layoutMode={DetailsListLayoutMode.justified}
-                                                checkboxVisibility={CheckboxVisibility.hidden}
-                                                onDidUpdate={() => this.detailsListRef.current?.getElementsByClassName("ms-DetailsList-headerWrapper")[0]
-                                                    ?.getElementsByClassName("ms-DetailsHeader")[0]?.setAttribute("aria-busy", "true")}
+                        </div>
+                        {this.state.isListView ?
+                            <div className='activity-version-details-area'>
+                                <div className='activity-log-area'>
+                                    <div className="activity-log-heading" title={this.props.localeStrings.activityLog}>{this.props.localeStrings.activityLog}</div>
+                                    <div className='activity-log-list-main-area' data-is-scrollable>
+                                        {this.state.incidentVersionData !== undefined &&
+                                            <List
+                                                componentRef={this.listRef}
+                                                items={this.state.incidentVersionData.slice(0, this.state.seeAllVersions ? this.state.incidentVersionData.length : constants.listViewItemInitialCount)}
+                                                onRenderCell={this.onRenderCell}
+                                                className="activity-log-list-main"
+                                                getPageHeight={(idx) => this.dataService.getPageHeight(idx, this.itemHeight, this.numberOfItemsOnPage)}
+                                                version={this.state.selectedItem}
                                             />
-                                            :
-                                            <>
-                                                {this.state.versionDetails.length !== undefined ?
-                                                    <div className="noDataFound" title={this.props.localeStrings.noVersionChangesLabel}>
-                                                        {this.props.localeStrings.noVersionChangesLabel}
-                                                    </div>
-                                                    :
-                                                    <div className="noDataFound" title={this.props.localeStrings.loadingLabel}>
-                                                        {this.props.localeStrings.loadingLabel}
-                                                    </div>
-                                                }
-                                            </>
+                                        }
+                                        {!this.state.seeAllVersions && this.state.incidentVersionData.length > constants.listViewItemInitialCount &&
+                                            <div
+                                                onClick={() => this.setState({ seeAllVersions: true })}
+                                                className="see-all-versions"
+                                                title={this.props.localeStrings.seeAll}
+                                            >
+                                                {this.props.localeStrings.seeAll}
+                                            </div>
                                         }
                                     </div>
                                 </div>
-                                :
-                                <div>
-                                    <ReactTableFixedColumns
-                                        data={this.state.gridData}
-                                        columns={gridViewColumns}
-                                        defaultPageSize={this.state.gridData.length}
-                                        className="grid-view-table"
-                                        showPagination={false}
-                                        sortable={false}
-                                    />
-                                    {(this.state.showRoles || this.state.showRoleLeads) ?
-                                        <Dialog
-                                            header={this.state.showRoles ? this.props.localeStrings.roles : this.props.localeStrings.roleLeadsLabel}
-                                            headerAction={{
-                                                ref: this.closeIconRef,
-                                                icon: <CloseIcon onClick={() => this.hideRoles()}/>,
-                                                title: this.props.localeStrings.btnClose,
-                                                onKeyDown: (event: any) => {
-                                                    if (event.shiftKey || event.key === constants.tabKey) {
-                                                        this.closeIconRef.current?.focus();
-                                                    }
-                                                    if(event.key === constants.enterKey || event.keyCode  === 32)
-                                                    {
-                                                        this.hideRoles();
-                                                    }
-                                                }                                           
-                                            }}
-                                            content={
-                                                <div className="role-assignment-table">
-                                                    <Row id="role-grid-thead" xs={2} sm={2} md={2}>
-                                                        <Col md={6} sm={6} xs={6} >{this.props.localeStrings.headerRole}</Col>
-                                                        <Col md={6} sm={6} xs={6} className="thead-border-left">
-                                                            {this.state.showRoles ? this.props.localeStrings.headerUsers : this.props.localeStrings.leadLabel}
-                                                        </Col>
-                                                    </Row>
-                                                    <div className="role-grid-tbody-area">
-                                                        {(this.state.showRoles ? this.state.roleDetails : this.state.roleLeadDetails).map((item: any, index: any) => (
-                                                            <Row xs={2} sm={2} md={2} key={index} id="role-grid-tbody">
-                                                                <Col md={6} sm={6} xs={6}>{item.Role}</Col>
-                                                                <Col md={6} sm={6} xs={6}>{item.Users}</Col>
-                                                            </Row>
-                                                        )
-                                                        )}
-                                                    </div>
+                                <div className='version-details-area' ref={this.detailsListRef}>
+                                    {this.state.versionDetails.length > 0 ?
+                                        <DetailsList
+                                            items={this.state.versionDetails}
+                                            columns={listViewColumns}
+                                            layoutMode={DetailsListLayoutMode.justified}
+                                            checkboxVisibility={CheckboxVisibility.hidden}
+                                            onDidUpdate={() => this.detailsListRef.current?.getElementsByClassName("ms-DetailsList-headerWrapper")[0]
+                                                ?.getElementsByClassName("ms-DetailsHeader")[0]?.setAttribute("aria-busy", "true")}
+                                        />
+                                        :
+                                        <>
+                                            {this.state.versionDetails.length !== undefined ?
+                                                <div className="noDataFound" title={this.props.localeStrings.noVersionChangesLabel}>
+                                                    {this.props.localeStrings.noVersionChangesLabel}
+                                                </div>
+                                                :
+                                                <div className="noDataFound" title={this.props.localeStrings.loadingLabel}>
+                                                    {this.props.localeStrings.loadingLabel}
                                                 </div>
                                             }
-                                            cancelButton={{
-                                                icon: <CloseIcon bordered circular size="smallest" className="roles-popup-btn-close-icon" />,
-                                                title: this.props.localeStrings.btnClose,
-                                                iconPosition: 'before',
-                                                content: this.props.localeStrings.btnClose,
-                                                className: "roles-popup-btn-close",                                            
-                                                onKeyDown: (event: any) => {
-                                                    if (event.shiftKey || event.key === constants.tabKey) {
-                                                        this.closeIconRef.current?.focus();
-                                                    }
-                                                }
-                                            }}
-                                            onCancel={(e) => this.hideRoles()}
-                                            open={this.state.showRoles || this.state.showRoleLeads}
-                                            className={`view-roles-popup${this.props.currentThemeName === constants.darkMode ? " view-roles-popup-dark" : this.props.currentThemeName === constants.contrastMode ? " view-roles-popup-contrast" : ""}`}
-                                        />
-                                         : null}
+                                        </>
+                                    }
                                 </div>
-                            }
-                        </div>
+                            </div>
+                            :
+                            <div>
+                                <ReactTableFixedColumns
+                                    data={this.state.gridData}
+                                    columns={gridViewColumns}
+                                    defaultPageSize={this.state.gridData.length}
+                                    className="grid-view-table"
+                                    showPagination={false}
+                                    sortable={false}
+                                />
+                                {(this.state.showRoles || this.state.showRoleLeads) ?
+                                    <Dialog
+                                        header={this.state.showRoles ? this.props.localeStrings.roles : this.props.localeStrings.roleLeadsLabel}
+                                        headerAction={{
+                                            ref: this.closeIconRef,
+                                            icon: <CloseIcon onClick={() => this.hideRoles()} />,
+                                            title: this.props.localeStrings.btnClose,
+                                            onKeyDown: (event: any) => {
+                                                if (event.shiftKey || event.key === constants.tabKey) {
+                                                    this.closeIconRef.current?.focus();
+                                                }
+                                                if (event.key === constants.enterKey || event.keyCode === 32) {
+                                                    this.hideRoles();
+                                                }
+                                            }
+                                        }}
+                                        content={
+                                            <div className="role-assignment-table">
+                                                <Row id="role-grid-thead" xs={2} sm={2} md={2}>
+                                                    <Col md={6} sm={6} xs={6} >{this.props.localeStrings.headerRole}</Col>
+                                                    <Col md={6} sm={6} xs={6} className="thead-border-left">
+                                                        {this.state.showRoles ? this.props.localeStrings.headerUsers : this.props.localeStrings.leadLabel}
+                                                    </Col>
+                                                </Row>
+                                                <div className="role-grid-tbody-area">
+                                                    {(this.state.showRoles ? this.state.roleDetails : this.state.roleLeadDetails).map((item: any, index: any) => (
+                                                        <Row xs={2} sm={2} md={2} key={index} id="role-grid-tbody">
+                                                            <Col md={6} sm={6} xs={6}>{item.Role}</Col>
+                                                            <Col md={6} sm={6} xs={6}>{item.Users}</Col>
+                                                        </Row>
+                                                    )
+                                                    )}
+                                                </div>
+                                            </div>
+                                        }
+                                        cancelButton={{
+                                            icon: <CloseIcon bordered circular size="smallest" className="roles-popup-btn-close-icon" />,
+                                            title: this.props.localeStrings.btnClose,
+                                            iconPosition: 'before',
+                                            content: this.props.localeStrings.btnClose,
+                                            className: "roles-popup-btn-close",
+                                            onKeyDown: (event: any) => {
+                                                if (event.shiftKey || event.key === constants.tabKey) {
+                                                    this.closeIconRef.current?.focus();
+                                                }
+                                            }
+                                        }}
+                                        onCancel={(e) => this.hideRoles()}
+                                        open={this.state.showRoles || this.state.showRoleLeads}
+                                        className={`view-roles-popup${this.props.currentThemeName === constants.darkMode ? " view-roles-popup-dark" : this.props.currentThemeName === constants.contrastMode ? " view-roles-popup-contrast" : ""}`}
+                                    />
+                                    : null}
+                            </div>
+                        }
                     </div>
                 </div>
-            </>
+            </div>
         );
     }
 }

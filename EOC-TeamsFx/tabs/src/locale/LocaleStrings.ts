@@ -265,6 +265,11 @@ const localizedStrings = {
                 enableMapViewerTooltipContent: "Enable Map Viewer in dashboard. Azure Maps subscription key is needed to enable Map viewer. Refer <a href='https://learn.microsoft.com/en-us/azure/azure-maps/how-to-use-map-control#prerequisites' target='_blank' rel='noreferrer'>Prerequisites</a> section for more information.",
                 mapViewerPlaceholder: "Enter Azure Maps Subscription Key",
                 mapViewerKeyRequiredMessage: "Azure Maps Subscription Key is required",
+                defaultTasksFieldLabel: "Create Default Tasks",
+                defaultTasksInfoIconTooltipContent: "Default planner tasks will be created from the 'TEOC-Tasks' SharePoint list configured by the Admin based on the selected Incident Type",
+                ownerLimitMessage: "An Incident/Teams cannot have more than 100 owners. Please change the Role Assignment and try again.",
+                tasksAdminMenuLabel: "Tasks",
+                tasksAdminMenuTooltip: "Manage default planner tasks",
         },
         "ar-sa": {
                 AppTitleErrorLabel: "عنوان التطبيق مطلوب.",
@@ -529,7 +534,12 @@ const localizedStrings = {
                 editAccessRoleInfoIconText: "سيتوفر لدى المستخدمين من الدور المحدد حق الوصول للتحرير إلى الحدث",       
                 enableMapViewerTooltipContent: "تمكين عارض الخريطة في لوحة المعلومات. مفتاح اشتراك خرائط Azure مطلوب لتمكين عارض الخرائط. راجع قسم <a href='https://learn.microsoft.com/en-us/azure/azure-maps/how-to-use-map-control#prerequisites' target='_blank' rel='noreferrer'>المتطلبات الأساسية</a> لمزيد من المعلومات.",
                 mapViewerPlaceholder: "مفتاح اشتراك خرائط Azure",
-                mapViewerKeyRequiredMessage: "مفتاح اشتراك خرائط Azure مطلوب"
+                mapViewerKeyRequiredMessage: "مفتاح اشتراك خرائط Azure مطلوب",
+                ownerLimitMessage: "لا يمكن أن يحتوي الحدث/Teams على أكثر من 100 مالك. الرجاء تغيير \"تعيين الدور\" والمحاولة مرة أخرى.",
+                defaultTasksFieldLabel: "إنشاء مهام افتراضية",
+                defaultTasksInfoIconTooltipContent: "سيتم إنشاء مهام المخطط الافتراضية من قائمة SharePoint 'TEOC-Tasks' المكونة بواسطة مسؤول استنادا إلى نوع الحدث المحدد",
+                tasksAdminMenuLabel: "المهام",
+                tasksAdminMenuTooltip: "إدارة مهام المخطط الافتراضية"
         },
         "de-de": {
                 AppTitleErrorLabel: "Der App-Titel ist erforderlich.",
@@ -794,7 +804,12 @@ const localizedStrings = {
                 editAccessRoleInfoIconText: "Die Benutzer aus der ausgewählten Rolle haben Bearbeitungszugriff auf den Incident.",
                 enableMapViewerTooltipContent: "Aktivieren Sie die Kartenanzeige in Dashboard. Azure Maps Abonnementschlüssel ist erforderlich, um die Kartenanzeige zu aktivieren. Weitere Informationen finden Sie im Abschnitt <a href='https://learn.microsoft.com/en-us/azure/azure-maps/how-to-use-map-control#prerequisites' target='_blank' rel='noreferrer'>Voraussetzungen</a>.",
                 mapViewerPlaceholder: "Enter Azure Maps Subscription Key",
-                mapViewerKeyRequiredMessage: "Azure Maps Subscription Key is required"
+                mapViewerKeyRequiredMessage: "Azure Maps Subscription Key is required",
+                ownerLimitMessage: "Ein Incident/Teams kann nicht mehr als 100 Besitzer haben. Ändern Sie die Rollenzuweisung, und versuchen Sie es noch mal.",
+                defaultTasksFieldLabel: "Standardtasks erstellen",
+                defaultTasksInfoIconTooltipContent: "Standardplaneraufgaben werden aus der SharePoint-Liste \"TEOC-Tasks\" erstellt, die vom Admin basierend auf dem ausgewählten Incidenttyp konfiguriert wurde.",
+                tasksAdminMenuLabel: "Tasks",
+                tasksAdminMenuTooltip: "Standardplanertasks verwalten"
         },
         "es-es": {
                 AppTitleErrorLabel: "El título de la aplicación es obligatorio.",
@@ -1059,7 +1074,12 @@ const localizedStrings = {
                 editAccessRoleInfoIconText: "Los usuarios del rol seleccionado tendrán acceso de edición al incidente",
                 enableMapViewerTooltipContent: "Habilita el Visor de mapas en el panel. Azure Maps clave de suscripción es necesaria para habilitar el visor de mapas. Consulte <a href='https://learn.microsoft.com/en-us/azure/azure-maps/how-to-use-map-control#prerequisites' target='_blank' rel='noreferrer'>sección de requisitos previos</a> para obtener más información.",
                 mapViewerPlaceholder: "Introduzca la clave de suscripción de Azure Maps",
-                mapViewerKeyRequiredMessage: "Se requiere la clave de suscripción de Azure Maps"
+                mapViewerKeyRequiredMessage: "Se requiere la clave de suscripción de Azure Maps",
+                ownerLimitMessage: "Un incidente o Teams no puede tener más de 100 propietarios. Cambie la asignación de roles e inténtelo de nuevo.",
+                defaultTasksFieldLabel: "Crear tareas predeterminadas",
+                defaultTasksInfoIconTooltipContent: "Las tareas de Planner predeterminadas se crearán a partir de la lista de SharePoint \"TEOC-Tasks\" configurada por el Administración según el tipo de incidente seleccionado.",
+                tasksAdminMenuLabel: "Tasks",
+                tasksAdminMenuTooltip: "Administrar tareas de planificador predeterminadas"        
         },
         "fr-fr": {
                 AppTitleErrorLabel: "Le titre de l’application est obligatoire.",
@@ -1324,7 +1344,12 @@ const localizedStrings = {
                 editAccessRoleInfoIconText: "Les utilisateurs du rôle sélectionné disposeront d’un accès en modification à l’incident",
                 enableMapViewerTooltipContent: "Activez la visionneuse de cartes dans le tableau de bord. Azure Maps clé d’abonnement est nécessaire pour activer la visionneuse de cartes. Pour plus d’informations, consultez <a href='https://learn.microsoft.com/en-us/azure/azure-maps/how-to-use-map-control#prerequisites' target='_blank' rel='noreferrer'>section</a> Conditions préalables.",
                 mapViewerPlaceholder: "Enter Azure Maps Subscription Key",
-                mapViewerKeyRequiredMessage: "Azure Maps Subscription Key is required"
+                mapViewerKeyRequiredMessage: "Azure Maps Subscription Key is required",
+                ownerLimitMessage: "Un incident/Teams ne peut pas avoir plus de 100 propriétaires. Modifiez l’attribution de rôle et réessayez.",
+                defaultTasksFieldLabel: "Créer des tâches par défaut",
+                defaultTasksInfoIconTooltipContent: "Les tâches du Planificateur par défaut seront créées à partir de la liste SharePoint « TEOC-Tasks » configurée par le Administration en fonction du type d’incident sélectionné",
+                tasksAdminMenuLabel: "Tâches",
+                tasksAdminMenuTooltip: "Gérer les tâches du planificateur par défaut"        
         },
         "he-il": {
                 AppTitleErrorLabel: "נדרשת כותרת אפליקציה.",
@@ -1589,7 +1614,12 @@ const localizedStrings = {
                 editAccessRoleInfoIconText: "למשתמשים מהתפקיד שנבחר תהיה גישת עריכה למקרה",
                 enableMapViewerTooltipContent: "הפוך את מציג המפות לזמין בלוח המחוונים. Azure Maps מפתח מנוי נדרש כדי להפוך את מציג המפות לזמין. עיין <a href='https://learn.microsoft.com/en-us/azure/azure-maps/how-to-use-map-control#prerequisites' target='_blank' rel='noreferrer'>הדרישות המוקדמות</a> לקבלת מידע נוסף.",
                 mapViewerPlaceholder: "הזן מפתח של מנוי Azure Maps",
-                mapViewerKeyRequiredMessage: "נדרש מפתח מנוי של Azure Maps"
+                mapViewerKeyRequiredMessage: "נדרש מפתח מנוי של Azure Maps",
+                ownerLimitMessage: "מקרה/Teams לא יכולים לכלול יותר מ- 100 בעלים. שנה את הקצאת התפקידים ונסה שוב.",
+                defaultTasksFieldLabel: "צור משימות ברירת מחדל",
+                defaultTasksInfoIconTooltipContent: "משימות המוגדרות כברירת מחדל בלוח התכנון ייווצרו מתוך רשימת SharePoint ‏'TEOC-Tasks' שהוגדרה על-ידי מרכז הניהול בהתאם לסוג המקרה שנבחר",
+                tasksAdminMenuLabel: "משימות",
+                tasksAdminMenuTooltip: "נהל משימות המוגדרות כברירת מחדל בלוח תכנון"
         },
         "ja-jp": {
                 AppTitleErrorLabel: "アプリ タイトルが必須です。",
@@ -1854,7 +1884,12 @@ const localizedStrings = {
                 editAccessRoleInfoIconText: "選択したロールのユーザーには、インシデントに対する編集アクセス権があります",
                 enableMapViewerTooltipContent: "ダッシュボードでマップ ビューアーを有効にします。マップ ビューアー Azure Maps有効にするには、サブスクリプション キーが必要です。詳細については <a href='https://learn.microsoft.com/en-us/azure/azure-maps/how-to-use-map-control#prerequisites' target='_blank' rel='noreferrer'>前提条件</a> セクションを参照してください。",
                 mapViewerPlaceholder: "Azure Maps サブスクリプション キーを入力してください",
-                mapViewerKeyRequiredMessage: "Azure Maps サブスクリプション キーが必要です"
+                mapViewerKeyRequiredMessage: "Azure Maps サブスクリプション キーが必要です",
+                ownerLimitMessage: "インシデントまたは Teams に 100 人を超える所有者を含めることはできません。ロールの割り当てを変更して、もう一度お試しください。",
+                defaultTasksFieldLabel: "既定のタスクを作成",
+                defaultTasksInfoIconTooltipContent: "既定の Planner タスクは、選択したインシデントの種類に基づいて管理によって構成された 'TEOC-Tasks' SharePoint リストから作成されます",
+                tasksAdminMenuLabel: "タスク",
+                tasksAdminMenuTooltip: "既定の Planner タスクを管理します"
         },
         "ko-kr": {
                 AppTitleErrorLabel: "앱 이름은 필수입니다.",
@@ -2119,7 +2154,12 @@ const localizedStrings = {
                 editAccessRoleInfoIconText: "선택한 역할의 사용자는 인시던트에 대한 편집 액세스 권한을 갖게 됩니다.",
                 enableMapViewerTooltipContent: "dashboard 맵 뷰어를 사용하도록 설정합니다. 맵 뷰어를 사용하도록 설정하려면 Azure Maps 구독 키가 필요합니다. 자세한 내용은 <a href='https://learn.microsoft.com/en-us/azure/azure-maps/how-to-use-map-control#prerequisites' target='_blank' rel='noreferrer'>필수 구성 요소</a> 섹션을 참조하세요.",
                 mapViewerPlaceholder: "Azure Maps 구독 키 입력",
-                mapViewerKeyRequiredMessage: "Azure Maps 구독 키가 필요합니다."
+                mapViewerKeyRequiredMessage: "Azure Maps 구독 키가 필요합니다.",
+                ownerLimitMessage: "인시던트/Teams에는 100명 이상의 소유자가 있을 수 없습니다. 역할 할당을 변경하고 다시 시도하세요.",
+                defaultTasksFieldLabel: "Create Default Tasks",
+                defaultTasksInfoIconTooltipContent: "기본 플래너 작업은 선택한 인시던트 유형을 기준으로 관리 구성된 'TEOC-Tasks' SharePoint 목록에서 만들어집니다.",
+                tasksAdminMenuLabel: "Tasks",
+                tasksAdminMenuTooltip: "Manage default planner tasks"
         },
         "pt-br": {
                 AppTitleErrorLabel: "O Título do Aplicativo é obrigatório.",
@@ -2384,7 +2424,12 @@ const localizedStrings = {
                 editAccessRoleInfoIconText: "Os usuários da função selecionada terão acesso de edição ao incidente",
                 enableMapViewerTooltipContent: "Habilitar Visualizador de Mapa dashboard. Azure Mapas chave de assinatura é necessária para habilitar o Visualizador de Mapa. Consulte <a href='https://learn.microsoft.com/en-us/azure/azure-maps/how-to-use-map-control#prerequisites' target='_blank' rel='noreferrer'>seção de</a> pré-requisitos para obter mais informações.",
                 mapViewerPlaceholder: "Insira a Chave de Assinatura do Azure Mapas",
-                mapViewerKeyRequiredMessage: "A chave de assinatura do Azure Mapas é necessária"
+                mapViewerKeyRequiredMessage: "A chave de assinatura do Azure Mapas é necessária",
+                ownerLimitMessage: "Um Incidente/Teams não pode ter mais de 100 proprietários. Altere a Atribuição de Função e tente novamente.",
+                defaultTasksFieldLabel: "Create Default Tasks",
+                defaultTasksInfoIconTooltipContent: "As tarefas padrão do Planejador serão criadas a partir da lista do SharePoint 'TEOC-Tasks' configurada pelo Administração com base no Tipo de Incidente selecionado",
+                tasksAdminMenuLabel: "Tasks",
+                tasksAdminMenuTooltip: "Manage default planner tasks"
         },
         "ru-ru": {
                 AppTitleErrorLabel: "Требуется название приложения.",
@@ -2649,8 +2694,13 @@ const localizedStrings = {
                 editAccessRoleInfoIconText: "Пользователи из выбранной роли будут иметь доступ на изменение к инциденту",
                 enableMapViewerTooltipContent: "Включите просмотр карты на панели мониторинга. Azure Maps ключ подписки необходим для включения средства просмотра карт. Дополнительные <a href='https://learn.microsoft.com/en-us/azure/azure-maps/how-to-use-map-control#prerequisites' target='_blank' rel='noreferrer'>дополнительные сведения см. в</a> необходимых компонентов.",
                 mapViewerPlaceholder: "Введите ключ подписки Azure Maps",
-                mapViewerKeyRequiredMessage: "Требуется ключ подписки Azure Maps"
-                        },
+                mapViewerKeyRequiredMessage: "Требуется ключ подписки Azure Maps",
+                ownerLimitMessage: "Инцидент или Teams не может иметь более 100 владельцев. Измените назначение ролей и повторите попытку.",
+                defaultTasksFieldLabel: "Создать стандартные задачи",
+                defaultTasksInfoIconTooltipContent: "Стандартные задачи планировщика будут созданы из списка SharePoint \"TEOC-Tasks\", настроенного администратором на основе выбранного типа инцидента",
+                tasksAdminMenuLabel: "Задачи",
+                tasksAdminMenuTooltip: "Управление стандартными задачами планировщика"
+        },
         "zh-cn": {
                 AppTitleErrorLabel: "应用标题是必填项。",
                 AppTitleInfoIconText: "应用标题将显示在应用的标题部分和痕迹导航部分中",
@@ -2914,7 +2964,12 @@ const localizedStrings = {
                 editAccessRoleInfoIconText: "所选角色中的用户将具有对事件的编辑访问权限",
                 enableMapViewerTooltipContent: "在仪表板中启用地图查看器。启用地图查看器需要Azure Maps订阅密钥。有关详细信息，请参阅 <a href='https://learn.microsoft.com/en-us/azure/azure-maps/how-to-use-map-control#prerequisites' target='_blank' rel='noreferrer'>必备组</a> 部分。",
                 mapViewerPlaceholder: "输入 Azure Maps 订阅密钥",
-                mapViewerKeyRequiredMessage: "Azure Maps 订阅密钥是必需的"
+                mapViewerKeyRequiredMessage: "Azure Maps 订阅密钥是必需的",
+                ownerLimitMessage: "事件/Teams 的所有者不能超过 100 个。请更改角色分配，然后重试。",
+                defaultTasksFieldLabel: "创建默认任务",
+                defaultTasksInfoIconTooltipContent: "默认规划器任务将从“TEOC-Tasks”SharePoint 列表中创建，该列表由管理员根据所选事件类型配置",
+                tasksAdminMenuLabel: "任务",
+                tasksAdminMenuTooltip: "管理默认计划任务"
         },
         "zh-tw": {
                 AppTitleErrorLabel: "應用程式標題為必要項目。",
@@ -3179,7 +3234,12 @@ const localizedStrings = {
                 editAccessRoleInfoIconText: "所選角色的使用者將具有事件的編輯存取權",
                 enableMapViewerTooltipContent: "在儀錶板中啟用地圖查看器。需要 Azure 地圖服務 訂閱金鑰才能啟用地圖查看器。如需詳細資訊，請參閱 <a href='https://learn.microsoft.com/en-us/azure/azure-maps/how-to-use-map-control#prerequisites' target='_blank' rel='noreferrer'></a> 條件區段。",
                 mapViewerPlaceholder: "輸入 Azure 地圖服務訂用帳戶金鑰",
-                mapViewerKeyRequiredMessage: "需要 Azure 地圖服務訂用帳戶金鑰"
+                mapViewerKeyRequiredMessage: "需要 Azure 地圖服務訂用帳戶金鑰",
+                ownerLimitMessage: "事件/Teams 不能有超過 100 個擁有者。請變更角色指派，然後再試一次。",
+                defaultTasksFieldLabel: "建立預設工作",
+                defaultTasksInfoIconTooltipContent: "默認規劃工作將從由 管理員 根據選取的事件類型所設定的 'TEOC-Tasks' SharePoint 清單建立",
+                tasksAdminMenuLabel: "工作",
+                tasksAdminMenuTooltip: "管理預設規劃工具工作"
         }
 }
 export { localizedStrings };
