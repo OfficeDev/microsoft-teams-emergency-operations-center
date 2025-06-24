@@ -1,4 +1,15 @@
-## Upgrade to v3.4  
+## Upgrade to v3.4
+
+> **🚀 New to upgrading TEOC?** 
+> Check out our [Upgrade Quick Start Guide](./UpgradeQuickStart.md) to quickly identify your current version and determine which steps you need to follow.
+
+> **📋 Upgrade Overview**
+> The steps below are comprehensive and version-specific. Not all steps apply to every upgrade path:
+> - **From v3.3**: Only steps 6, 10, 11
+> - **From v3.0-v3.2**: Steps 5, 6, 10, 11  
+> - **From v2.x**: Steps 6-11
+> - **From v1.0**: Steps 2-11
+> - **From v0.5/v0.5.1**: All steps 1-11  
 
 ### 1. Modify the column type of "Location" ( **This step is applicable only if you upgrade the app from 2.0 or older ** )
 
@@ -202,6 +213,30 @@ In this section, you’ll be adding the Office 365 Exchange Online API permissio
 1. Once you accept the permissions, app will load, and "Dashboard" will appear.
 
     ![TEOC Dashboard](./Images/Dashboard.png)
+
+
+## Need Additional Support?
+
+If you need help with your upgrade or encounter issues not covered in this guide:
+
+### Self-Service Resources
+1. **Start with the [Upgrade Quick Start Guide](./UpgradeQuickStart.md)** for a simplified overview
+2. **Check [FAQ section](./FAQ.md)** - see questions 7-12 for upgrade-specific guidance
+3. **Review [Troubleshooting Guide](./Troubleshooting.md)** for common deployment issues
+4. **Check [Release Notes](./ReleaseNotes.md)** to understand what's new in v3.4
+
+### Community Support
+- **GitHub Issues**: Search existing issues or create a new one for technical problems
+- **Community Discussions**: Check if other users have faced similar upgrade challenges
+
+### Before Requesting Help
+Please have the following information ready:
+- Your current TEOC version (see [version identification guide](./UpgradeQuickStart.md#step-1-identify-your-current-version))
+- Your deployment environment (Commercial, GCC, or GCC-H)
+- Specific error messages or issues encountered
+- Steps you've already tried from this guide
+
+> **💡 Tip**: Most upgrade issues can be resolved using the troubleshooting resources above. The [Upgrade Quick Start Guide](./UpgradeQuickStart.md) covers 90% of common upgrade scenarios.
 
 
 
