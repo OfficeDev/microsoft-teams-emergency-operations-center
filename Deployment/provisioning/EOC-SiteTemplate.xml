@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <pnp:Provisioning xmlns:pnp="http://schemas.dev.office.com/PnP/2021/03/ProvisioningSchema">
-  <pnp:Preferences Generator="PnP.Framework, Version=1.8.3.0, Culture=neutral, PublicKeyToken=0d501f89f11b748c" />
+  <pnp:Preferences Generator="PnP.Framework, Version=1.8.3.0, Culture=neutral, PublicKeyToken=REDACTED" />
   <pnp:Templates ID="CONTAINER-TEMPLATE-8315D078DB6D4FF9A32C5E2397D54645">
     <pnp:ProvisioningTemplate ID="TEMPLATE-8315D078DB6D4FF9A32C5E2397D54645" Version="1" BaseSiteTemplate="STS#3" Scope="RootSite">
       <pnp:SiteSettings AllowDesigner="true" SearchBoxInNavBar="Inherit" SearchCenterUrl="" />
@@ -124,7 +124,7 @@
             </View>
           </pnp:Views>
           <pnp:Webhooks>
-            <pnp:Webhook ServerNotificationUrl="https://southeastasia0.pushnp.svc.ms/notifications?token=6ac0052c-3643-48ed-ab2d-20082a4dd416" ExpiresInDays="1" />
+            <pnp:Webhook ServerNotificationUrl="https://southeastasia0.pushnp.svc.ms/notifications?token=REDACTED" ExpiresInDays="1" />
           </pnp:Webhooks>
            <pnp:DataRows UpdateBehavior="Overwrite">
           <pnp:DataRow>
@@ -210,7 +210,7 @@
             </View>
           </pnp:Views>
           <pnp:Webhooks>
-            <pnp:Webhook ServerNotificationUrl="https://southeastasia0.pushnp.svc.ms/notifications?token=b816c626-077b-46f6-a002-189839b1c5cc" ExpiresInDays="1" />
+            <pnp:Webhook ServerNotificationUrl="https://southeastasia0.pushnp.svc.ms/notifications?token=REDACTED" ExpiresInDays="1" />
           </pnp:Webhooks>
            <pnp:DataRows UpdateBehavior="Overwrite">
           <pnp:DataRow>
@@ -516,7 +516,7 @@
             <Field DisplayName="Value" Type="Note" Required="FALSE" ID="{51a1e44f-4e67-486a-bcdf-e13efdd07b36}" SourceID="{{listid:TEOC-Config}}" StaticName="Value" Name="Value" ColName="nvarchar5" RowOrdinal="0" Version="1" />
           </pnp:Fields>
           <pnp:Webhooks>
-            <pnp:Webhook ServerNotificationUrl="https://southeastasia1-0.pushnp.svc.ms/notifications?token=4b912ca4-6d08-4c59-806c-cf8f8d7ecdf9" ExpiresInDays="1" />
+            <pnp:Webhook ServerNotificationUrl="https://southeastasia1-0.pushnp.svc.ms/notifications?token=REDACTED" ExpiresInDays="1" />
           </pnp:Webhooks>
             <pnp:DataRows UpdateBehavior="Overwrite">
           <pnp:DataRow>
@@ -638,7 +638,7 @@
             <pnp:FieldRef ID="76d13cd2-1bae-45a5-8b74-545b87b65037" Name="_ColorTag" DisplayName="Color Tag" />
           </pnp:FieldRefs>
           <pnp:Webhooks>
-            <pnp:Webhook ServerNotificationUrl="https://japaneast0-0.pushnp.svc.ms/notifications?token=9c514e26-d3cf-40bd-b0f8-3fa2a0062f3a%2Fb!zs9_4fV_d0qocJpEhXQ5_DuWg3BquCJDopXji9mp8fGH9UR0t5INQJSS8TA8pFGD" ExpiresInDays="1" />
+            <pnp:Webhook ServerNotificationUrl="https://japaneast0-0.pushnp.svc.ms/notifications?token=REDACTED" ExpiresInDays="1" />
           </pnp:Webhooks>
         </pnp:ListInstance>
          
